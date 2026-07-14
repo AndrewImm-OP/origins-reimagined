@@ -102,3 +102,22 @@ jar {
         rename { 'origins-overhaul-LICENSE' }
     }
 }
+
+tasks.register('verifyPackagedMixins') {
+    dependsOn jar
+    doLast {
+        def archive = jar.archiveFile.get().asFile
+        def requiredEntries = [
+            'origins_overhaul.mixins.json',
+            'ru/origins_overhaul/mixin/ModPacketsS2CMixin.class',
+            'ru/origins_overhaul/mixin/LivingEntityRendererVisualMixin.class',
+            'ru/origins_overhaul/mixin/AvatarRendererVisualMixin.class',
+            'ru/origins_overhaul/mixin/GuiSkinRendererVisualMixin.class'
+        ] as Set
+        def found = new java.util.zip.ZipFile(archive).withCloseable { zip -> zip.entries().findAll { !it.isDirectory() }.collect { it.name } as Set }
+        def missing = requiredEntries - found
+        if (!missing.isEmpty()) throw new GradleException("Production JAR is missing mixin entries: ${missing}")
+        logger.lifecycle("Verified ${requiredEntries.size()} packaged Origins Overhaul mixin entries")
+    }
+}
+tasks.named('check') { dependsOn verifyPackagedMixins }
