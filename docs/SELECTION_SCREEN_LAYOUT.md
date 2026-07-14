@@ -26,3 +26,7 @@ origin_list_threshold=12
 
 The animation cache is separate from this layout calculation. It is invalidated
 when the screen is resized and keyed by origin ID plus current text width.
+
+The central preview rectangle is now consumed by `PlayerPreviewController`; its
+scissor is exactly the calculated `preview` bounds, so model pixels cannot enter
+the text columns.

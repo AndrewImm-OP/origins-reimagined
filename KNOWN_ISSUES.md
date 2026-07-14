@@ -22,6 +22,9 @@
 - Кнопка случайного выбора отображается как текстовый control рядом с подтверждением; её расположение следует проверить на крайних GUI Scale.
 - Анимации не прошли визуальную проверку в настоящем окне Minecraft из-за headless-окружения; graphical runtime остаётся `BLOCKED`.
 - Поворот ItemStack выполняется через текущий GUI pose stack и требует визуальной проверки на разных ресурс-паках.
+- Player preview использует штатный `GuiGraphicsExtractor.skin` и поэтому намеренно не отображает armor, held items, cape или elytra geometry; соответствующие snapshot texture IDs сохранены для будущего renderer pipeline.
+- `preview_show_equipment` и `preview_show_cape` пока сохраняются как настройки API, но не включают неподдерживаемую GUI geometry.
+- Classic/slim и clipping проверены только компиляцией и isolated math tests; живое окно Minecraft недоступно.
 
 ## Поведение мобов
 

@@ -4,7 +4,7 @@
 
 ## Текущий этап
 
-Этап 4 — анимации кинематографичного интерфейса.
+Этап 5 — интерактивная модель игрока в экране выбора.
 
 - [x] Найден upstream: `BluSpring/Origins-Legacy`, ветка `versions/26.1`.
 - [x] Проверены Minecraft/Fabric/Java параметры.
@@ -16,6 +16,7 @@
 - [x] Создан исходный мод Origins Overhaul.
 - [x] Реализован универсальный fallback.
 - [x] Реализованы статичный экран выбора и frame-independent анимации; runtime-открытие ожидает графическую проверку.
+- [x] Реализован isolated player skin preview; graphical runtime ожидает проверки.
 - [ ] Реализованы визуальные профили.
 - [ ] Реализован relation engine.
 - [ ] Реализован PhantomSunState.
@@ -68,6 +69,25 @@
 | Localization | COMPLETE |
 | Client runtime test | BLOCKED |
 | Dedicated server test | COMPLETE |
+| Player rendering audit | COMPLETE |
+| Preview architecture | COMPLETE |
+| Appearance snapshot | COMPLETE |
+| Skin loading | COMPLETE |
+| Classic model | COMPLETE |
+| Slim model | COMPLETE |
+| Preview camera | COMPLETE |
+| Mouse rotation | COMPLETE |
+| Zoom | COMPLETE |
+| Pan | COMPLETE |
+| Reset | COMPLETE |
+| Auto rotation | COMPLETE |
+| Outer skin layer | COMPLETE |
+| Equipment visibility | BLOCKED |
+| Preview clipping | COMPLETE |
+| Animation integration | COMPLETE |
+| Lifecycle cleanup | COMPLETE |
+| Preview tests | COMPLETE |
+| Graphical runtime validation | BLOCKED |
 
 ## Статус сборки исследуемого upstream
 
@@ -79,4 +99,4 @@ JDK 25 подтверждён: `openjdk version "25.0.3"`. Проект соби
 
 ## Следующий этап
 
-Добавить 3D preview pipeline игрока, не меняя selection protocol.
+Добавить visual profiles и подключить их к `PreviewOriginContext`, не меняя selection protocol.

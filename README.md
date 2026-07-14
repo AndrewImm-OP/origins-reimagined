@@ -2,7 +2,7 @@
 
 Клиент-серверный Fabric-мод поверх Origins Legacy для Minecraft 26.1.2.
 
-Этап 4 добавляет frame-independent анимации экрана: fade-in, вращение иконки, reveal форматированных glyphs, stagger способностей, transitions с latest-target-wins, search overlay fade и reduce-motion. Модель игрока, visual layers, отношения с мобами и Phantom fix пока не реализованы.
+Этап 5 добавляет интерактивное 3D-preview текущего player skin через штатный `GuiGraphicsExtractor.skin` pipeline: wide/slim модели, rotation, zoom, pan, reset, auto-rotation и clipping. Расовые visual layers, отношения с мобами и Phantom fix пока не реализованы.
 
 Точная карта upstream API находится в [AUDIT_ORIGINS_LEGACY_26.1.2.md](AUDIT_ORIGINS_LEGACY_26.1.2.md), текущие ограничения — в [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
 
@@ -27,8 +27,10 @@ Origins Legacy объявлен через Maven-координаты `xyz.blusp
 
 Описание анимационной системы: [ANIMATION_ARCHITECTURE.md](docs/ANIMATION_ARCHITECTURE.md), [TEXT_REVEAL_BEHAVIOR.md](docs/TEXT_REVEAL_BEHAVIOR.md).
 
+Аудит и устройство preview: [PLAYER_PREVIEW_RENDERING_AUDIT.md](docs/PLAYER_PREVIEW_RENDERING_AUDIT.md), [PLAYER_PREVIEW_ARCHITECTURE.md](docs/PLAYER_PREVIEW_ARCHITECTURE.md), [PLAYER_PREVIEW_CONTROLS.md](docs/PLAYER_PREVIEW_CONTROLS.md).
+
 Клиентские параметры читаются из `config/origins_overhaul.properties`; `cinematic_selection_screen=false` оставляет стандартный экран Origins Legacy.
 
-Параметры анимаций включают `text_animation_enabled`, `text_animation_speed`, `transition_animation_enabled`, `transition_out_duration_ms`, `transition_in_duration_ms`, `icon_rotation_enabled`, `icon_rotation_speed`, `icon_bob_enabled`, `ability_stagger_ms` и `reduce_motion`.
+Параметры анимаций включают `text_animation_enabled`, `text_animation_speed`, `transition_animation_enabled`, `transition_out_duration_ms`, `transition_in_duration_ms`, `icon_rotation_enabled`, `icon_rotation_speed`, `icon_bob_enabled`, `ability_stagger_ms` и `reduce_motion`. Preview управляется `player_preview_enabled`, `preview_auto_rotate`, `preview_auto_rotate_speed`, `preview_mouse_sensitivity`, `preview_zoom_sensitivity`, `preview_show_outer_layer`, `preview_show_cape`, `preview_show_equipment` и `preview_idle_animation`.
 
 Для debug-измерения catalog использовать JVM-флаг `-Dorigins_overhaul.debug=true`.
