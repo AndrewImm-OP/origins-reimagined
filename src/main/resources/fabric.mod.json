@@ -11,6 +11,7 @@
     "main": ["ru.origins_overhaul.OriginsOverhaul"],
     "client": ["ru.origins_overhaul.OriginsOverhaulClient"]
   },
+  "mixins": ["origins_overhaul.mixins.json"],
   "depends": {
     "java": ">=25",
     "fabricloader": ">=0.18.5",

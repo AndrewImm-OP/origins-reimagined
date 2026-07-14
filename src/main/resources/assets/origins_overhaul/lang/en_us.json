@@ -6,5 +6,19 @@
   "origins_overhaul.presentation.phantom.hunger": "Hunger Over Time",
   "origins_overhaul.presentation.phantom.hunger.description": "Your phantom abilities gradually increase hunger.",
   "origins_overhaul.presentation.phantom.fragile": "Fragile",
-  "origins_overhaul.presentation.phantom.fragile.description": "You take increased damage."
+  "origins_overhaul.presentation.phantom.fragile.description": "You take increased damage.",
+  "origins_overhaul.selection.advantages": "ADVANTAGES",
+  "origins_overhaul.selection.disadvantages": "DISADVANTAGES",
+  "origins_overhaul.selection.features": "FEATURES",
+  "origins_overhaul.selection.select": "SELECT",
+  "origins_overhaul.selection.random": "RANDOM",
+  "origins_overhaul.selection.search": "SEARCH",
+  "origins_overhaul.selection.search_hint": "Type a name or ID",
+  "origins_overhaul.selection.origin_list": "LIST",
+  "origins_overhaul.selection.no_advantages": "No expressed advantages",
+  "origins_overhaul.selection.no_disadvantages": "No expressed disadvantages",
+  "origins_overhaul.selection.no_features": "No additional features",
+  "origins_overhaul.selection.no_origins": "No selectable origins",
+  "origins_overhaul.selection.layer_progress": "Layer %s/%s",
+  "origins_overhaul.selection.debug_preview": "DEBUG PREVIEW"
 }

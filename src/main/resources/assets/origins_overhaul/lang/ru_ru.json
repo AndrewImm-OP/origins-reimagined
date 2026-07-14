@@ -1,0 +1,16 @@
+{
+  "origins_overhaul.selection.advantages": "ПРЕИМУЩЕСТВА",
+  "origins_overhaul.selection.disadvantages": "НЕДОСТАТКИ",
+  "origins_overhaul.selection.features": "ОСОБЕННОСТИ",
+  "origins_overhaul.selection.select": "ВЫБРАТЬ",
+  "origins_overhaul.selection.random": "СЛУЧАЙНО",
+  "origins_overhaul.selection.search": "ПОИСК",
+  "origins_overhaul.selection.search_hint": "Введите имя или ID",
+  "origins_overhaul.selection.origin_list": "СПИСОК",
+  "origins_overhaul.selection.no_advantages": "Нет выраженных преимуществ",
+  "origins_overhaul.selection.no_disadvantages": "Нет выраженных недостатков",
+  "origins_overhaul.selection.no_features": "Нет дополнительных особенностей",
+  "origins_overhaul.selection.no_origins": "Нет доступных происхождений",
+  "origins_overhaul.selection.layer_progress": "Слой %s/%s",
+  "origins_overhaul.selection.debug_preview": "ОТЛАДОЧНЫЙ ПРОСМОТР"
+}

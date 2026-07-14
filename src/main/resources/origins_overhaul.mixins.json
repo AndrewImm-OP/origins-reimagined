@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ru.origins_overhaul.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": ["ModPacketsS2CMixin"],
+  "injectors": { "defaultRequire": 1 }
+}
