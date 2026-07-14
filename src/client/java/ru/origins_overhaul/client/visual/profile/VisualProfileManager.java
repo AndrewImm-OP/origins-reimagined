@@ -15,13 +15,13 @@ import ru.origins_overhaul.client.visual.modifier.VisualModifier;
 import java.util.*;
 
 public final class VisualProfileManager extends MultiJsonDataLoader implements IdentifiableResourceReloadListener {
-    public static final VisualProfileManager INSTANCE = new VisualProfileManager();
     private static final Gson GSON = new GsonBuilder().create();
+    public static final VisualProfileManager INSTANCE = new VisualProfileManager();
     private static volatile Map<Identifier, VisualProfile> profiles = Map.of();
     private static volatile Map<Identifier, VisualProfile> byOrigin = Map.of();
     private static volatile Runnable reloadCallback = () -> {};
 
-    private VisualProfileManager() { super(GSON, "origins_overhaul/visual_profiles"); }
+    private VisualProfileManager() { super(GSON, "visual_profiles"); }
     @Override public Identifier getFabricId() { return Identifier.fromNamespaceAndPath("origins_overhaul", "visual_profiles"); }
 
     @Override protected void apply(Map<Identifier, List<JsonElement>> loader, ResourceManager manager, ProfilerFiller profiler) {

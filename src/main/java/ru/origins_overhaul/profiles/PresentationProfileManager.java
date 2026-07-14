@@ -12,14 +12,14 @@ import ru.origins_overhaul.OriginsOverhaul;
 import java.util.*;
 
 public final class PresentationProfileManager extends MultiJsonDataLoader implements IdentifiableResourceReloadListener {
-    public static final PresentationProfileManager INSTANCE = new PresentationProfileManager();
     private static final Gson GSON = new GsonBuilder().create();
+    public static final PresentationProfileManager INSTANCE = new PresentationProfileManager();
     private static volatile Map<Identifier, PresentationProfile> profiles = Map.of();
     private static volatile Set<Identifier> builtinOrigins = Set.of();
     private static volatile Runnable reloadCallback = () -> {};
 
     private PresentationProfileManager() {
-        super(GSON, "origins_overhaul/presentations");
+        super(GSON, "presentations");
     }
 
     @Override
