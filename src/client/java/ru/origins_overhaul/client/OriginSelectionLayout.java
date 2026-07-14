@@ -9,7 +9,9 @@ public record OriginSelectionLayout(Rect header, Rect advantages, Rect preview, 
     public static OriginSelectionLayout calculate(int width, int height, boolean hasNeutralFeatures) {
         int margin = Math.max(16, Math.min(40, width / 32));
         int headerHeight = Math.max(48, Math.min(56, height / 9));
-        int bottom = Math.max(78, Math.min(110, height / 7));
+        // The navigation and action buttons live inside the central panel;
+        // reserve only a small safety margin below that panel.
+        int bottom = Math.max(48, Math.min(64, height / 10));
         int contentTop = margin + headerHeight + 8;
         int availableBelowHeader = Math.max(84, height - contentTop - bottom);
         int neutralHeight = hasNeutralFeatures ? Math.max(42, Math.min(92, availableBelowHeader / 4)) : 0;
