@@ -113,7 +113,8 @@ tasks.register('verifyPackagedMixins') {
             'ru/origins_overhaul/mixin/LivingEntityRendererVisualMixin.class',
             'ru/origins_overhaul/mixin/AvatarRendererVisualMixin.class',
             'ru/origins_overhaul/mixin/GuiSkinRendererVisualMixin.class',
-            'ru/origins_overhaul/mixin/PictureInPictureRendererAccessor.class'
+            'ru/origins_overhaul/mixin/PictureInPictureRendererAccessor.class',
+            'ru/origins_overhaul/mixin/LivingEntityRendererAccessor.class'
         ] as Set
         def found = new java.util.zip.ZipFile(archive).withCloseable { zip -> zip.entries().findAll { !it.isDirectory() }.collect { it.name } as Set }
         def missing = requiredEntries - found
