@@ -7,8 +7,10 @@ public record OriginSelectionLayout(Rect header, Rect advantages, Rect preview, 
         int headerHeight = Math.max(48, Math.min(72, height / 8));
         int bottom = Math.max(54, height / 8);
         int contentTop = margin + headerHeight;
-        int neutralHeight = Math.max(42, Math.min(92, height / 7));
-        int contentBottom = Math.max(contentTop + 50, height - bottom - neutralHeight);
+        int availableBelowHeader = Math.max(84, height - contentTop - bottom);
+        int neutralHeight = Math.max(42, Math.min(92, availableBelowHeader / 4));
+        int neutralY = height - bottom - neutralHeight - 6;
+        int contentBottom = Math.max(contentTop + 50, neutralY - 8);
         int gap = Math.max(8, width / 80);
         int usable = Math.max(180, width - margin * 2 - gap * 2);
         int side = Math.max(88, usable / 4);
@@ -20,7 +22,7 @@ public record OriginSelectionLayout(Rect header, Rect advantages, Rect preview, 
         x += center + gap;
         Rect right = new Rect(x, contentTop, side, left.height());
         Rect h = new Rect(margin, margin, Math.max(1, width - margin * 2), headerHeight);
-        Rect n = new Rect(margin, contentBottom + 8, Math.max(1, width - margin * 2), neutralHeight);
+        Rect n = new Rect(margin, neutralY, Math.max(1, width - margin * 2), neutralHeight);
         Rect nav = new Rect(margin, height - bottom + 4, Math.max(1, width - margin * 2), 24);
         Rect confirm = new Rect(Math.max(margin, width / 2 - 55), height - 28, 110, 20);
         Rect list = new Rect(Math.max(margin, width - margin - 70), margin + 4, 70, 20);

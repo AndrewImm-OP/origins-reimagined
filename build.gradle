@@ -60,6 +60,12 @@ loom {
 
 processResources {
     inputs.property 'version', project.version
+    // Presentation profiles are needed on the client before a server data pack
+    // reload is available (for example in the selection screen). Keep the
+    // canonical datapack copy and expose the same built-ins as client resources.
+    from('src/main/resources/data/origins_overhaul/presentations') {
+        into('assets/origins_overhaul/presentations')
+    }
     filesMatching('fabric.mod.json') {
         expand version: project.version
     }
