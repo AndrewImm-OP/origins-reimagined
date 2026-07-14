@@ -217,10 +217,12 @@ public final class CinematicOriginSelectionScreen extends Screen {
 
     private void renderColumnSurface(GuiGraphicsExtractor context, OriginSelectionLayout.Rect rect, int accent, boolean right) {
         context.fill(rect.x() - 8, rect.y() - 8, rect.x() + rect.width() + 8, rect.y() + rect.height() + 6, AnimatedRenderContext.alpha(0x5908090B, entrance.value()));
+        context.fill(rect.x() - 8, rect.y() - 8, rect.x() + rect.width() + 8, rect.y() + 22, AnimatedRenderContext.alpha(0x6613161B, entrance.value()));
         int line = AnimatedRenderContext.alpha((accent & 0x00FFFFFF) | 0x3A000000, entrance.value());
         if (right) context.verticalLine(rect.x() + rect.width() + 7, rect.y() - 8, rect.y() + rect.height() + 6, line);
         else context.verticalLine(rect.x() - 8, rect.y() - 8, rect.y() + rect.height() + 6, line);
         context.horizontalLine(rect.x() - 8, rect.x() + rect.width() + 8, rect.y() - 8, AnimatedRenderContext.alpha(0x22777777, entrance.value()));
+        context.horizontalLine(rect.x() - 8, rect.x() + rect.width() + 8, rect.y() + 22, AnimatedRenderContext.alpha((accent & 0x00FFFFFF) | 0x30000000, entrance.value()));
     }
 
     private AnimatedOriginContent content(OriginPresentation origin, int width) {
@@ -270,7 +272,8 @@ public final class CinematicOriginSelectionScreen extends Screen {
         }
         int textWidth = Math.max(40, rect.width() - 28);
         AnimatedOriginContent cached = content(displayedOrigin(), textWidth);
-        int y = rect.y() + 18 - scroll;
+        int effectiveScroll = Math.min(Math.max(0, scroll), maxScroll(rect, powers, textWidth, cached));
+        int y = rect.y() + 30 - effectiveScroll;
         int textX = rect.x() + 24;
         context.enableScissor(rect.x(), rect.y(), rect.x() + rect.width(), rect.y() + rect.height());
         try {
@@ -300,6 +303,23 @@ public final class CinematicOriginSelectionScreen extends Screen {
         } finally {
             context.disableScissor();
         }
+    }
+
+    private int maxScroll(OriginSelectionLayout.Rect rect, List<PresentedPower> powers, int textWidth, AnimatedOriginContent cached) {
+        int total = 0;
+        for (PresentedPower power : powers) {
+            int nameLines = Math.max(1, font.split(power.name(), textWidth).size());
+            total += nameLines * 10 + 2 + cached.power(power.powerId()).lines().size() * 10 + 8;
+        }
+        return Math.max(0, total - Math.max(0, rect.height() - 30));
+    }
+
+    private int scrollBy(int current, int wheelAmount, OriginSelectionLayout.Rect rect, List<PresentedPower> powers) {
+        int textWidth = Math.max(40, rect.width() - 28);
+        AnimatedOriginContent cached = content(displayedOrigin(), textWidth);
+        int max = maxScroll(rect, powers, textWidth, cached);
+        if (max == 0) return 0;
+        return Math.max(0, Math.min(max, current - wheelAmount));
     }
 
     private void renderNavigation(GuiGraphicsExtractor context, OriginPresentation origin) {
@@ -489,9 +509,10 @@ public final class CinematicOriginSelectionScreen extends Screen {
             return true;
         }
         int amount = (int) Math.signum(scrollY) * 12;
-        if (layout.advantages().contains(x, y)) advantageScroll = Math.max(0, advantageScroll - amount);
-        else if (layout.disadvantages().contains(x, y)) disadvantageScroll = Math.max(0, disadvantageScroll - amount);
-        else if (layout.neutral().contains(x, y)) neutralScroll = Math.max(0, neutralScroll - amount);
+        OriginPresentation origin = displayedOrigin();
+        if (origin != null && layout.advantages().contains(x, y)) advantageScroll = scrollBy(advantageScroll, amount, layout.advantages(), origin.advantages());
+        else if (origin != null && layout.disadvantages().contains(x, y)) disadvantageScroll = scrollBy(disadvantageScroll, amount, layout.disadvantages(), origin.disadvantages());
+        else if (origin != null && layout.neutral().contains(x, y)) neutralScroll = scrollBy(neutralScroll, amount, layout.neutral(), origin.neutralFeatures());
         else move(scrollY > 0 ? -1 : 1);
         return true;
     }
