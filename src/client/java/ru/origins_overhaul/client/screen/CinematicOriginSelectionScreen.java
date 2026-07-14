@@ -350,9 +350,8 @@ public final class CinematicOriginSelectionScreen extends Screen {
         context.text(font, "›", nav.x() + nav.width() - 16, nav.y() + 3, AnimatedRenderContext.alpha((theme.accent() & 0x00FFFFFF) | 0xFF000000, opacity), false);
         int buttonColor = session.selectionSubmitted() || debugPreview ? 0x66444444 : AnimatedRenderContext.alpha(0xAA222222, opacity);
         if (Minecraft.getInstance().player != null && session.randomAllowed(Minecraft.getInstance().player)) {
-            int randomX = layout.confirm().x() - 106;
-            context.outline(randomX, layout.confirm().y() - 2, 96, layout.confirm().height() + 2, AnimatedRenderContext.alpha(0x33555555, opacity));
-            context.text(font, Component.translatable("origins_overhaul.selection.random"), randomX + 10, layout.confirm().y() + 4, AnimatedRenderContext.alpha(0xFFCCCCCC, opacity), false);
+            context.outline(layout.random().x(), layout.random().y() - 2, layout.random().width(), layout.random().height() + 2, AnimatedRenderContext.alpha(0x33555555, opacity));
+            context.text(font, Component.translatable("origins_overhaul.selection.random"), layout.random().x() + 10, layout.random().y() + 4, AnimatedRenderContext.alpha(0xFFCCCCCC, opacity), false);
         }
         context.outline(layout.confirm().x(), layout.confirm().y() - 2, layout.confirm().width(), layout.confirm().height() + 2, AnimatedRenderContext.alpha((theme.accent() & 0x00FFFFFF) | 0x66000000, opacity));
         context.fill(layout.confirm().x(), layout.confirm().y() - 2, layout.confirm().x() + layout.confirm().width(), layout.confirm().y() + layout.confirm().height(), buttonColor);
@@ -486,15 +485,15 @@ public final class CinematicOriginSelectionScreen extends Screen {
             if (keyEditorClick(x, y)) return true;
             return true;
         }
+        boolean control = layout.confirm().contains(x, y) || layout.random().contains(x, y) || layout.navigation().contains(x, y) || layout.listButton().contains(x, y);
+        if (skipCurrentAnimation() && !control) return true;
+        if (layout.confirm().contains(x, y)) { submit(); return true; }
+        if (Minecraft.getInstance().player != null && session.randomAllowed(Minecraft.getInstance().player) && layout.random().contains(x, y)) { selectRandom(); return true; }
+        if (layout.navigation().contains(x, y)) { move(x < width / 2 ? -1 : 1); return true; }
+        if (session.currentOrigins().size() > ClientSelectionConfig.threshold() && layout.listButton().contains(x, y)) { openList(); return true; }
         if (previewBodyRect().contains(x, y) && preview != null) {
             if (preview.input().press(event.button(), isDoubleClick, x, y, preview.camera())) return true;
         }
-        boolean control = layout.confirm().contains(x, y) || layout.navigation().contains(x, y) || layout.listButton().contains(x, y);
-        if (skipCurrentAnimation() && !control) return true;
-        if (layout.confirm().contains(x, y)) { submit(); return true; }
-        if (Minecraft.getInstance().player != null && session.randomAllowed(Minecraft.getInstance().player) && x >= layout.confirm().x() - 106 && x < layout.confirm().x() - 10 && y >= layout.confirm().y() - 2 && y < layout.confirm().y() + layout.confirm().height()) { selectRandom(); return true; }
-        if (layout.navigation().contains(x, y)) { move(x < width / 2 ? -1 : 1); return true; }
-        if (session.currentOrigins().size() > ClientSelectionConfig.threshold() && layout.listButton().contains(x, y)) { openList(); return true; }
         return super.mouseClicked(event, isDoubleClick);
     }
 

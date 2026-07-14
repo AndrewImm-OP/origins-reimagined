@@ -1,7 +1,7 @@
 package ru.origins_overhaul.client;
 
 public record OriginSelectionLayout(Rect header, Rect advantages, Rect preview, Rect disadvantages,
-                                    Rect neutral, Rect navigation, Rect confirm, Rect listButton) {
+                                    Rect neutral, Rect navigation, Rect random, Rect confirm, Rect listButton) {
     public static OriginSelectionLayout calculate(int width, int height) {
         return calculate(width, height, true);
     }
@@ -31,9 +31,12 @@ public record OriginSelectionLayout(Rect header, Rect advantages, Rect preview, 
         Rect n = hasNeutralFeatures ? new Rect(margin, neutralY, Math.max(1, width - margin * 2), neutralHeight) : new Rect(0, 0, 0, 0);
         int arrowTop = middle.y() + headerHeight + Math.max(0, (middle.height() - headerHeight) / 2) - 14;
         Rect nav = new Rect(middle.x() + 10, arrowTop, Math.max(1, middle.width() - 20), 28);
-        Rect confirm = new Rect(middle.x() + middle.width() / 2 - 55, middle.y() + middle.height() - 27, 110, 20);
+        int actionWidth = 96 + 10 + 110;
+        int actionX = middle.x() + Math.max(0, (middle.width() - actionWidth) / 2);
+        Rect random = new Rect(actionX, middle.y() + middle.height() - 27, 96, 20);
+        Rect confirm = new Rect(actionX + 106, middle.y() + middle.height() - 27, 110, 20);
         Rect list = new Rect(Math.max(margin, width - margin - 70), margin + 4, 70, 20);
-        return new OriginSelectionLayout(h, left, middle, right, n, nav, confirm, list);
+        return new OriginSelectionLayout(h, left, middle, right, n, nav, random, confirm, list);
     }
 
     public record Rect(int x, int y, int width, int height) {

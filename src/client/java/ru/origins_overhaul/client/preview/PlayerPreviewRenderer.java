@@ -38,7 +38,7 @@ public final class PlayerPreviewRenderer {
         model.rightSleeve.visible = showOuterLayer && appearance.showRightSleeve();
         model.leftPants.visible = showOuterLayer && appearance.showLeftPants();
         model.rightPants.visible = showOuterLayer && appearance.showRightPants();
-        float scale = 0.97f * height / 2.125f * camera.zoom() * (0.96f + 0.04f * Math.max(0.0f, Math.min(1.0f, opacity)));
+        float scale = 0.80f * height / 2.125f * camera.zoom() * (0.96f + 0.04f * Math.max(0.0f, Math.min(1.0f, opacity)));
         int panX = Math.round(camera.offsetX() * width);
         int panY = Math.round(camera.offsetY() * height);
         int shiftedX = x + panX;
