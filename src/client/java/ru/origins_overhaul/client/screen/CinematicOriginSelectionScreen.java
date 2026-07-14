@@ -222,6 +222,13 @@ public final class CinematicOriginSelectionScreen extends Screen {
         return new OriginSelectionLayout.Rect(rect.x() + 2, top, Math.max(20, rect.width() - 4), Math.max(20, bottom - top));
     }
 
+    private OriginSelectionLayout.Rect previewInputRect() {
+        OriginSelectionLayout.Rect rect = layout.preview();
+        int top = rect.y() + layout.header().height() + 4;
+        int bottom = layout.confirm().y() - 8;
+        return new OriginSelectionLayout.Rect(rect.x(), top, rect.width(), Math.max(20, bottom - top));
+    }
+
     private void renderPreviewPlatform(GuiGraphicsExtractor context, OriginSelectionLayout.Rect rect, int color) {
         int center = rect.x() + rect.width() / 2;
         int base = rect.y() + rect.height() - Math.max(18, rect.height() / 12);
@@ -346,16 +353,19 @@ public final class CinematicOriginSelectionScreen extends Screen {
         OriginSelectionLayout.Rect nav = layout.navigation();
         OriginSelectionTheme theme = OriginSelectionTheme.forOrigin(origin);
         // The origin name already lives in the header. Keep only unobtrusive navigation glyphs.
-        context.text(font, "‹", nav.x() + 8, nav.y() + 3, AnimatedRenderContext.alpha((theme.accent() & 0x00FFFFFF) | 0xFF000000, opacity), false);
-        context.text(font, "›", nav.x() + nav.width() - 16, nav.y() + 3, AnimatedRenderContext.alpha((theme.accent() & 0x00FFFFFF) | 0xFF000000, opacity), false);
+        int arrowColor = AnimatedRenderContext.alpha(0xFF888888, opacity);
+        context.text(font, "‹", nav.x() + 18, nav.y() + 3, arrowColor, false);
+        context.text(font, "›", nav.x() + nav.width() - 26, nav.y() + 3, arrowColor, false);
         int buttonColor = session.selectionSubmitted() || debugPreview ? 0x66444444 : AnimatedRenderContext.alpha(0xAA222222, opacity);
         if (Minecraft.getInstance().player != null && session.randomAllowed(Minecraft.getInstance().player)) {
             context.outline(layout.random().x(), layout.random().y() - 2, layout.random().width(), layout.random().height() + 2, AnimatedRenderContext.alpha(0x33555555, opacity));
-            context.text(font, Component.translatable("origins_overhaul.selection.random"), layout.random().x() + 10, layout.random().y() + 4, AnimatedRenderContext.alpha(0xFFCCCCCC, opacity), false);
+            Component randomText = Component.translatable("origins_overhaul.selection.random");
+            context.text(font, randomText, layout.random().x() + (layout.random().width() - font.width(randomText)) / 2, layout.random().y() + 4, AnimatedRenderContext.alpha(0xFFCCCCCC, opacity), false);
         }
         context.outline(layout.confirm().x(), layout.confirm().y() - 2, layout.confirm().width(), layout.confirm().height() + 2, AnimatedRenderContext.alpha((theme.accent() & 0x00FFFFFF) | 0x66000000, opacity));
         context.fill(layout.confirm().x(), layout.confirm().y() - 2, layout.confirm().x() + layout.confirm().width(), layout.confirm().y() + layout.confirm().height(), buttonColor);
-        context.text(font, Component.translatable("origins_overhaul.selection.select"), layout.confirm().x() + 28, layout.confirm().y() + 4, AnimatedRenderContext.alpha(session.selectionSubmitted() || debugPreview ? 0xFF888888 : 0xFFFFFFFF, opacity), false);
+        Component selectText = Component.translatable("origins_overhaul.selection.select");
+        context.text(font, selectText, layout.confirm().x() + (layout.confirm().width() - font.width(selectText)) / 2, layout.confirm().y() + 4, AnimatedRenderContext.alpha(session.selectionSubmitted() || debugPreview ? 0xFF888888 : 0xFFFFFFFF, opacity), false);
         if (session.currentOrigins().size() > ClientSelectionConfig.threshold()) {
             context.fill(layout.listButton().x(), layout.listButton().y(), layout.listButton().x() + layout.listButton().width(), layout.listButton().y() + layout.listButton().height(), AnimatedRenderContext.alpha(0x99222222, opacity));
             context.text(font, Component.translatable("origins_overhaul.selection.origin_list"), layout.listButton().x() + 7, layout.listButton().y() + 6, AnimatedRenderContext.alpha(0xFFFFFFFF, opacity), false);
@@ -491,7 +501,7 @@ public final class CinematicOriginSelectionScreen extends Screen {
         if (Minecraft.getInstance().player != null && session.randomAllowed(Minecraft.getInstance().player) && layout.random().contains(x, y)) { selectRandom(); return true; }
         if (layout.navigation().contains(x, y)) { move(x < width / 2 ? -1 : 1); return true; }
         if (session.currentOrigins().size() > ClientSelectionConfig.threshold() && layout.listButton().contains(x, y)) { openList(); return true; }
-        if (previewBodyRect().contains(x, y) && preview != null) {
+        if (previewInputRect().contains(x, y) && preview != null) {
             if (preview.input().press(event.button(), isDoubleClick, x, y, preview.camera())) return true;
         }
         return super.mouseClicked(event, isDoubleClick);
@@ -517,7 +527,7 @@ public final class CinematicOriginSelectionScreen extends Screen {
     }
 
     @Override public boolean mouseScrolled(double x, double y, double scrollX, double scrollY) {
-        if (previewBodyRect().contains(x, y) && preview != null) {
+        if (previewInputRect().contains(x, y) && preview != null) {
             preview.input().scroll(scrollY, ClientSelectionConfig.previewZoomSensitivity(), preview.camera());
             return true;
         }
