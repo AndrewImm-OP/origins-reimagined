@@ -1,0 +1,10 @@
+{
+  "origin": "origins:feline",
+  "advantages": [
+    {"powers": ["origins:fall_immunity", "origins:sprint_jump"], "name": {"translate": "origins_overhaul.presentation.feline.mobility"}, "description": {"translate": "origins_overhaul.presentation.feline.mobility.description"}, "order": 0},
+    {"powers": ["origins:velvet_paws", "origins:nine_lives", "origins:scare_creepers", "origins:cat_vision"], "name": {"translate": "origins_overhaul.presentation.feline.predator"}, "description": {"translate": "origins_overhaul.presentation.feline.predator.description"}, "order": 1}
+  ],
+  "disadvantages": [
+    {"powers": ["origins:weak_arms"], "name": {"translate": "origins_overhaul.presentation.feline.weak_arms"}, "description": {"translate": "origins_overhaul.presentation.feline.weak_arms.description"}, "order": 0}
+  ]
+}

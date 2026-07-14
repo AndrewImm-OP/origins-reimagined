@@ -1,0 +1,11 @@
+{
+  "origin": "origins:arachnid",
+  "advantages": [
+    {"powers": ["origins:climbing", "origins:master_of_webs"], "name": {"translate": "origins_overhaul.presentation.arachnid.web"}, "description": {"translate": "origins_overhaul.presentation.arachnid.web.description"}, "order": 0},
+    {"powers": ["origins:carnivore"], "name": {"translate": "origins_overhaul.presentation.arachnid.carnivore"}, "description": {"translate": "origins_overhaul.presentation.arachnid.carnivore.description"}, "order": 1}
+  ],
+  "disadvantages": [
+    {"powers": ["origins:fragile"], "name": {"translate": "origins_overhaul.presentation.common.fragile"}, "description": {"translate": "origins_overhaul.presentation.common.fragile.description"}, "order": 0},
+    {"powers": ["origins:arthropod"], "name": {"translate": "origins_overhaul.presentation.arachnid.arthropod"}, "description": {"translate": "origins_overhaul.presentation.arachnid.arthropod.description"}, "order": 1}
+  ]
+}

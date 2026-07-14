@@ -27,7 +27,6 @@ public final class OriginsOverhaulClient implements ClientModInitializer {
             ClientOriginCatalog.rebuild();
             PlayerPreviewController.invalidateModels();
         });
-        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(PresentationProfileManager.INSTANCE);
         ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(VisualProfileManager.INSTANCE);
         OriginDataLoadedCallback.EVENT.register(fromServer -> {
             if (fromServer) ClientOriginCatalog.rebuild();

@@ -1,0 +1,10 @@
+{
+  "origin": "origins:elytrian",
+  "advantages": [
+    {"powers": ["origins:elytra", "origins:launch_into_air", "origins:aerial_combatant"], "name": {"translate": "origins_overhaul.presentation.elytrian.flight"}, "description": {"translate": "origins_overhaul.presentation.elytrian.flight.description"}, "order": 0}
+  ],
+  "disadvantages": [
+    {"powers": ["origins:claustrophobia"], "name": {"translate": "origins_overhaul.presentation.elytrian.claustrophobia"}, "description": {"translate": "origins_overhaul.presentation.elytrian.claustrophobia.description"}, "order": 0},
+    {"powers": ["origins:light_armor", "origins:more_kinetic_damage"], "name": {"translate": "origins_overhaul.presentation.elytrian.fragility"}, "description": {"translate": "origins_overhaul.presentation.elytrian.fragility.description"}, "order": 1}
+  ]
+}

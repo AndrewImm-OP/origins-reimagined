@@ -1,0 +1,9 @@
+{
+  "origin": "origins:merling",
+  "advantages": [
+    {"powers": ["origins:water_breathing", "origins:water_vision", "origins:aqua_affinity", "origins:swim_speed", "origins:like_water", "origins:aquatic", "origins:conduit_power_on_land"], "name": {"translate": "origins_overhaul.presentation.merling.aquatic"}, "description": {"translate": "origins_overhaul.presentation.merling.aquatic.description"}, "order": 0}
+  ],
+  "disadvantages": [
+    {"powers": ["origins:air_from_potions"], "name": {"translate": "origins_overhaul.presentation.merling.air"}, "description": {"translate": "origins_overhaul.presentation.merling.air.description"}, "order": 0}
+  ]
+}
