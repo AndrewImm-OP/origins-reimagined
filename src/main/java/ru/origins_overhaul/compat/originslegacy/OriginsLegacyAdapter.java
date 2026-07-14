@@ -6,6 +6,8 @@ import io.github.apace100.origins.origin.Origin;
 import io.github.apace100.origins.origin.OriginLayer;
 import io.github.apace100.origins.origin.OriginLayers;
 import io.github.apace100.origins.origin.OriginRegistry;
+import io.github.apace100.origins.component.OriginComponent;
+import io.github.apace100.origins.registry.ModComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import ru.origins_overhaul.model.OriginData;
@@ -39,6 +41,22 @@ public final class OriginsLegacyAdapter {
             result.add(origin(snapshot.id(), origin));
         }
         return List.copyOf(result);
+    }
+
+    public static List<OriginData> choosableOrigins(OriginLayerSnapshot snapshot, Player player) {
+        return origins(snapshot, player).stream().filter(OriginData::choosable).toList();
+    }
+
+    public static List<OriginLayerSnapshot> selectableLayers(Player player) {
+        OriginComponent component = ModComponents.ORIGIN.get(player);
+        return layers().stream()
+            .filter(layer -> layer.enabled() && !component.hasOrigin(OriginLayers.getLayer(layer.id())))
+            .toList();
+    }
+
+    public static boolean hasRandomChoice(Identifier layerId, Player player) {
+        OriginLayer layer = OriginLayers.getLayer(layerId);
+        return layer.isRandomAllowed() && !layer.getRandomOrigins(player).isEmpty();
     }
 
     public static OriginData origin(Identifier layerId, Identifier originId) {
