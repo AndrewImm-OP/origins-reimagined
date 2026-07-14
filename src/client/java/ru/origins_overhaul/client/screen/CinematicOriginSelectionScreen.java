@@ -209,17 +209,18 @@ public final class CinematicOriginSelectionScreen extends Screen {
         context.horizontalLine(rect.x() + rect.width() - corner, rect.x() + rect.width(), rect.y() + rect.height(), border);
         context.verticalLine(rect.x() + rect.width(), rect.y() + rect.height() - corner, rect.y() + rect.height(), border);
         renderPreviewPlatform(context, body, theme.previewGlow());
-        context.fill(body.x() + 8, body.y() + 7, body.x() + 128, body.y() + 26, AnimatedRenderContext.alpha(0x99222222, entrance.value()));
-        context.text(font, Component.translatable("origins_overhaul.selection.preview_editor"), body.x() + 14, body.y() + 12, AnimatedRenderContext.alpha(0xFFFFFFFF, entrance.value()), false);
         if (!ClientSelectionConfig.previewEnabled()) return;
         boolean rendered = preview != null && preview.render(context, body.x(), body.y(), body.width(), body.height(), entrance.value());
         if (!rendered) context.centeredText(font, Component.translatable("origins_overhaul.selection.preview_unavailable"), body.x() + body.width() / 2, body.y() + body.height() / 2, AnimatedRenderContext.alpha(0xFFAAAAAA, entrance.value()));
+        context.fill(body.x() + 8, body.y() + 7, body.x() + 128, body.y() + 26, AnimatedRenderContext.alpha(0x99222222, entrance.value()));
+        context.text(font, Component.translatable("origins_overhaul.selection.preview_editor"), body.x() + 14, body.y() + 12, AnimatedRenderContext.alpha(0xFFFFFFFF, entrance.value()), false);
     }
 
     private OriginSelectionLayout.Rect previewBodyRect() {
         OriginSelectionLayout.Rect rect = layout.preview();
-        int footer = Math.min(96, Math.max(58, rect.height() / 4));
-        return new OriginSelectionLayout.Rect(rect.x() + 2, rect.y() + 30, Math.max(20, rect.width() - 4), Math.max(20, rect.height() - footer - 30));
+        int top = rect.y() + layout.header().height() + 10;
+        int bottom = layout.navigation().y() - 12;
+        return new OriginSelectionLayout.Rect(rect.x() + 2, top, Math.max(20, rect.width() - 4), Math.max(20, bottom - top));
     }
 
     private void renderPreviewPlatform(GuiGraphicsExtractor context, OriginSelectionLayout.Rect rect, int color) {
@@ -489,7 +490,8 @@ public final class CinematicOriginSelectionScreen extends Screen {
             if (keyEditorClick(x, y)) return true;
             return true;
         }
-        if (layout.preview().contains(x, y) && y < layout.preview().y() + 24 && x < layout.preview().x() + 120) {
+        OriginSelectionLayout.Rect body = previewBodyRect();
+        if (body.contains(x, y) && y < body.y() + 28 && x < body.x() + 130) {
             eyeAnchorEditor = true;
             return true;
         }
