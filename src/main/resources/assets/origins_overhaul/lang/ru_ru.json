@@ -12,5 +12,11 @@
   "origins_overhaul.selection.no_features": "Нет дополнительных особенностей",
   "origins_overhaul.selection.no_origins": "Нет доступных происхождений",
   "origins_overhaul.selection.layer_progress": "Слой %s/%s",
-  "origins_overhaul.selection.debug_preview": "ОТЛАДОЧНЫЙ ПРОСМОТР"
+  "origins_overhaul.selection.debug_preview": "ОТЛАДОЧНЫЙ ПРОСМОТР",
+  "origins_overhaul.selection.preview_unavailable": "Предпросмотр модели недоступен",
+  "origins_overhaul.selection.preview_reset": "Сбросить предпросмотр",
+  "origins_overhaul.selection.preview_outer_layer": "ВНЕШНИЙ СЛОЙ",
+  "origins_overhaul.selection.preview_equipment": "ЭКИПИРОВКА",
+  "origins_overhaul.selection.preview_cape": "ПЛАЩ",
+  "origins_overhaul.selection.preview_debug": "ПРЕВЬЮ"
 }

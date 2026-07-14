@@ -20,5 +20,11 @@
   "origins_overhaul.selection.no_features": "No additional features",
   "origins_overhaul.selection.no_origins": "No selectable origins",
   "origins_overhaul.selection.layer_progress": "Layer %s/%s",
-  "origins_overhaul.selection.debug_preview": "DEBUG PREVIEW"
+  "origins_overhaul.selection.debug_preview": "DEBUG PREVIEW",
+  "origins_overhaul.selection.preview_unavailable": "Preview unavailable",
+  "origins_overhaul.selection.preview_reset": "Reset preview",
+  "origins_overhaul.selection.preview_outer_layer": "OUTER LAYER",
+  "origins_overhaul.selection.preview_equipment": "EQUIPMENT",
+  "origins_overhaul.selection.preview_cape": "CAPE",
+  "origins_overhaul.selection.preview_debug": "PREVIEW"
 }

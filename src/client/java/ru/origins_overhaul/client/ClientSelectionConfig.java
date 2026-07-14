@@ -20,6 +20,15 @@ public final class ClientSelectionConfig {
     private static boolean iconBob = true;
     private static float abilityStagger = 0.075f;
     private static boolean reduceMotion;
+    private static boolean previewEnabled = true;
+    private static boolean previewAutoRotate = true;
+    private static float previewAutoRotateSpeed = 12.0f;
+    private static float previewMouseSensitivity = 1.0f;
+    private static float previewZoomSensitivity = 1.0f;
+    private static boolean previewShowOuterLayer = true;
+    private static boolean previewShowCape;
+    private static boolean previewShowEquipment;
+    private static boolean previewIdleAnimation = true;
 
     private ClientSelectionConfig() {}
 
@@ -44,6 +53,15 @@ public final class ClientSelectionConfig {
         iconBob = bool(p, "icon_bob_enabled", true);
         abilityStagger = clamp(floatValue(p, "ability_stagger_ms", 75.0f), 0.0f, 1000.0f) / 1000.0f;
         reduceMotion = bool(p, "reduce_motion", false);
+        previewEnabled = bool(p, "player_preview_enabled", true);
+        previewAutoRotate = bool(p, "preview_auto_rotate", true);
+        previewAutoRotateSpeed = clamp(floatValue(p, "preview_auto_rotate_speed", 12.0f), -180.0f, 180.0f);
+        previewMouseSensitivity = clamp(floatValue(p, "preview_mouse_sensitivity", 1.0f), 0.1f, 5.0f);
+        previewZoomSensitivity = clamp(floatValue(p, "preview_zoom_sensitivity", 1.0f), 0.1f, 5.0f);
+        previewShowOuterLayer = bool(p, "preview_show_outer_layer", true);
+        previewShowCape = bool(p, "preview_show_cape", false);
+        previewShowEquipment = bool(p, "preview_show_equipment", false);
+        previewIdleAnimation = bool(p, "preview_idle_animation", true);
     }
     public static boolean cinematic() { return cinematic; }
     public static boolean showNeutral() { return neutral; }
@@ -60,6 +78,15 @@ public final class ClientSelectionConfig {
     public static boolean iconBob() { return iconBob && !reduceMotion; }
     public static float abilityStagger() { return reduceMotion ? 0.0f : abilityStagger; }
     public static boolean reduceMotion() { return reduceMotion; }
+    public static boolean previewEnabled() { return previewEnabled; }
+    public static boolean previewAutoRotate() { return previewAutoRotate; }
+    public static float previewAutoRotateSpeed() { return previewAutoRotateSpeed; }
+    public static float previewMouseSensitivity() { return previewMouseSensitivity; }
+    public static float previewZoomSensitivity() { return previewZoomSensitivity; }
+    public static boolean previewShowOuterLayer() { return previewShowOuterLayer; }
+    public static boolean previewShowCape() { return previewShowCape; }
+    public static boolean previewShowEquipment() { return previewShowEquipment; }
+    public static boolean previewIdleAnimation() { return previewIdleAnimation && !reduceMotion; }
     private static boolean bool(Properties p, String k, boolean d) { return Boolean.parseBoolean(p.getProperty(k, Boolean.toString(d))); }
     private static int intValue(Properties p, String k, int d) { try { return Integer.parseInt(p.getProperty(k, "" + d)); } catch (Exception e) { return d; } }
     private static float floatValue(Properties p, String k, float d) { try { return Float.parseFloat(p.getProperty(k, "" + d)); } catch (Exception e) { return d; } }

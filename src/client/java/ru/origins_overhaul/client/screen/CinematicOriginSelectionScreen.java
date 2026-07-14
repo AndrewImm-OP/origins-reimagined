@@ -29,6 +29,7 @@ import ru.origins_overhaul.client.animation.AnimatedTextLine;
 import ru.origins_overhaul.client.animation.Easing;
 import ru.origins_overhaul.client.animation.OriginTransitionController;
 import ru.origins_overhaul.client.animation.TextRevealController;
+import ru.origins_overhaul.client.preview.PlayerPreviewController;
 import ru.origins_overhaul.model.OriginPresentation;
 import ru.origins_overhaul.model.PresentedPower;
 import ru.origins_overhaul.profiles.OriginDifficultyColorResolver;
@@ -47,6 +48,7 @@ public final class CinematicOriginSelectionScreen extends Screen {
     private final AnimatedValue entrance = new AnimatedValue(0.0f);
     private final AnimatedValue overlayOpacity = new AnimatedValue(0.0f);
     private final Map<CacheKey, AnimatedOriginContent> contentCache = new HashMap<>();
+    private PlayerPreviewController preview;
     private OriginSelectionLayout layout;
     private OriginTransitionController transitions;
     private AnimationState phase = AnimationState.ENTERING;
@@ -80,6 +82,9 @@ public final class CinematicOriginSelectionScreen extends Screen {
         reveal.reset();
         overlayOpacity.start(0.0f, 0.0f, 0.0f, Easing.LINEAR);
         clock.reset();
+        if (preview == null) preview = new PlayerPreviewController();
+        preview.initialize(Minecraft.getInstance());
+        updatePreviewOrigin();
     }
 
     private void updateAnimations() {
@@ -93,12 +98,14 @@ public final class CinematicOriginSelectionScreen extends Screen {
         if (changed) {
             session.select(transitions.displayedIndex());
             resetContentAnimation();
+            updatePreviewOrigin();
         }
         if (transitions != null && transitions.state() == AnimationState.SWITCHING_OUT) phase = AnimationState.SWITCHING_OUT;
         else if (transitions != null && transitions.state() == AnimationState.SWITCHING_IN) phase = AnimationState.SWITCHING_IN;
         else if (phase != AnimationState.SUBMITTING && phase != AnimationState.LEAVING) phase = entrance.finished() ? AnimationState.IDLE : AnimationState.ENTERING;
         if (ClientSelectionConfig.iconRotation()) iconRotation = (iconRotation + delta * ClientSelectionConfig.iconRotationSpeed()) % 360.0f;
         if (ClientSelectionConfig.iconBob()) iconPulse += delta;
+        if (preview != null) preview.update(delta, Minecraft.getInstance());
         overlayOpacity.update(delta);
         if (debugPreview && OriginsOverhaul.DEBUG) {
             // Deliberately sampled only during rendering; no per-frame logging.
@@ -137,6 +144,7 @@ public final class CinematicOriginSelectionScreen extends Screen {
         renderColumn(context, layout.advantages(), origin.advantages(), "origins_overhaul.selection.advantages", "origins_overhaul.selection.no_advantages", advantageScroll, 0xFFFFFFFF);
         renderColumn(context, layout.disadvantages(), origin.disadvantages(), "origins_overhaul.selection.disadvantages", "origins_overhaul.selection.no_disadvantages", disadvantageScroll, 0xFFFFB0B0);
         if (ClientSelectionConfig.showNeutral() && !origin.neutralFeatures().isEmpty()) renderColumn(context, layout.neutral(), origin.neutralFeatures(), "origins_overhaul.selection.features", "origins_overhaul.selection.no_features", neutralScroll, 0xFFE0E0E0);
+        renderPreview(context);
         renderNavigation(context, origin);
         if (listOverlay) renderListOverlay(context);
         if (OriginsOverhaul.DEBUG) renderDebug(context);
@@ -147,6 +155,19 @@ public final class CinematicOriginSelectionScreen extends Screen {
         if (origins.isEmpty()) return null;
         int index = transitions == null ? session.selectedOriginIndex() : transitions.displayedIndex();
         return origins.get(Math.floorMod(index, origins.size()));
+    }
+
+    private void updatePreviewOrigin() {
+        if (preview != null && session.hasCurrentLayer() && displayedOrigin() != null) preview.setOriginContext(session.currentLayerId(), displayedOrigin().originId(), transitions == null ? 1.0f : transitions.progress());
+    }
+
+    private void renderPreview(GuiGraphicsExtractor context) {
+        OriginSelectionLayout.Rect rect = layout.preview();
+        int border = AnimatedRenderContext.alpha(0x55777777, entrance.value());
+        context.outline(rect.x(), rect.y(), rect.width(), rect.height(), border);
+        if (!ClientSelectionConfig.previewEnabled()) return;
+        boolean rendered = preview != null && preview.render(context, rect.x() + 2, rect.y() + 2, Math.max(4, rect.width() - 4), Math.max(4, rect.height() - 4), entrance.value());
+        if (!rendered) context.centeredText(font, Component.translatable("origins_overhaul.selection.preview_unavailable"), rect.x() + rect.width() / 2, rect.y() + rect.height() / 2, AnimatedRenderContext.alpha(0xFFAAAAAA, entrance.value()));
     }
 
     private AnimatedOriginContent content(OriginPresentation origin, int width) {
@@ -251,6 +272,11 @@ public final class CinematicOriginSelectionScreen extends Screen {
     private void renderDebug(GuiGraphicsExtractor context) {
         String debug = "phase=" + phase + " progress=" + String.format(Locale.ROOT, "%.2f", transitions == null ? 0.0f : transitions.progress()) + " target=" + (displayedOrigin() == null ? "none" : displayedOrigin().originId()) + " dt=" + String.format(Locale.ROOT, "%.3f", lastDelta);
         context.text(font, debug, 6, height - 10, 0xFFAAAAAA, false);
+        if (preview != null && preview.state().appearance() != null) {
+            var camera = preview.camera();
+            String previewDebug = "preview model=" + preview.state().appearance().modelType() + " yaw=" + String.format(Locale.ROOT, "%.1f", camera.yaw()) + " pitch=" + String.format(Locale.ROOT, "%.1f", camera.pitch()) + " zoom=" + String.format(Locale.ROOT, "%.2f", camera.zoom()) + " offset=(" + String.format(Locale.ROOT, "%.2f", camera.offsetX()) + "," + String.format(Locale.ROOT, "%.2f", camera.offsetY()) + ") skin=" + preview.state().appearance().skinTexture();
+            context.text(font, previewDebug, 6, height - 22, 0xFFAAAAAA, false);
+        }
     }
 
     private void rebuildSearchResults() {
@@ -326,6 +352,9 @@ public final class CinematicOriginSelectionScreen extends Screen {
             }
             return true;
         }
+        if (layout.preview().contains(x, y) && preview != null) {
+            if (preview.input().press(event.button(), isDoubleClick, x, y, preview.camera())) return true;
+        }
         boolean control = layout.confirm().contains(x, y) || layout.navigation().contains(x, y) || layout.listButton().contains(x, y);
         if (skipCurrentAnimation() && !control) return true;
         if (layout.confirm().contains(x, y)) { submit(); return true; }
@@ -340,10 +369,25 @@ public final class CinematicOriginSelectionScreen extends Screen {
         if (transitions.request(index, ClientSelectionConfig.transitionAnimation())) {
             if (!ClientSelectionConfig.transitionAnimation()) session.select(index);
             else phase = AnimationState.SWITCHING_OUT;
+            if (!ClientSelectionConfig.transitionAnimation()) updatePreviewOrigin();
         }
     }
 
+    @Override public boolean mouseReleased(MouseButtonEvent event) {
+        if (preview != null && preview.input().release()) return true;
+        return super.mouseReleased(event);
+    }
+
+    @Override public boolean mouseDragged(MouseButtonEvent event, double deltaX, double deltaY) {
+        if (preview != null && preview.input().drag(deltaX, deltaY, ClientSelectionConfig.previewMouseSensitivity(), preview.camera())) return true;
+        return super.mouseDragged(event, deltaX, deltaY);
+    }
+
     @Override public boolean mouseScrolled(double x, double y, double scrollX, double scrollY) {
+        if (layout.preview().contains(x, y) && preview != null) {
+            preview.input().scroll(scrollY, ClientSelectionConfig.previewZoomSensitivity(), preview.camera());
+            return true;
+        }
         int amount = (int) Math.signum(scrollY) * 12;
         if (layout.advantages().contains(x, y)) advantageScroll = Math.max(0, advantageScroll - amount);
         else if (layout.disadvantages().contains(x, y)) disadvantageScroll = Math.max(0, disadvantageScroll - amount);
@@ -362,6 +406,7 @@ public final class CinematicOriginSelectionScreen extends Screen {
         }
         if (key == GLFW.GLFW_KEY_LEFT || key == GLFW.GLFW_KEY_A) { move(-1); return true; }
         if (key == GLFW.GLFW_KEY_RIGHT || key == GLFW.GLFW_KEY_D) { move(1); return true; }
+        if (key == GLFW.GLFW_KEY_R && preview != null) { preview.reset(); return true; }
         if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_SPACE) { submit(); return true; }
         if (key == GLFW.GLFW_KEY_TAB && session.currentOrigins().size() > ClientSelectionConfig.threshold()) { openList(); return true; }
         return super.keyPressed(event);
@@ -373,5 +418,9 @@ public final class CinematicOriginSelectionScreen extends Screen {
     }
 
     public OriginSelectionSession session() { return session; }
+    @Override public void removed() {
+        if (preview != null) preview.clear();
+        super.removed();
+    }
     private record CacheKey(Identifier originId, int width) { }
 }
