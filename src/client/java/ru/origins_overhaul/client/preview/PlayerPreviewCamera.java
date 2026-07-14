@@ -9,7 +9,7 @@ public final class PlayerPreviewCamera {
 
     private float yaw = 25.0f;
     private float pitch = -5.0f;
-    private float zoom = 1.0f;
+    private float zoom = 1.12f;
     private float offsetX;
     private float offsetY;
     private float targetYaw = yaw;
@@ -54,7 +54,7 @@ public final class PlayerPreviewCamera {
     public void reset() {
         yaw = targetYaw = 25.0f;
         pitch = targetPitch = -5.0f;
-        zoom = targetZoom = 1.0f;
+        zoom = targetZoom = 1.12f;
         offsetX = targetOffsetX = 0.0f;
         offsetY = targetOffsetY = 0.0f;
         userInteracted = false;

@@ -212,8 +212,6 @@ public final class CinematicOriginSelectionScreen extends Screen {
         if (!ClientSelectionConfig.previewEnabled()) return;
         boolean rendered = preview != null && preview.render(context, body.x(), body.y(), body.width(), body.height(), entrance.value());
         if (!rendered) context.centeredText(font, Component.translatable("origins_overhaul.selection.preview_unavailable"), body.x() + body.width() / 2, body.y() + body.height() / 2, AnimatedRenderContext.alpha(0xFFAAAAAA, entrance.value()));
-        context.fill(body.x() + 8, body.y() + 7, body.x() + 128, body.y() + 26, AnimatedRenderContext.alpha(0x99222222, entrance.value()));
-        context.text(font, Component.translatable("origins_overhaul.selection.preview_editor"), body.x() + 14, body.y() + 12, AnimatedRenderContext.alpha(0xFFFFFFFF, entrance.value()), false);
     }
 
     private OriginSelectionLayout.Rect previewBodyRect() {
@@ -488,11 +486,6 @@ public final class CinematicOriginSelectionScreen extends Screen {
         }
         if (eyeAnchorEditor) {
             if (keyEditorClick(x, y)) return true;
-            return true;
-        }
-        OriginSelectionLayout.Rect body = previewBodyRect();
-        if (body.contains(x, y) && y < body.y() + 28 && x < body.x() + 130) {
-            eyeAnchorEditor = true;
             return true;
         }
         if (previewBodyRect().contains(x, y) && preview != null) {
