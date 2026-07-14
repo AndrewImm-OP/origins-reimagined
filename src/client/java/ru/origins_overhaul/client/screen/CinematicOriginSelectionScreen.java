@@ -226,24 +226,34 @@ public final class CinematicOriginSelectionScreen extends Screen {
             return;
         }
         AnimatedOriginContent cached = content(displayedOrigin(), Math.max(40, rect.width() - 4));
+        int textWidth = Math.max(40, rect.width() - 4);
         int y = rect.y() + 18 - scroll;
-        for (int index = 0; index < powers.size(); index++) {
-            PresentedPower power = powers.get(index);
-            AnimatedPowerContent animated = cached.power(power.powerId());
-            float abilityElapsed = reveal.abilityElapsed(index, ClientSelectionConfig.abilityStagger());
-            int visible = animated.visibleCharacters(abilityElapsed, ClientSelectionConfig.textSpeed(), ClientSelectionConfig.textAnimation());
-            float abilityOpacity = ClientSelectionConfig.textAnimation() ? Math.min(1.0f, Math.max(0.0f, abilityElapsed / 0.14f)) : 1.0f;
-            int blockHeight = 18 + animated.lines().size() * 10 + 8;
-            if (y + blockHeight >= rect.y() && y <= rect.y() + rect.height()) {
-                int nameColor = AnimatedRenderContext.alpha(accent, abilityOpacity * opacity);
-                context.text(font, power.name(), rect.x(), y, nameColor, false);
-                int lineY = y + 12;
-                for (AnimatedTextLine line : animated.lines()) {
-                    if (lineY >= rect.y() && lineY < rect.y() + rect.height()) context.text(font, line.visible(visible), rect.x(), lineY, AnimatedRenderContext.alpha(0xFFB8B8B8, abilityOpacity * opacity), false);
-                    lineY += 10;
+        context.enableScissor(rect.x(), rect.y(), rect.x() + rect.width(), rect.y() + rect.height());
+        try {
+            for (int index = 0; index < powers.size(); index++) {
+                PresentedPower power = powers.get(index);
+                AnimatedPowerContent animated = cached.power(power.powerId());
+                List<FormattedCharSequence> nameLines = font.split(power.name(), textWidth);
+                int nameLineCount = Math.max(1, nameLines.size());
+                float abilityElapsed = reveal.abilityElapsed(index, ClientSelectionConfig.abilityStagger());
+                int visible = animated.visibleCharacters(abilityElapsed, ClientSelectionConfig.textSpeed(), ClientSelectionConfig.textAnimation());
+                float abilityOpacity = ClientSelectionConfig.textAnimation() ? Math.min(1.0f, Math.max(0.0f, abilityElapsed / 0.14f)) : 1.0f;
+                int blockHeight = nameLineCount * 10 + 2 + animated.lines().size() * 10 + 8;
+                if (y + blockHeight >= rect.y() && y <= rect.y() + rect.height()) {
+                    int nameColor = AnimatedRenderContext.alpha(accent, abilityOpacity * opacity);
+                    for (int nameLine = 0; nameLine < nameLines.size(); nameLine++) {
+                        context.text(font, nameLines.get(nameLine), rect.x(), y + nameLine * 10, nameColor, false);
+                    }
+                    int lineY = y + nameLineCount * 10 + 2;
+                    for (AnimatedTextLine line : animated.lines()) {
+                        if (lineY >= rect.y() && lineY < rect.y() + rect.height()) context.text(font, line.visible(visible), rect.x(), lineY, AnimatedRenderContext.alpha(0xFFB8B8B8, abilityOpacity * opacity), false);
+                        lineY += 10;
+                    }
                 }
+                y += blockHeight;
             }
-            y += blockHeight;
+        } finally {
+            context.disableScissor();
         }
     }
 
