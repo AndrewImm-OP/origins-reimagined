@@ -79,6 +79,12 @@ tasks.test {
     failOnNoDiscoveredTests = false
 }
 
+tasks.register('runAnimationSelfTest', JavaExec) {
+    classpath = sourceSets.test.runtimeClasspath + sourceSets.client.output
+    mainClass = 'ru.origins_overhaul.client.AnimationMathSelfTest'
+    enableAssertions = true
+}
+
 jar {
     from('LICENSE') {
         rename { 'origins-overhaul-LICENSE' }
