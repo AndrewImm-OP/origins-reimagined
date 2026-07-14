@@ -1,0 +1,26 @@
+# Origins Overhaul
+
+Клиент-серверный Fabric-мод поверх Origins Legacy для Minecraft 26.1.2.
+
+Этап 2 добавляет common/client каркас, adapter Origins Legacy, серверно-синхронизированный client catalog, JSON presentation profiles и fallback. Экран выбора, визуальные слои, отношения с мобами и Phantom fix пока не реализованы.
+
+Точная карта upstream API находится в [AUDIT_ORIGINS_LEGACY_26.1.2.md](AUDIT_ORIGINS_LEGACY_26.1.2.md), текущие ограничения — в [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
+
+## Требования и сборка
+
+- Minecraft `26.1.2`;
+- Java/JDK `25`;
+- Fabric Loader/API;
+- Origins Legacy `v1.12.10+26.1.2`, mod ID `origins-legacy` (также предоставляет alias `origins`).
+
+```bash
+export JAVA_HOME=/usr/lib/jvm/java-25-openjdk
+export PATH="$JAVA_HOME/bin:$PATH"
+./gradlew --gradle-user-home .gradle-user-home build
+```
+
+Origins Legacy объявлен через Maven-координаты `xyz.bluspring:Origins-Legacy:1.12.15+26.1.2` из `https://mvn.devos.one/releases`.
+
+Тестовый datapack находится в `test-datapack/`: он содержит неизвестный origin, дополнительный layer и сломанный presentation profile для проверки warning/fallback поведения.
+
+Для debug-измерения catalog использовать JVM-флаг `-Dorigins_overhaul.debug=true`. Пока catalog проверяется логом; отдельный экран выбора намеренно отсутствует.

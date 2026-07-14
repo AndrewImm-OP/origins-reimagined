@@ -1,0 +1,82 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
+    id 'maven-publish'
+}
+
+version = project.mod_version + '+' + project.minecraft_version
+group = project.maven_group
+
+repositories {
+    maven { url = 'https://mvn.devos.one/releases' }
+    maven { url = 'https://maven.fabricmc.net/' }
+    maven { url = 'https://maven.ladysnake.org/releases' }
+    maven { url = 'https://maven.terraformersmc.com/' }
+    maven { url = 'https://maven.shedaniel.me/' }
+    maven { url = 'https://jitpack.io' }
+    maven { url = 'https://maven.cafeteria.dev' }
+    mavenCentral()
+    exclusiveContent {
+        forRepository {
+            maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' }
+        }
+        filter { includeGroup 'maven.modrinth' }
+    }
+}
+
+base {
+    archivesName = project.archives_base_name
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation("xyz.bluspring:Origins-Legacy:${project.origins_legacy_version}") {
+        // Optional upstream development/runtime integrations are not needed by
+        // this foundation and can make a dedicated-server build depend on UI mods.
+        exclude group: 'com.terraformersmc', module: 'modmenu'
+        exclude group: 'maven.modrinth', module: 'lithium'
+        exclude group: 'maven.modrinth', module: 'additionalentityattributes'
+    }
+    implementation("xyz.bluspring:Apoli-Legacy:2.12.9+26.1.2") {
+        exclude group: 'com.terraformersmc', module: 'modmenu'
+        exclude group: 'maven.modrinth', module: 'lithium'
+        exclude group: 'maven.modrinth', module: 'additionalentityattributes'
+    }
+    implementation "xyz.bluspring:Calio-Legacy:1.11.3+26.1.2"
+    implementation "org.ladysnake.cardinal-components-api:cardinal-components-base:8.0.1"
+    implementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:8.0.1"
+}
+
+loom {
+    splitEnvironmentSourceSets()
+    mods {
+        origins_overhaul {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand version: project.version
+    }
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 25
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    from('LICENSE') {
+        rename { 'origins-overhaul-LICENSE' }
+    }
+}
