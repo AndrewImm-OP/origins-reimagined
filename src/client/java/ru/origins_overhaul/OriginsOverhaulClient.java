@@ -11,16 +11,20 @@ import ru.origins_overhaul.client.ClientOriginCatalog;
 import ru.origins_overhaul.profiles.PresentationProfileManager;
 import ru.origins_overhaul.client.ClientSelectionConfig;
 import ru.origins_overhaul.client.preview.PlayerPreviewController;
+import ru.origins_overhaul.client.visual.profile.VisualProfileManager;
+import ru.origins_overhaul.client.visual.anchor.SkinAnchorManager;
 
 public final class OriginsOverhaulClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientSelectionConfig.load(Minecraft.getInstance().gameDirectory.toPath());
+        SkinAnchorManager.load(Minecraft.getInstance().gameDirectory.toPath());
         PresentationProfileManager.setReloadCallback(() -> {
             ClientOriginCatalog.rebuild();
             PlayerPreviewController.invalidateModels();
         });
         ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(PresentationProfileManager.INSTANCE);
+        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(VisualProfileManager.INSTANCE);
         OriginDataLoadedCallback.EVENT.register(fromServer -> {
             if (fromServer) ClientOriginCatalog.rebuild();
         });

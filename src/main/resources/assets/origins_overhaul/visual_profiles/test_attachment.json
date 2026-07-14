@@ -1,0 +1,1 @@
+{"id":"origins_overhaul:test_attachment","origin":"origins_overhaul:test_attachment","modifiers":[{"type":"origins_overhaul:geometry_attachment","anchor":"head","scale":[1,1,1]},{"type":"origins_overhaul:geometry_attachment","anchor":"back","render_phase":"BEFORE_BODY"}]}

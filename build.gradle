@@ -91,6 +91,12 @@ tasks.register('runPlayerPreviewSelfTest', JavaExec) {
     enableAssertions = true
 }
 
+tasks.register('runVisualSelfTest', JavaExec) {
+    classpath = sourceSets.test.runtimeClasspath + sourceSets.client.output
+    mainClass = 'ru.origins_overhaul.client.VisualMathSelfTest'
+    enableAssertions = true
+}
+
 jar {
     from('LICENSE') {
         rename { 'origins-overhaul-LICENSE' }

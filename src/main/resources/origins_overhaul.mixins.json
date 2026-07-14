@@ -3,6 +3,6 @@
   "minVersion": "0.8",
   "package": "ru.origins_overhaul.mixin",
   "compatibilityLevel": "JAVA_25",
-  "client": ["ModPacketsS2CMixin"],
+  "client": ["ModPacketsS2CMixin", "LivingEntityRendererVisualMixin", "AvatarRendererVisualMixin", "GuiSkinRendererVisualMixin"],
   "injectors": { "defaultRequire": 1 }
 }

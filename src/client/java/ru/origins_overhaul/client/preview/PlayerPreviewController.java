@@ -36,7 +36,7 @@ public final class PlayerPreviewController {
 
     public boolean render(GuiGraphicsExtractor context, int x, int y, int width, int height, float opacity) {
         if (!ClientSelectionConfig.previewEnabled()) return false;
-        return renderer.render(context, state.appearance(), camera, x, y, width, height, opacity, state.showOuterLayer());
+        return renderer.render(context, state.appearance(), camera, x, y, width, height, opacity, state.showOuterLayer(), state.originContext());
     }
 
     public void refreshAppearance(Minecraft client) {
@@ -45,6 +45,7 @@ public final class PlayerPreviewController {
     }
 
     public void setOriginContext(Identifier layerId, Identifier originId, float transitionProgress) { state.originContext(new PreviewOriginContext(layerId, originId, transitionProgress)); }
+    public void setOriginContext(Identifier layerId, Identifier originId, Identifier visualProfileId, float transitionProgress) { state.originContext(new PreviewOriginContext(layerId, originId, transitionProgress, visualProfileId)); }
     public PlayerPreviewCamera camera() { return camera; }
     public PlayerPreviewInputHandler input() { return input; }
     public PlayerPreviewState state() { return state; }

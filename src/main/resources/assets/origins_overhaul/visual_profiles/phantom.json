@@ -1,0 +1,13 @@
+{
+  "id": "origins_overhaul:phantom",
+  "origin": "origins:phantom",
+  "priority": 0,
+  "modifiers": [
+    {"type": "origins_overhaul:model_tint", "color": "#E8FFFF", "strength": 0.08},
+    {"type": "origins_overhaul:model_alpha", "opacity": 0.58, "condition": {"type": "origins_overhaul:power_active", "power": "origins:phantomize"}}
+  ],
+  "preview_states": [
+    {"id": "normal", "name": {"translate": "origins_overhaul.preview.normal"}},
+    {"id": "phantom_form", "name": {"translate": "origins_overhaul.preview.phantom_form"}, "simulate_powers": ["origins:phantomize"]}
+  ]
+}

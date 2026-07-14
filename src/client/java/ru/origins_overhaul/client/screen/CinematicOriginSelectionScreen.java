@@ -30,6 +30,10 @@ import ru.origins_overhaul.client.animation.Easing;
 import ru.origins_overhaul.client.animation.OriginTransitionController;
 import ru.origins_overhaul.client.animation.TextRevealController;
 import ru.origins_overhaul.client.preview.PlayerPreviewController;
+import ru.origins_overhaul.client.visual.anchor.EyeAnchor;
+import ru.origins_overhaul.client.visual.anchor.EyeAnchorProfile;
+import ru.origins_overhaul.client.visual.anchor.EyePreset;
+import ru.origins_overhaul.client.visual.anchor.SkinAnchorManager;
 import ru.origins_overhaul.model.OriginPresentation;
 import ru.origins_overhaul.model.PresentedPower;
 import ru.origins_overhaul.profiles.OriginDifficultyColorResolver;
@@ -61,6 +65,8 @@ public final class CinematicOriginSelectionScreen extends Screen {
     private boolean listOverlay;
     private String search = "";
     private List<OriginPresentation> searchResults = List.of();
+    private boolean eyeAnchorEditor;
+    private boolean editingLeftEye = true;
 
     public CinematicOriginSelectionScreen(OriginSelectionSession session) { this(session, false); }
 
@@ -147,6 +153,7 @@ public final class CinematicOriginSelectionScreen extends Screen {
         renderPreview(context);
         renderNavigation(context, origin);
         if (listOverlay) renderListOverlay(context);
+        if (eyeAnchorEditor) renderEyeAnchorEditor(context);
         if (OriginsOverhaul.DEBUG) renderDebug(context);
     }
 
@@ -158,13 +165,18 @@ public final class CinematicOriginSelectionScreen extends Screen {
     }
 
     private void updatePreviewOrigin() {
-        if (preview != null && session.hasCurrentLayer() && displayedOrigin() != null) preview.setOriginContext(session.currentLayerId(), displayedOrigin().originId(), transitions == null ? 1.0f : transitions.progress());
+        if (preview != null && session.hasCurrentLayer() && displayedOrigin() != null) {
+            OriginPresentation origin = displayedOrigin();
+            preview.setOriginContext(session.currentLayerId(), origin.originId(), origin.visualProfileId().orElse(origin.originId()), transitions == null ? 1.0f : transitions.progress());
+        }
     }
 
     private void renderPreview(GuiGraphicsExtractor context) {
         OriginSelectionLayout.Rect rect = layout.preview();
         int border = AnimatedRenderContext.alpha(0x55777777, entrance.value());
         context.outline(rect.x(), rect.y(), rect.width(), rect.height(), border);
+        context.fill(rect.x() + 4, rect.y() + 4, rect.x() + 116, rect.y() + 22, AnimatedRenderContext.alpha(0x99222222, entrance.value()));
+        context.text(font, Component.translatable("origins_overhaul.selection.preview_editor"), rect.x() + 8, rect.y() + 9, AnimatedRenderContext.alpha(0xFFFFFFFF, entrance.value()), false);
         if (!ClientSelectionConfig.previewEnabled()) return;
         boolean rendered = preview != null && preview.render(context, rect.x() + 2, rect.y() + 2, Math.max(4, rect.width() - 4), Math.max(4, rect.height() - 4), entrance.value());
         if (!rendered) context.centeredText(font, Component.translatable("origins_overhaul.selection.preview_unavailable"), rect.x() + rect.width() / 2, rect.y() + rect.height() / 2, AnimatedRenderContext.alpha(0xFFAAAAAA, entrance.value()));
@@ -269,6 +281,25 @@ public final class CinematicOriginSelectionScreen extends Screen {
         }
     }
 
+    private void renderEyeAnchorEditor(GuiGraphicsExtractor context) {
+        context.fill(0, 0, width, height, 0xDD080808);
+        context.text(font, Component.translatable("origins_overhaul.selection.preview_editor"), 24, 22, 0xFFFFFFFF, false);
+        context.text(font, Component.translatable("origins_overhaul.selection.preview_editor_hint"), 24, 36, 0xFFAAAAAA, false);
+        int size = Math.min(224, Math.max(128, Math.min(width, height) / 2));
+        int gx = width / 2 - size / 2;
+        int gy = height / 2 - size / 2;
+        EyeAnchorProfile profile = preview == null || preview.state().appearance() == null ? EyeAnchorProfile.preset(EyePreset.STANDARD) : SkinAnchorManager.get(preview.state().appearance());
+        context.fill(gx - 2, gy - 2, gx + size + 2, gy + size + 2, 0xFF222222);
+        for (int cellY = 0; cellY < 8; cellY++) for (int cellX = 0; cellX < 8; cellX++) {
+            int color = ((cellX + cellY) & 1) == 0 ? 0xFF454545 : 0xFF353535;
+            context.fill(gx + cellX * size / 8, gy + cellY * size / 8, gx + (cellX + 1) * size / 8 - 1, gy + (cellY + 1) * size / 8 - 1, color);
+        }
+        EyeAnchor selected = editingLeftEye ? profile.leftEye() : profile.rightEye();
+        context.fill(gx + selected.x() * size / 8, gy + selected.y() * size / 8, gx + (selected.x() + selected.width()) * size / 8, gy + (selected.y() + selected.height()) * size / 8, 0x8844FF88);
+        context.text(font, Component.translatable(editingLeftEye ? "origins_overhaul.selection.preview_left_eye" : "origins_overhaul.selection.preview_right_eye"), gx, gy + size + 16, 0xFFFFFFFF, false);
+        context.text(font, Component.translatable("origins_overhaul.selection.preview_editor_close"), gx, gy + size + 32, 0xFFCCCCCC, false);
+    }
+
     private void renderDebug(GuiGraphicsExtractor context) {
         String debug = "phase=" + phase + " progress=" + String.format(Locale.ROOT, "%.2f", transitions == null ? 0.0f : transitions.progress()) + " target=" + (displayedOrigin() == null ? "none" : displayedOrigin().originId()) + " dt=" + String.format(Locale.ROOT, "%.3f", lastDelta);
         context.text(font, debug, 6, height - 10, 0xFFAAAAAA, false);
@@ -352,6 +383,14 @@ public final class CinematicOriginSelectionScreen extends Screen {
             }
             return true;
         }
+        if (eyeAnchorEditor) {
+            if (keyEditorClick(x, y)) return true;
+            return true;
+        }
+        if (layout.preview().contains(x, y) && y < layout.preview().y() + 24 && x < layout.preview().x() + 120) {
+            eyeAnchorEditor = true;
+            return true;
+        }
         if (layout.preview().contains(x, y) && preview != null) {
             if (preview.input().press(event.button(), isDoubleClick, x, y, preview.camera())) return true;
         }
@@ -404,6 +443,11 @@ public final class CinematicOriginSelectionScreen extends Screen {
             if (key == GLFW.GLFW_KEY_ENTER && !searchResults.isEmpty()) { int index = session.currentOrigins().indexOf(searchResults.get(0)); closeList(); requestIndex(index); return true; }
             return true;
         }
+        if (eyeAnchorEditor) {
+            if (key == GLFW.GLFW_KEY_ESCAPE) { eyeAnchorEditor = false; return true; }
+            if (key == GLFW.GLFW_KEY_TAB) { editingLeftEye = !editingLeftEye; return true; }
+            return true;
+        }
         if (key == GLFW.GLFW_KEY_LEFT || key == GLFW.GLFW_KEY_A) { move(-1); return true; }
         if (key == GLFW.GLFW_KEY_RIGHT || key == GLFW.GLFW_KEY_D) { move(1); return true; }
         if (key == GLFW.GLFW_KEY_R && preview != null) { preview.reset(); return true; }
@@ -423,4 +467,19 @@ public final class CinematicOriginSelectionScreen extends Screen {
         super.removed();
     }
     private record CacheKey(Identifier originId, int width) { }
+
+    private boolean keyEditorClick(double x, double y) {
+        if (preview == null || preview.state().appearance() == null) return true;
+        int size = Math.min(224, Math.max(128, Math.min(width, height) / 2));
+        int gx = width / 2 - size / 2;
+        int gy = height / 2 - size / 2;
+        if (x < gx || x >= gx + size || y < gy || y >= gy + size) return false;
+        int cellX = Math.max(0, Math.min(7, (int) ((x - gx) * 8 / size)));
+        int cellY = Math.max(0, Math.min(7, (int) ((y - gy) * 8 / size)));
+        EyeAnchorProfile old = SkinAnchorManager.get(preview.state().appearance());
+        EyeAnchor selected = editingLeftEye ? old.leftEye() : old.rightEye();
+        EyeAnchor replacement = new EyeAnchor(cellX, cellY, selected.width(), selected.height(), selected.layer());
+        SkinAnchorManager.put(preview.state().appearance(), editingLeftEye ? new EyeAnchorProfile(EyePreset.CUSTOM, replacement, old.rightEye()) : new EyeAnchorProfile(EyePreset.CUSTOM, old.leftEye(), replacement));
+        return true;
+    }
 }

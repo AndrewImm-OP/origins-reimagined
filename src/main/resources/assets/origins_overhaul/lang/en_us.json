@@ -27,4 +27,9 @@
   "origins_overhaul.selection.preview_equipment": "EQUIPMENT",
   "origins_overhaul.selection.preview_cape": "CAPE",
   "origins_overhaul.selection.preview_debug": "PREVIEW"
+  ,"origins_overhaul.selection.preview_editor": "EDIT APPEARANCE"
+  ,"origins_overhaul.selection.preview_editor_hint": "Click a cell to place the selected eye. Tab switches eyes.",
+  "origins_overhaul.selection.preview_left_eye": "LEFT EYE",
+  "origins_overhaul.selection.preview_right_eye": "RIGHT EYE",
+  "origins_overhaul.selection.preview_editor_close": "Esc — close editor"
 }

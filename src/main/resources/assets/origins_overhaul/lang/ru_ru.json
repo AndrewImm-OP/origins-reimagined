@@ -19,4 +19,9 @@
   "origins_overhaul.selection.preview_equipment": "ЭКИПИРОВКА",
   "origins_overhaul.selection.preview_cape": "ПЛАЩ",
   "origins_overhaul.selection.preview_debug": "ПРЕВЬЮ"
+  ,"origins_overhaul.selection.preview_editor": "НАСТРОИТЬ ВНЕШНОСТЬ"
+  ,"origins_overhaul.selection.preview_editor_hint": "Выберите ячейку для глаза. Tab переключает глаз.",
+  "origins_overhaul.selection.preview_left_eye": "ЛЕВЫЙ ГЛАЗ",
+  "origins_overhaul.selection.preview_right_eye": "ПРАВЫЙ ГЛАЗ",
+  "origins_overhaul.selection.preview_editor_close": "Esc — закрыть редактор"
 }

@@ -29,6 +29,17 @@ public final class ClientSelectionConfig {
     private static boolean previewShowCape;
     private static boolean previewShowEquipment;
     private static boolean previewIdleAnimation = true;
+    private static boolean visualsEnabled = true;
+    private static boolean visualOverlays = true;
+    private static boolean visualAttachments = true;
+    private static boolean visualEmissive = true;
+    private static boolean visualParticles = true;
+    private static boolean showOtherVisuals = true;
+    private static boolean showOtherParticles;
+    private static float particleDensity = 1.0f;
+    private static int particleDistance = 24;
+    private static boolean manualSkinAnchors = true;
+    private static boolean previewVisualStateSelector = true;
 
     private ClientSelectionConfig() {}
 
@@ -62,6 +73,17 @@ public final class ClientSelectionConfig {
         previewShowCape = bool(p, "preview_show_cape", false);
         previewShowEquipment = bool(p, "preview_show_equipment", false);
         previewIdleAnimation = bool(p, "preview_idle_animation", true);
+        visualsEnabled = bool(p, "origin_visuals_enabled", true);
+        visualOverlays = bool(p, "visual_overlays_enabled", true);
+        visualAttachments = bool(p, "visual_attachments_enabled", true);
+        visualEmissive = bool(p, "visual_emissive_enabled", true);
+        visualParticles = bool(p, "visual_particles_enabled", true);
+        showOtherVisuals = bool(p, "show_other_player_visuals", true);
+        showOtherParticles = bool(p, "show_other_player_particles", false);
+        particleDensity = clamp(floatValue(p, "visual_particle_density", 1.0f), 0.0f, 4.0f);
+        particleDistance = clamp(intValue(p, "visual_particle_distance", 24), 0, 128);
+        manualSkinAnchors = bool(p, "manual_skin_anchors_enabled", true);
+        previewVisualStateSelector = bool(p, "preview_visual_state_selector", true);
     }
     public static boolean cinematic() { return cinematic; }
     public static boolean showNeutral() { return neutral; }
@@ -87,6 +109,17 @@ public final class ClientSelectionConfig {
     public static boolean previewShowCape() { return previewShowCape; }
     public static boolean previewShowEquipment() { return previewShowEquipment; }
     public static boolean previewIdleAnimation() { return previewIdleAnimation && !reduceMotion; }
+    public static boolean visualsEnabled() { return visualsEnabled; }
+    public static boolean visualOverlays() { return visualOverlays; }
+    public static boolean visualAttachments() { return visualAttachments; }
+    public static boolean visualEmissive() { return visualEmissive; }
+    public static boolean visualParticles() { return visualParticles; }
+    public static boolean showOtherVisuals() { return showOtherVisuals; }
+    public static boolean showOtherParticles() { return showOtherParticles; }
+    public static float particleDensity() { return particleDensity; }
+    public static int particleDistance() { return particleDistance; }
+    public static boolean manualSkinAnchors() { return manualSkinAnchors; }
+    public static boolean previewVisualStateSelector() { return previewVisualStateSelector; }
     private static boolean bool(Properties p, String k, boolean d) { return Boolean.parseBoolean(p.getProperty(k, Boolean.toString(d))); }
     private static int intValue(Properties p, String k, int d) { try { return Integer.parseInt(p.getProperty(k, "" + d)); } catch (Exception e) { return d; } }
     private static float floatValue(Properties p, String k, float d) { try { return Float.parseFloat(p.getProperty(k, "" + d)); } catch (Exception e) { return d; } }

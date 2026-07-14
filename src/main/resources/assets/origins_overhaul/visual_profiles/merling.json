@@ -1,0 +1,1 @@
+{"id":"origins_overhaul:merling","origin":"origins:merling","modifiers":[{"type":"origins_overhaul:model_tint","color":"#D8F5FF","strength":0.08}],"preview_states":[{"id":"normal","name":{"translate":"origins_overhaul.preview.normal"}},{"id":"underwater","name":{"translate":"origins_overhaul.preview.underwater"}}]}
