@@ -23,3 +23,6 @@ show_neutral_features=true
 show_origin_namespace=false
 origin_list_threshold=12
 ```
+
+The animation cache is separate from this layout calculation. It is invalidated
+when the screen is resized and keyed by origin ID plus current text width.

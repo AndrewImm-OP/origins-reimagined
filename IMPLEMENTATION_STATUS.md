@@ -4,7 +4,7 @@
 
 ## Текущий этап
 
-Этап 3 — функциональный статичный экран выбора происхождения.
+Этап 4 — анимации кинематографичного интерфейса.
 
 - [x] Найден upstream: `BluSpring/Origins-Legacy`, ветка `versions/26.1`.
 - [x] Проверены Minecraft/Fabric/Java параметры.
@@ -15,7 +15,7 @@
 - [x] Проверена текущая реализация Phantom daylight.
 - [x] Создан исходный мод Origins Overhaul.
 - [x] Реализован универсальный fallback.
-- [x] Реализован статичный функциональный экран выбора; runtime-открытие ожидает графическую проверку.
+- [x] Реализованы статичный экран выбора и frame-independent анимации; runtime-открытие ожидает графическую проверку.
 - [ ] Реализованы визуальные профили.
 - [ ] Реализован relation engine.
 - [ ] Реализован PhantomSunState.
@@ -38,6 +38,21 @@
 | Client launch | BLOCKED |
 | Dedicated server launch | COMPLETE |
 | Build | COMPLETE |
+| Animation clock | COMPLETE |
+| Animation state machine | COMPLETE |
+| Screen entrance | COMPLETE |
+| Background fade | COMPLETE |
+| Header transition | COMPLETE |
+| Icon rotation | COMPLETE |
+| Text reveal | COMPLETE |
+| Ability stagger | COMPLETE |
+| Origin switch transition | COMPLETE |
+| Rapid input handling | COMPLETE |
+| Search overlay transition | COMPLETE |
+| Reduce motion | COMPLETE |
+| Animation configuration | COMPLETE |
+| Animation unit tests | COMPLETE |
+| Graphical runtime validation | BLOCKED |
 | Screen interception | COMPLETE |
 | Selection session | COMPLETE |
 | Background | COMPLETE |
@@ -64,4 +79,4 @@ JDK 25 подтверждён: `openjdk version "25.0.3"`. Проект соби
 
 ## Следующий этап
 
-Добавить статические анимации переходов и preview pipeline игрока, не меняя selection protocol.
+Добавить 3D preview pipeline игрока, не меняя selection protocol.
