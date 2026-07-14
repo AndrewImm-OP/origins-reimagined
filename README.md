@@ -2,7 +2,7 @@
 
 Клиент-серверный Fabric-мод поверх Origins Legacy для Minecraft 26.1.2.
 
-Этап 2 добавляет common/client каркас, adapter Origins Legacy, серверно-синхронизированный client catalog, JSON presentation profiles и fallback. Экран выбора, визуальные слои, отношения с мобами и Phantom fix пока не реализованы.
+Этап 3 добавляет первый статичный экран выбора поверх upstream flow: заголовок, difficulty accent, advantages/disadvantages/features, карусель, поиск больших списков и последовательные layers. Анимации, модель игрока, визуальные слои, отношения с мобами и Phantom fix пока не реализованы.
 
 Точная карта upstream API находится в [AUDIT_ORIGINS_LEGACY_26.1.2.md](AUDIT_ORIGINS_LEGACY_26.1.2.md), текущие ограничения — в [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
 
@@ -23,4 +23,8 @@ Origins Legacy объявлен через Maven-координаты `xyz.blusp
 
 Тестовый datapack находится в `test-datapack/`: он содержит неизвестный origin, дополнительный layer и сломанный presentation profile для проверки warning/fallback поведения.
 
-Для debug-измерения catalog использовать JVM-флаг `-Dorigins_overhaul.debug=true`. Пока catalog проверяется логом; отдельный экран выбора намеренно отсутствует.
+Описание интеграции и геометрии экрана: [SELECTION_SCREEN_INTEGRATION.md](docs/SELECTION_SCREEN_INTEGRATION.md), [SELECTION_SCREEN_LAYOUT.md](docs/SELECTION_SCREEN_LAYOUT.md).
+
+Клиентские параметры читаются из `config/origins_overhaul.properties`; `cinematic_selection_screen=false` оставляет стандартный экран Origins Legacy.
+
+Для debug-измерения catalog использовать JVM-флаг `-Dorigins_overhaul.debug=true`.
