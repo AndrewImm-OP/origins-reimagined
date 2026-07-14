@@ -210,8 +210,9 @@ public final class CinematicOriginSelectionScreen extends Screen {
         context.verticalLine(rect.x() + rect.width(), rect.y() + rect.height() - corner, rect.y() + rect.height(), border);
         renderPreviewPlatform(context, body, theme.previewGlow());
         if (!ClientSelectionConfig.previewEnabled()) return;
-        boolean rendered = preview != null && preview.render(context, body.x(), body.y(), body.width(), body.height(), entrance.value());
-        if (!rendered) context.centeredText(font, Component.translatable("origins_overhaul.selection.preview_unavailable"), body.x() + body.width() / 2, body.y() + body.height() / 2, AnimatedRenderContext.alpha(0xFFAAAAAA, entrance.value()));
+        float contentOpacity = transitionOpacity() * entrance.value();
+        boolean rendered = preview != null && preview.render(context, body.x(), body.y(), body.width(), body.height(), contentOpacity);
+        if (!rendered) context.centeredText(font, Component.translatable("origins_overhaul.selection.preview_unavailable"), body.x() + body.width() / 2, body.y() + body.height() / 2, AnimatedRenderContext.alpha(0xFFAAAAAA, contentOpacity));
     }
 
     private OriginSelectionLayout.Rect previewBodyRect() {
@@ -280,7 +281,7 @@ public final class CinematicOriginSelectionScreen extends Screen {
     }
 
     private void renderColumn(GuiGraphicsExtractor context, OriginSelectionLayout.Rect rect, List<PresentedPower> powers, String headingKey, String emptyKey, int scroll, int accent) {
-        float opacity = Math.max(0.0f, Math.min(1.0f, entrance.value()));
+        float opacity = Math.max(0.0f, Math.min(1.0f, entrance.value() * transitionOpacity()));
         context.text(font, Component.translatable(headingKey), rect.x(), rect.y(), AnimatedRenderContext.alpha(0xFFFFFFFF, opacity), false);
         if (powers.isEmpty()) {
             context.text(font, Component.translatable(emptyKey), rect.x(), rect.y() + 50, AnimatedRenderContext.alpha(0xFFAAAAAA, opacity), false);
@@ -339,17 +340,12 @@ public final class CinematicOriginSelectionScreen extends Screen {
     }
 
     private void renderNavigation(GuiGraphicsExtractor context, OriginPresentation origin) {
-        float opacity = Math.max(0.0f, Math.min(1.0f, entrance.value()));
+        float opacity = Math.max(0.0f, Math.min(1.0f, entrance.value() * transitionOpacity()));
         OriginSelectionLayout.Rect nav = layout.navigation();
         OriginSelectionTheme theme = OriginSelectionTheme.forOrigin(origin);
-        int blockWidth = nav.width();
-        int blockX = nav.x();
-        context.fill(blockX, nav.y() - 4, blockX + blockWidth, nav.y() + 25, AnimatedRenderContext.alpha(0x66202024, opacity));
-        context.outline(blockX, nav.y() - 4, blockWidth, 29, AnimatedRenderContext.alpha((theme.accent() & 0x00FFFFFF) | 0x30000000, opacity));
-        context.text(font, "‹", blockX + 12, nav.y() + 3, AnimatedRenderContext.alpha(0xFFFFFFFF, opacity), false);
-        String name = origin.name().getString();
-        context.text(font, name, width / 2 - font.width(name) / 2, nav.y() + 3, AnimatedRenderContext.alpha(0xFFFFFFFF, opacity), false);
-        context.text(font, "›", blockX + blockWidth - 20, nav.y() + 3, AnimatedRenderContext.alpha(0xFFFFFFFF, opacity), false);
+        // The origin name already lives in the header. Keep only unobtrusive navigation glyphs.
+        context.text(font, "‹", nav.x() + 8, nav.y() + 3, AnimatedRenderContext.alpha((theme.accent() & 0x00FFFFFF) | 0xFF000000, opacity), false);
+        context.text(font, "›", nav.x() + nav.width() - 16, nav.y() + 3, AnimatedRenderContext.alpha((theme.accent() & 0x00FFFFFF) | 0xFF000000, opacity), false);
         int buttonColor = session.selectionSubmitted() || debugPreview ? 0x66444444 : AnimatedRenderContext.alpha(0xAA222222, opacity);
         if (Minecraft.getInstance().player != null && session.randomAllowed(Minecraft.getInstance().player)) {
             int randomX = Math.max(layout.preview().x() + 8, layout.confirm().x() - 104);

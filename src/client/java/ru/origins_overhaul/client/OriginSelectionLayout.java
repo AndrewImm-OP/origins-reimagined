@@ -19,7 +19,7 @@ public record OriginSelectionLayout(Rect header, Rect advantages, Rect preview, 
         int contentBottom = Math.max(contentTop + 50, neutralY - (hasNeutralFeatures ? 8 : 0));
         int gap = Math.max(10, width / 80);
         int usable = Math.max(180, width - margin * 2 - gap * 2);
-        int side = Math.max(120, usable * 27 / 100);
+        int side = Math.max(120, usable * 31 / 100);
         int center = Math.max(80, usable - side * 2);
         int x = margin;
         Rect left = new Rect(x, contentTop, side, Math.max(30, contentBottom - contentTop));
