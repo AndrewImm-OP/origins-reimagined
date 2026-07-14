@@ -47,6 +47,11 @@ public final class PlayerPreviewController {
 
     public void setOriginContext(Identifier layerId, Identifier originId, float transitionProgress) { state.originContext(new PreviewOriginContext(layerId, originId, transitionProgress)); }
     public void setOriginContext(Identifier layerId, Identifier originId, Identifier visualProfileId, float transitionProgress) { state.originContext(new PreviewOriginContext(layerId, originId, transitionProgress, visualProfileId)); }
+    public void configureSimulation(java.util.Set<Identifier> powers, boolean inWater, boolean swimming, boolean sneaking, boolean fallFlying, boolean onFire, String modelOverride) {
+        state.simulatedPowers(powers); state.environment(inWater, swimming, sneaking, fallFlying, onFire); state.modelOverride(modelOverride);
+        PreviewOriginContext current = state.originContext();
+        state.originContext(new PreviewOriginContext(current.layerId(), current.originId(), current.transitionProgress(), current.visualProfileId(), powers, inWater, swimming, sneaking, fallFlying, onFire, modelOverride));
+    }
     public PlayerPreviewCamera camera() { return camera; }
     public PlayerPreviewInputHandler input() { return input; }
     public PlayerPreviewState state() { return state; }

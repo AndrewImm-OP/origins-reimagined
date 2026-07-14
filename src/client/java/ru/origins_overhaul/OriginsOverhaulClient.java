@@ -14,6 +14,7 @@ import ru.origins_overhaul.client.preview.PlayerPreviewController;
 import ru.origins_overhaul.client.visual.profile.VisualProfileManager;
 import ru.origins_overhaul.client.visual.anchor.SkinAnchorManager;
 import ru.origins_overhaul.client.visual.render.ParticleAuraManager;
+import ru.origins_overhaul.client.VisualDebugCommands;
 
 public final class OriginsOverhaulClient implements ClientModInitializer {
     @Override
@@ -21,6 +22,7 @@ public final class OriginsOverhaulClient implements ClientModInitializer {
         ClientSelectionConfig.load(Minecraft.getInstance().gameDirectory.toPath());
         SkinAnchorManager.load(Minecraft.getInstance().gameDirectory.toPath());
         ParticleAuraManager.register();
+        VisualDebugCommands.register();
         PresentationProfileManager.setReloadCallback(() -> {
             ClientOriginCatalog.rebuild();
             PlayerPreviewController.invalidateModels();

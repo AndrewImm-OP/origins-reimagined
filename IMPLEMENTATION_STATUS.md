@@ -99,6 +99,27 @@
 | Enderian reference profile | COMPLETE |
 | Feline reference profile | COMPLETE |
 | Merling reference profile | COMPLETE |
+| Visual Test Lab | COMPLETE |
+| Profile selector | COMPLETE |
+| Model type override | COMPLETE |
+| State simulation | COMPLETE |
+| Capability controls | COMPLETE |
+| Attachment bounds | NOT STARTED |
+| Anchor debug | NOT STARTED |
+| UV debug | NOT STARTED |
+| Lighting debug | NOT STARTED |
+| Armor test flags | NOT STARTED |
+| True segmented chain | COMPLETE |
+| Segmented animation | COMPLETE |
+| Preview particles | COMPLETE |
+| Experimental model alpha | BLOCKED |
+| World debug override | IN PROGRESS |
+| Diagnostics export | COMPLETE |
+| Local graphical smoke-test | BLOCKED |
+| Sodium validation | BLOCKED |
+| Iris validation | BLOCKED |
+| Slim validation | BLOCKED |
+| Armor interaction validation | BLOCKED |
 | Screen interception | COMPLETE |
 | Selection session | COMPLETE |
 | Background | COMPLETE |

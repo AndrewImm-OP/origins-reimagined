@@ -37,6 +37,9 @@
 - Preview particles are not emitted yet. World particle aura is client-only and rate-limited.
 - Whole-model alpha is capability-disabled until a real client confirms depth/blend ordering with outer layers and Iris.
 - Built-in texture references use vanilla resource identifiers where possible; final custom art assets still require graphical review.
+- Visual Test Lab currently exposes keyboard controls and a compact diagnostics view; attachment bounds, axes, UV grid and lighting presets are not yet implemented.
+- The experimental alpha toggle is not exposed until depth/blend behavior is validated in a graphical client.
+- The agent cannot execute the required graphical smoke-test because `runClient` stops during headless launch preparation.
 
 ## Поведение мобов
 

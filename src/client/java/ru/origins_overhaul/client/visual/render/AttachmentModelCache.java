@@ -10,6 +10,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import ru.origins_overhaul.client.visual.modifier.VisualModifier;
 
 import java.util.Map;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class AttachmentModelCache {
@@ -19,6 +20,10 @@ public final class AttachmentModelCache {
     public static ModelPart get(VisualModifier modifier, boolean slim) {
         String key = modifier.id() + ":" + (slim ? "slim" : "classic") + ":" + java.util.Arrays.toString(modifier.geometrySize()) + ":" + java.util.Arrays.toString(modifier.uv());
         return CACHE.computeIfAbsent(key, ignored -> bake(modifier));
+    }
+    public static List<ModelPart> getChain(VisualModifier modifier, boolean slim) {
+        String key = modifier.id() + ":chain:" + (slim ? "slim" : "classic") + ":" + modifier.segmentCount() + java.util.Arrays.toString(modifier.geometrySize());
+        return CACHE.computeIfAbsent(key, ignored -> bake(modifier)).getAllParts().stream().skip(1).toList();
     }
 
     public static void clear() { CACHE.clear(); }
@@ -32,9 +37,10 @@ public final class AttachmentModelCache {
         if (type.equals("plane") || type.equals("cross_planes")) depth = 0.05f;
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition root = mesh.getRoot();
-        CubeListBuilder cube = CubeListBuilder.create().texOffs(modifier.uv()[0], modifier.uv()[1])
-            .addBox(-width / 2.0f, -height / 2.0f, -depth / 2.0f, width, height, depth);
-        root.addOrReplaceChild("attachment", cube, PartPose.ZERO);
+        CubeListBuilder cube = CubeListBuilder.create().texOffs(modifier.uv()[0], modifier.uv()[1]).addBox(-width / 2.0f, -height / 2.0f, -depth / 2.0f, width, height, depth);
+        if (modifier.geometryType().equals("segmented_chain")) {
+            for (int i = 0; i < modifier.segmentCount(); i++) root.addOrReplaceChild("segment_" + i, cube, PartPose.ZERO);
+        } else root.addOrReplaceChild("attachment", cube, PartPose.ZERO);
         return LayerDefinition.create(mesh, 64, 64).bakeRoot();
     }
 }

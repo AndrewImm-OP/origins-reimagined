@@ -6,6 +6,7 @@ import ru.origins_overhaul.client.visual.anchor.EyePreset;
 import ru.origins_overhaul.client.visual.modifier.RenderPhase;
 import ru.origins_overhaul.client.visual.render.VisualBackendCapabilities;
 import ru.origins_overhaul.client.visual.render.VisualRenderCapability;
+import ru.origins_overhaul.client.visual.render.SegmentedChainMath;
 
 /** Small JVM-only checks for visual data that do not require a Minecraft window. */
 public final class VisualMathSelfTest {
@@ -18,6 +19,9 @@ public final class VisualMathSelfTest {
         assert RenderPhase.values().length == 4;
         assert VisualBackendCapabilities.WORLD.contains(VisualRenderCapability.GEOMETRY_ATTACHMENT);
         assert !VisualBackendCapabilities.PREVIEW.contains(VisualRenderCapability.MODEL_ALPHA);
+        assert SegmentedChainMath.clampSegments(0) == 1;
+        assert SegmentedChainMath.clampSegments(99) == 16;
+        assert SegmentedChainMath.angle(10, 2, 1, 8, 2, 0.5f, 1, true) == 10;
         System.out.println("VisualMathSelfTest passed");
     }
 }

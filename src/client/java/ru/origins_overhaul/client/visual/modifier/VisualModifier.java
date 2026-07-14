@@ -34,12 +34,18 @@ public record VisualModifier(
     float particleRate,
     float particleRadius,
     float particleHeight
+    ,
+    int segmentCount,
+    float[] segmentOffset,
+    float[] baseRotation,
+    float bendYaw,
+    float bendPitch
 ) {
     public VisualModifier(Identifier type, Identifier texture, int color, float opacity, float strength, List<String> parts,
                           String anchor, VisualCondition condition, RenderPhase renderPhase, float[] offset, float[] rotation,
                           float[] scale, boolean hideWhenHeadArmor, boolean hideWhenChestArmor) {
         this(type.getPath(), type, texture, color, opacity, strength, parts, anchor, condition, renderPhase, offset, rotation, scale,
-            hideWhenHeadArmor, hideWhenChestArmor, "cuboid", new float[]{1, 1, 1}, new int[]{0, 0}, false, "STATIC", 0, 0, 0, null, 0, 0.45f, 1.7f);
+            hideWhenHeadArmor, hideWhenChestArmor, "cuboid", new float[]{1, 1, 1}, new int[]{0, 0}, false, "STATIC", 0, 0, 0, null, 0, 0.45f, 1.7f, 1, new float[]{0,0,0}, new float[]{0,0,0}, 0, 0);
     }
     public VisualModifier {
         id = id == null || id.isBlank() ? type.getPath() : id;
@@ -59,6 +65,10 @@ public record VisualModifier(
         particleRate = Math.max(0, finite(particleRate, 0));
         particleRadius = Math.max(0, finite(particleRadius, 0.45f));
         particleHeight = Math.max(0, finite(particleHeight, 1.7f));
+        segmentCount = Math.max(1, Math.min(16, segmentCount));
+        segmentOffset = clean(segmentOffset, new float[]{0, 0.18f, 0});
+        baseRotation = clean(baseRotation, new float[]{0, 0, 0});
+        bendYaw = finite(bendYaw, 0); bendPitch = finite(bendPitch, 0);
     }
     private static float[] clean(float[] source, float[] fallback) {
         if (source == null || source.length != 3) return fallback;

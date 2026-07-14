@@ -37,6 +37,21 @@ public final class GuiVisualRenderPass {
         pose.pushPose();
         anchor.translateAndRotate(pose);
         pose.translate(modifier.offset()[0], modifier.offset()[1], modifier.offset()[2]);
+        if (modifier.geometryType().equals("segmented_chain")) {
+            pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(modifier.baseRotation()[0]));
+            pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(modifier.baseRotation()[1]));
+            pose.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(modifier.baseRotation()[2]));
+            int index = 0;
+            for (ModelPart segment : AttachmentModelCache.getChain(modifier, slim)) {
+                pose.pushPose();
+                if (index > 0) pose.translate(modifier.segmentOffset()[0], modifier.segmentOffset()[1], modifier.segmentOffset()[2]);
+                pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(index * modifier.bendYaw()));
+                pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(index * modifier.bendPitch()));
+                segment.render(pose, buffers.getBuffer(RenderTypes.entityTranslucent(modifier.texture())), light, OverlayTexture.NO_OVERLAY, modifier.color());
+                pose.popPose(); index++;
+            }
+            pose.popPose(); return;
+        }
         pose.scale(modifier.scale()[0], modifier.scale()[1], modifier.scale()[2]);
         attachment.setRotation((float)Math.toRadians(modifier.rotation()[0]), (float)Math.toRadians(modifier.rotation()[1]), (float)Math.toRadians(modifier.rotation()[2]));
         attachment.render(pose, buffers.getBuffer(RenderTypes.entityTranslucent(modifier.texture())), light, OverlayTexture.NO_OVERLAY, modifier.color());

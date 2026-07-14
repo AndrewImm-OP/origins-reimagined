@@ -31,6 +31,8 @@ Origins Legacy объявлен через Maven-координаты `xyz.blusp
 
 Visual pipeline и формат профилей: [VISUAL_RENDERING_PIPELINE_AUDIT.md](docs/VISUAL_RENDERING_PIPELINE_AUDIT.md), [VISUAL_PROFILE_FORMAT.md](docs/VISUAL_PROFILE_FORMAT.md), [VISUAL_MODIFIER_TYPES.md](docs/VISUAL_MODIFIER_TYPES.md), [SKIN_ANCHOR_SYSTEM.md](docs/SKIN_ANCHOR_SYSTEM.md), [BUILTIN_VISUAL_PROFILES.md](docs/BUILTIN_VISUAL_PROFILES.md).
 
+Visual Test Lab: [VISUAL_TEST_LAB.md](docs/VISUAL_TEST_LAB.md), [GRAPHICAL_VALIDATION_CHECKLIST.md](docs/GRAPHICAL_VALIDATION_CHECKLIST.md), [SEGMENTED_GEOMETRY.md](docs/SEGMENTED_GEOMETRY.md), [PREVIEW_PARTICLES.md](docs/PREVIEW_PARTICLES.md).
+
 Клиентские параметры читаются из `config/origins_overhaul.properties`; `cinematic_selection_screen=false` оставляет стандартный экран Origins Legacy.
 
 Параметры анимаций включают `text_animation_enabled`, `text_animation_speed`, `transition_animation_enabled`, `transition_out_duration_ms`, `transition_in_duration_ms`, `icon_rotation_enabled`, `icon_rotation_speed`, `icon_bob_enabled`, `ability_stagger_ms` и `reduce_motion`. Preview управляется `player_preview_enabled`, `preview_auto_rotate`, `preview_auto_rotate_speed`, `preview_mouse_sensitivity`, `preview_zoom_sensitivity`, `preview_show_outer_layer`, `preview_show_cape`, `preview_show_equipment` и `preview_idle_animation`.

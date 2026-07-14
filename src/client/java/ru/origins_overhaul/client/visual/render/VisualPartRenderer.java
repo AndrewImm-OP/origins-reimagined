@@ -36,6 +36,22 @@ public final class VisualPartRenderer {
         pose.pushPose();
         anchor.translateAndRotate(pose);
         pose.translate(modifier.offset()[0], modifier.offset()[1], modifier.offset()[2]);
+        if (modifier.geometryType().equals("segmented_chain")) {
+            pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(modifier.baseRotation()[0]));
+            pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(modifier.baseRotation()[1]));
+            pose.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(modifier.baseRotation()[2]));
+            int index = 0;
+            for (ModelPart segment : AttachmentModelCache.getChain(modifier, slim)) {
+                pose.pushPose();
+                if (index > 0) pose.translate(modifier.segmentOffset()[0], modifier.segmentOffset()[1], modifier.segmentOffset()[2]);
+                float wave = modifier.animationType().equals("STATIC") ? 0 : (float)Math.sin(state.ageInTicks * modifier.animationSpeed() - index * 0.5f) * modifier.animationAmplitude();
+                pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(index * modifier.bendYaw() + wave));
+                pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(index * modifier.bendPitch()));
+                collector.submitModelPart(segment, pose, RenderTypes.entityTranslucent(modifier.texture()), light, OverlayTexture.NO_OVERLAY, null, false, false);
+                pose.popPose(); index++;
+            }
+            pose.popPose(); return;
+        }
         pose.scale(modifier.scale()[0], modifier.scale()[1], modifier.scale()[2]);
         attachment.setRotation((float) Math.toRadians(modifier.rotation()[0]), (float) Math.toRadians(modifier.rotation()[1]), (float) Math.toRadians(modifier.rotation()[2]));
         collector.submitModelPart(attachment, pose, RenderTypes.entityTranslucent(modifier.texture()), light, OverlayTexture.NO_OVERLAY, null, false, false);

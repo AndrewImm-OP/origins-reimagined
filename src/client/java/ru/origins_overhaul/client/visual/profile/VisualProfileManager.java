@@ -102,10 +102,16 @@ public final class VisualProfileManager extends MultiJsonDataLoader implements I
         float particleRate = number(json, "rate", 0);
         float particleRadius = number(json, "radius", 0.45f);
         float particleHeight = number(json, "height", 1.7f);
+        int segmentCount = integer(json, "segments", 1);
+        float[] segmentOffset = vector(json, "segment_offset", new float[]{0, 0.18f, 0});
+        float[] baseRotation = vector(json, "base_rotation", new float[]{0, 0, 0});
+        float bendYaw = 0, bendPitch = 0;
+        if (json.has("bend") && json.get("bend").isJsonObject()) { JsonObject bend = json.getAsJsonObject("bend"); bendYaw = number(bend, "yaw", 0); bendPitch = number(bend, "pitch", 0); }
+        if (geometry != null) { segmentCount = integer(geometry, "segments", segmentCount); segmentOffset = vector(geometry, "segment_offset", segmentOffset); baseRotation = vector(geometry, "base_rotation", baseRotation); if (geometry.has("bend") && geometry.get("bend").isJsonObject()) { JsonObject bend = geometry.getAsJsonObject("bend"); bendYaw = number(bend, "yaw", bendYaw); bendPitch = number(bend, "pitch", bendPitch); } }
         return new VisualModifier(modifierId, type, texture, color, opacity, strength, strings(json, "parts"), anchor, condition, phase,
             vector(json, "offset", new float[]{0, 0, 0}), vector(json, "rotation", new float[]{0, 0, 0}), vector(json, "scale", new float[]{1, 1, 1}),
             bool(json, "hide_when_head_armor", false), bool(json, "hide_when_chest_armor", false), geometryType, size, uv,
-            bool(json, "mirror", false), animationType, animationAmplitude, animationSpeed, animationWalkMultiplier, particle, particleRate, particleRadius, particleHeight);
+            bool(json, "mirror", false), animationType, animationAmplitude, animationSpeed, animationWalkMultiplier, particle, particleRate, particleRadius, particleHeight, segmentCount, segmentOffset, baseRotation, bendYaw, bendPitch);
     }
 
     private static VisualCondition parseCondition(JsonElement element) {
