@@ -10,3 +10,16 @@ Origins Overhaul therefore uses two backends with one shared profile/resolver co
 Both backends consume `PlayerVisualContext`, `ResolvedVisualProfile` and `VisualModifier`. No PNG is edited and no preview entity is inserted into a world. The current world texture overlay is a cutout pass; emissive modifiers currently use the same safe cutout fallback because a separate fullbright vertex path would require a version-specific shader contract. Alpha, geometry and particles remain explicit follow-up backend work.
 
 The GUI path is isolated in client source and client mixins, so dedicated servers never load it.
+
+## Capability matrix
+
+| Capability | Preview | World | Note |
+|---|---|---|---|
+| `MODEL_TINT` | SUPPORTED | SUPPORTED | Shared tint hook. |
+| `TEXTURE_OVERLAY` | SUPPORTED | SUPPORTED | Additional translucent texture pass with model-part filtering. |
+| `EMISSIVE_OVERLAY` | SUPPORTED | SUPPORTED | Uses the engine emissive entity render type; visual validation is still required. |
+| `MODEL_ALPHA` | NOT IMPLEMENTED | NOT IMPLEMENTED | Filtered until depth/blend ordering is validated. |
+| `GEOMETRY_ATTACHMENT` | SUPPORTED | SUPPORTED | Baked cuboid/plane-like attachment parts anchored to model parts. |
+| `PARTICLE_AURA` | NOT IMPLEMENTED | SUPPORTED | Client tick emitter in world; preview emitter remains pending. |
+
+The resolver receives backend capabilities and records unsupported modifier IDs. It never silently treats a filtered modifier as active.

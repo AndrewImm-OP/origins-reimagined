@@ -33,6 +33,10 @@
 - World texture/emissive modifiers use a safe cutout render pass. `model_alpha` is parsed and conditionally resolved, but transparent whole-player rendering is not enabled until depth/blend ordering is validated in a real client.
 - The minimal eye editor stores anchors and presets, but eye texture overlays are not yet rendered by the GUI backend.
 - Custom skin anchor identity currently hashes the skin texture identifier, not downloaded PNG bytes.
+- Attachments currently bake cuboid-like geometry; `plane`, `cross_planes` and `segmented_chain` are accepted definitions with conservative cuboid fallback, not specialized mesh topology.
+- Preview particles are not emitted yet. World particle aura is client-only and rate-limited.
+- Whole-model alpha is capability-disabled until a real client confirms depth/blend ordering with outer layers and Iris.
+- Built-in texture references use vanilla resource identifiers where possible; final custom art assets still require graphical review.
 
 ## Поведение мобов
 

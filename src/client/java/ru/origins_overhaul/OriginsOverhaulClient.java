@@ -13,12 +13,14 @@ import ru.origins_overhaul.client.ClientSelectionConfig;
 import ru.origins_overhaul.client.preview.PlayerPreviewController;
 import ru.origins_overhaul.client.visual.profile.VisualProfileManager;
 import ru.origins_overhaul.client.visual.anchor.SkinAnchorManager;
+import ru.origins_overhaul.client.visual.render.ParticleAuraManager;
 
 public final class OriginsOverhaulClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientSelectionConfig.load(Minecraft.getInstance().gameDirectory.toPath());
         SkinAnchorManager.load(Minecraft.getInstance().gameDirectory.toPath());
+        ParticleAuraManager.register();
         PresentationProfileManager.setReloadCallback(() -> {
             ClientOriginCatalog.rebuild();
             PlayerPreviewController.invalidateModels();
@@ -28,7 +30,7 @@ public final class OriginsOverhaulClient implements ClientModInitializer {
         OriginDataLoadedCallback.EVENT.register(fromServer -> {
             if (fromServer) ClientOriginCatalog.rebuild();
         });
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> ClientOriginCatalog.clear());
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> { ClientOriginCatalog.clear(); ParticleAuraManager.clear(); });
         ClientLifecycleEvents.CLIENT_STOPPING.register(client -> ClientOriginCatalog.clear());
         OriginsOverhaul.LOGGER.debug("Origins Overhaul client catalog initialized");
     }

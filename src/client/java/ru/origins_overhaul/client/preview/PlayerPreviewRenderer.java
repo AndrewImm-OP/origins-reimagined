@@ -9,6 +9,7 @@ import ru.origins_overhaul.client.visual.context.PreviewPlayerVisualContext;
 import ru.origins_overhaul.client.visual.profile.ResolvedVisualProfile;
 import ru.origins_overhaul.client.visual.profile.VisualProfileResolver;
 import ru.origins_overhaul.client.visual.render.VisualRenderBridge;
+import ru.origins_overhaul.client.visual.render.VisualBackendCapabilities;
 
 public final class PlayerPreviewRenderer {
     private PlayerModel wideModel;
@@ -36,10 +37,13 @@ public final class PlayerPreviewRenderer {
         int panY = Math.round(camera.offsetY() * height);
         int shiftedX = x + panX;
         int shiftedY = y + panY;
-        ResolvedVisualProfile visualProfile = VisualProfileResolver.resolve(originContext.visualProfileId(), new PreviewPlayerVisualContext(appearance.playerId(), originContext.originId(), appearance, java.util.Set.of(), 0.0f), true);
+        ResolvedVisualProfile visualProfile = VisualProfileResolver.resolve(originContext.visualProfileId(), new PreviewPlayerVisualContext(appearance.playerId(), originContext.originId(), appearance, java.util.Set.of(), 0.0f), true, VisualBackendCapabilities.PREVIEW);
         context.enableScissor(x, y, x + width, y + height);
         try {
             VisualRenderBridge.push(visualProfile);
+            VisualRenderBridge.setPreview(visualProfile);
+            VisualRenderBridge.setPreviewAppearance(appearance);
+            VisualRenderBridge.setPreviewModel(model);
             context.skin(model, appearance.skinTexture(), scale, camera.pitch(), camera.yaw(), -1.0625f, shiftedX, shiftedY, shiftedX + width, shiftedY + height);
             return true;
         } finally {

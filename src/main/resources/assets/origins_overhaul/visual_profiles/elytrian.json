@@ -1,1 +1,1 @@
-{"id":"origins_overhaul:elytrian","origin":"origins:elytrian","modifiers":[],"preview_states":[{"id":"normal","name":{"translate":"origins_overhaul.preview.normal"}}]}
+{"id":"origins_overhaul:elytrian","origin":"origins:elytrian","modifiers":[{"id":"elytrian_wings","type":"origins_overhaul:geometry_attachment","anchor":"back","texture":"minecraft:textures/entity/enderdragon/dragon.png","geometry_type":"cross_planes","size":[0.85,0.70,0.05],"offset":[0,0.15,0.25]}],"preview_states":[{"id":"normal","name":{"translate":"origins_overhaul.preview.normal"}}]}

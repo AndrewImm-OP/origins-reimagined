@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import ru.origins_overhaul.client.ClientSelectionConfig;
+import ru.origins_overhaul.client.visual.render.VisualRenderBridge;
 
 public final class PlayerPreviewController {
     private static long modelRevision;
@@ -50,6 +51,6 @@ public final class PlayerPreviewController {
     public PlayerPreviewInputHandler input() { return input; }
     public PlayerPreviewState state() { return state; }
     public void reset() { camera.reset(); }
-    public void clear() { state.clear(); renderer.clear(); input.release(); }
+    public void clear() { state.clear(); renderer.clear(); input.release(); VisualRenderBridge.clearPreview(); }
     public static void invalidateModels() { modelRevision++; }
 }

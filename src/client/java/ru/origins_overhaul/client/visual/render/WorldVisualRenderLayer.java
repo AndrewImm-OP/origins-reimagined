@@ -8,9 +8,6 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
-import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.resources.Identifier;
-import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Player;
 import ru.origins_overhaul.client.preview.PlayerAppearanceSnapshot;
 import ru.origins_overhaul.client.visual.context.WorldPlayerVisualContext;
@@ -30,14 +27,13 @@ public final class WorldVisualRenderLayer extends RenderLayer<AvatarRenderState,
         if (!(player instanceof net.minecraft.client.player.AbstractClientPlayer clientPlayer)) return;
         PlayerAppearanceSnapshot appearance = PlayerAppearanceSnapshot.from(clientPlayer, client.options);
         WorldPlayerVisualContext context = new WorldPlayerVisualContext(player, appearance, limbDistance);
-        ResolvedVisualProfile profile = VisualProfileResolver.resolve(context, true);
+        ResolvedVisualProfile profile = VisualProfileResolver.resolve(context, true, VisualBackendCapabilities.WORLD);
         for (VisualModifier modifier : profile.modifiers()) {
             String type = modifier.type().getPath();
-            if (!type.equals("texture_overlay") && !type.equals("emissive_overlay")) continue;
-            Identifier texture = modifier.texture();
-            if (texture == null) continue;
-            int color = ARGB.multiplyAlpha(modifier.color(), modifier.opacity());
-            RenderLayer.renderColoredCutoutModel(getParentModel(), texture, poseStack, collector, light, state, color, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);
+            if (type.equals("texture_overlay")) VisualPartRenderer.renderOverlay(getParentModel(), modifier, poseStack, collector, light, state, false);
+            else if (type.equals("emissive_overlay")) VisualPartRenderer.renderOverlay(getParentModel(), modifier, poseStack, collector, light, state, true);
+            else if (type.equals("eye_overlay") && modifier.texture() != null) EyeOverlayRenderer.world(getParentModel(), modifier, appearance, poseStack, collector, light, state, appearance.modelType() == net.minecraft.world.entity.player.PlayerModelType.SLIM);
+            else if (type.equals("geometry_attachment")) VisualPartRenderer.renderAttachment(getParentModel(), modifier, poseStack, collector, light, state, appearance.modelType() == net.minecraft.world.entity.player.PlayerModelType.SLIM);
         }
     }
 }

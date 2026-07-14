@@ -29,6 +29,11 @@ public final class VisualProfileManager extends MultiJsonDataLoader implements I
         loader.forEach((resourceId, values) -> values.forEach(json -> {
             try {
                 VisualProfile profile = parse(resourceId, json.getAsJsonObject());
+                profile.modifiers().forEach(modifier -> {
+                    if (modifier.texture() != null && manager.getResource(modifier.texture()).isEmpty()) {
+                        OriginsOverhaul.LOGGER.warn("Missing texture {} referenced by visual profile {} modifier {}", modifier.texture(), profile.profileId(), modifier.id());
+                    }
+                });
                 VisualProfile previous = next.put(profile.profileId(), profile);
                 if (previous != null && profile.priority() < previous.priority()) next.put(profile.profileId(), previous);
             } catch (RuntimeException exception) {
@@ -57,7 +62,7 @@ public final class VisualProfileManager extends MultiJsonDataLoader implements I
         List<VisualModifier> modifiers = new ArrayList<>();
         if (json.has("modifiers") && json.get("modifiers").isJsonArray()) {
             for (JsonElement element : json.getAsJsonArray("modifiers")) {
-                try { modifiers.add(parseModifier(resourceId, element.getAsJsonObject())); }
+                try { modifiers.add(parseModifier(resourceId, element.getAsJsonObject(), modifiers.size())); }
                 catch (RuntimeException exception) { OriginsOverhaul.LOGGER.warn("Skipping modifier in visual profile {}: {}", resourceId, exception.getMessage()); }
             }
         }
@@ -73,7 +78,7 @@ public final class VisualProfileManager extends MultiJsonDataLoader implements I
         return new VisualProfile(profileId, origin, priority, modifiers, states);
     }
 
-    private static VisualModifier parseModifier(Identifier resourceId, JsonObject json) {
+    private static VisualModifier parseModifier(Identifier resourceId, JsonObject json, int index) {
         Identifier type = id(json, "type").orElseThrow(() -> new JsonParseException("missing modifier type"));
         Identifier texture = id(json, "texture").orElse(null);
         int color = color(json.has("color") ? json.get("color").getAsString() : "#FFFFFF", resourceId);
@@ -82,9 +87,25 @@ public final class VisualProfileManager extends MultiJsonDataLoader implements I
         String anchor = json.has("anchor") ? json.get("anchor").getAsString() : null;
         VisualCondition condition = parseCondition(json.get("condition"));
         RenderPhase phase = renderPhase(json.has("render_phase") ? json.get("render_phase").getAsString() : null);
-        return new VisualModifier(type, texture, color, opacity, strength, strings(json, "parts"), anchor, condition, phase,
+        String modifierId = json.has("id") && json.get("id").isJsonPrimitive() ? json.get("id").getAsString() : type.getPath() + "_" + index;
+        float[] size = vector(json, "size", new float[]{1, 1, 1});
+        int[] uv = integerVector(json, "uv", new int[]{0, 0});
+        JsonObject geometry = json.has("geometry") && json.get("geometry").isJsonObject() ? json.getAsJsonObject("geometry") : null;
+        String geometryType = geometry != null && geometry.has("type") ? geometry.get("type").getAsString() : json.has("geometry_type") ? json.get("geometry_type").getAsString() : "cuboid";
+        if (geometry != null) { size = vector(geometry, "size", size); uv = integerVector(geometry, "uv", uv); texture = id(geometry, "texture").orElse(texture); }
+        JsonObject animation = json.has("animation") && json.get("animation").isJsonObject() ? json.getAsJsonObject("animation") : null;
+        String animationType = animation != null && animation.has("type") ? animation.get("type").getAsString() : "STATIC";
+        float animationAmplitude = animation == null ? 0 : number(animation, "amplitude", 0);
+        float animationSpeed = animation == null ? 0 : number(animation, "speed", 0);
+        float animationWalkMultiplier = animation == null ? 0 : number(animation, "walk_multiplier", 0);
+        Identifier particle = id(json, "particle").orElse(null);
+        float particleRate = number(json, "rate", 0);
+        float particleRadius = number(json, "radius", 0.45f);
+        float particleHeight = number(json, "height", 1.7f);
+        return new VisualModifier(modifierId, type, texture, color, opacity, strength, strings(json, "parts"), anchor, condition, phase,
             vector(json, "offset", new float[]{0, 0, 0}), vector(json, "rotation", new float[]{0, 0, 0}), vector(json, "scale", new float[]{1, 1, 1}),
-            bool(json, "hide_when_head_armor", false), bool(json, "hide_when_chest_armor", false));
+            bool(json, "hide_when_head_armor", false), bool(json, "hide_when_chest_armor", false), geometryType, size, uv,
+            bool(json, "mirror", false), animationType, animationAmplitude, animationSpeed, animationWalkMultiplier, particle, particleRate, particleRadius, particleHeight);
     }
 
     private static VisualCondition parseCondition(JsonElement element) {
@@ -100,6 +121,7 @@ public final class VisualProfileManager extends MultiJsonDataLoader implements I
     private static boolean bool(JsonObject json, String key, boolean fallback) { return json.has(key) && json.get(key).isJsonPrimitive() ? json.get(key).getAsBoolean() : fallback; }
     private static float[] vector(JsonObject json, String key, float[] fallback) { if (!json.has(key) || !json.get(key).isJsonArray() || json.getAsJsonArray(key).size() != 3) return fallback; float[] result = new float[3]; for (int i = 0; i < 3; i++) result[i] = number(json.getAsJsonArray(key), i, fallback[i]); return result; }
     private static float number(JsonArray array, int index, float fallback) { try { return array.get(index).getAsFloat(); } catch (RuntimeException e) { return fallback; } }
+    private static int[] integerVector(JsonObject json, String key, int[] fallback) { if (!json.has(key) || !json.get(key).isJsonArray() || json.getAsJsonArray(key).size() != 2) return fallback; int[] result = new int[2]; for (int i = 0; i < 2; i++) { try { result[i] = json.getAsJsonArray(key).get(i).getAsInt(); } catch (RuntimeException e) { result[i] = fallback[i]; } } return result; }
     private static float clamp(float value, float min, float max) { return Math.max(min, Math.min(max, value)); }
     private static int color(String value, Identifier resource) { try { String hex = value.startsWith("#") ? value.substring(1) : value; if (hex.length() != 6 && hex.length() != 8) throw new NumberFormatException(); return (int) Long.parseLong(hex, 16) | (hex.length() == 6 ? 0xFF000000 : 0); } catch (RuntimeException e) { OriginsOverhaul.LOGGER.warn("Invalid visual color '{}' in {}", value, resource); return 0xFFFFFFFF; } }
     private static Component text(JsonElement element, Component fallback) { if (element == null || !element.isJsonObject()) return fallback; JsonObject json = element.getAsJsonObject(); if (json.has("translate")) return Component.translatable(json.get("translate").getAsString()); if (json.has("text")) return Component.literal(json.get("text").getAsString()); return fallback; }

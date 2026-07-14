@@ -22,3 +22,5 @@ Profiles are client resources at `assets/<namespace>/origins_overhaul/visual_pro
 ```
 
 `id` identifies the profile and `origin` identifies the Origins origin it decorates. The presentation profile points to `id`. Higher `priority` wins when resource packs provide profiles for the same origin. Invalid modifiers are skipped with a warning; the base skin remains available.
+
+Attachments may use `geometry_type` (`cuboid`, `plane`, `cross_planes`, `segmented_chain`), `size`, `uv`, `anchor`, `offset`, `rotation`, `scale`, `mirror`, armor hide flags and an optional animation object. Particle modifiers use `particle`, `rate`, `radius` and `height`.

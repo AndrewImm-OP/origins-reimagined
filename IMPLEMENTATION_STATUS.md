@@ -4,7 +4,7 @@
 
 ## Текущий этап
 
-Этап 6 — система визуальных профилей происхождений.
+Этап 6.1 — завершение визуального рендера.
 
 - [x] Найден upstream: `BluSpring/Origins-Legacy`, ветка `versions/26.1`.
 - [x] Проверены Minecraft/Fabric/Java параметры.
@@ -86,6 +86,19 @@
 | Visual preferences | COMPLETE |
 | Visual cache | NOT STARTED |
 | Visual tests | IN PROGRESS |
+| Render capabilities | COMPLETE |
+| Real texture overlay pass | COMPLETE |
+| Eye overlay pass | COMPLETE |
+| Emissive render pass | COMPLETE |
+| Baked cuboid attachments | COMPLETE |
+| Segmented attachment definition | IN PROGRESS |
+| World particle aura | COMPLETE |
+| Preview particle aura | NOT STARTED |
+| Model alpha validation | BLOCKED |
+| Phantom reference profile | IN PROGRESS |
+| Enderian reference profile | COMPLETE |
+| Feline reference profile | COMPLETE |
+| Merling reference profile | COMPLETE |
 | Screen interception | COMPLETE |
 | Selection session | COMPLETE |
 | Background | COMPLETE |
