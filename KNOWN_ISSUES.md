@@ -26,6 +26,14 @@
 - `preview_show_equipment` и `preview_show_cape` пока сохраняются как настройки API, но не включают неподдерживаемую GUI geometry.
 - Classic/slim и clipping проверены только компиляцией и isolated math tests; живое окно Minecraft недоступно.
 
+## Visual profiles
+
+- Graphical validation of visual profiles is blocked by the headless environment.
+- The current preview backend applies the shared model tint through `GuiSkinRenderer`; it does not yet render arbitrary geometry attachments, particles, armor or true fullbright emissive layers.
+- World texture/emissive modifiers use a safe cutout render pass. `model_alpha` is parsed and conditionally resolved, but transparent whole-player rendering is not enabled until depth/blend ordering is validated in a real client.
+- The minimal eye editor stores anchors and presets, but eye texture overlays are not yet rendered by the GUI backend.
+- Custom skin anchor identity currently hashes the skin texture identifier, not downloaded PNG bytes.
+
 ## Поведение мобов
 
 Apoli Legacy уже имеет `ModifyBehaviorPower` и mixin-точки в `Mob`, `TargetingConditions` и `NearestAttackableTargetGoal`, но это поведение ограничено power-источниками игрока и не покрывает retaliation, случайный урон, Thorns, питомцев или смену origin. Relation engine должен быть отдельным фильтром с явным порядком приоритетов.

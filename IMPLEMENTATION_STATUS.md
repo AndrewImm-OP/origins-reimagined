@@ -4,7 +4,7 @@
 
 ## Текущий этап
 
-Этап 5 — интерактивная модель игрока в экране выбора.
+Этап 6 — система визуальных профилей происхождений.
 
 - [x] Найден upstream: `BluSpring/Origins-Legacy`, ветка `versions/26.1`.
 - [x] Проверены Minecraft/Fabric/Java параметры.
@@ -17,7 +17,9 @@
 - [x] Реализован универсальный fallback.
 - [x] Реализованы статичный экран выбора и frame-independent анимации; runtime-открытие ожидает графическую проверку.
 - [x] Реализован isolated player skin preview; graphical runtime ожидает проверки.
-- [ ] Реализованы визуальные профили.
+- [x] Реализована общая модель visual profiles, resolver и client reload loader.
+- [x] Реализованы безопасные preview/world tint passes и fallback.
+- [ ] Реализованы полноценные attachments, particles, true emissive и alpha passes.
 - [ ] Реализован relation engine.
 - [ ] Реализован PhantomSunState.
 
@@ -54,6 +56,36 @@
 | Animation configuration | COMPLETE |
 | Animation unit tests | COMPLETE |
 | Graphical runtime validation | BLOCKED |
+| Visual rendering audit | COMPLETE |
+| Visual profile loader | COMPLETE |
+| Visual profile resolver | COMPLETE |
+| Preview visual backend | COMPLETE |
+| World visual backend | COMPLETE |
+| Texture overlays | IN PROGRESS |
+| Emissive overlays | IN PROGRESS |
+| Model tint | COMPLETE |
+| Model alpha | BLOCKED |
+| Geometry attachments | NOT STARTED |
+| Particle aura | NOT STARTED |
+| Model-part anchors | COMPLETE |
+| Eye anchors | COMPLETE |
+| Skin hash | IN PROGRESS |
+| Eye anchor editor | IN PROGRESS |
+| Preview states | COMPLETE |
+| Human profile | COMPLETE |
+| Phantom profile | COMPLETE |
+| Enderian profile | COMPLETE |
+| Arachnid profile | COMPLETE |
+| Blazeborn profile | COMPLETE |
+| Merling profile | COMPLETE |
+| Feline profile | COMPLETE |
+| Avian profile | COMPLETE |
+| Elytrian profile | COMPLETE |
+| Shulk profile | COMPLETE |
+| Other player rendering | COMPLETE |
+| Visual preferences | COMPLETE |
+| Visual cache | NOT STARTED |
+| Visual tests | IN PROGRESS |
 | Screen interception | COMPLETE |
 | Selection session | COMPLETE |
 | Background | COMPLETE |
