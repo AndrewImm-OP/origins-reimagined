@@ -11,12 +11,12 @@ public final class PlayerPreviewCamera {
     private float pitch = -5.0f;
     private float zoom = 1.12f;
     private float offsetX;
-    private float offsetY;
+    private float offsetY = 0.08f;
     private float targetYaw = yaw;
     private float targetPitch = pitch;
     private float targetZoom = zoom;
     private float targetOffsetX;
-    private float targetOffsetY;
+    private float targetOffsetY = 0.08f;
     private boolean userInteracted;
     private boolean autoRotate = true;
 
@@ -56,7 +56,7 @@ public final class PlayerPreviewCamera {
         pitch = targetPitch = -5.0f;
         zoom = targetZoom = 1.12f;
         offsetX = targetOffsetX = 0.0f;
-        offsetY = targetOffsetY = 0.0f;
+        offsetY = targetOffsetY = 0.08f;
         userInteracted = false;
         autoRotate = true;
     }

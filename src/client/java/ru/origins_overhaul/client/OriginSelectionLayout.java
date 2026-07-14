@@ -29,8 +29,8 @@ public record OriginSelectionLayout(Rect header, Rect advantages, Rect preview, 
         Rect right = new Rect(x, contentTop, side, left.height());
         Rect h = new Rect(middle.x(), middle.y(), middle.width(), headerHeight);
         Rect n = hasNeutralFeatures ? new Rect(margin, neutralY, Math.max(1, width - margin * 2), neutralHeight) : new Rect(0, 0, 0, 0);
-        int footerTop = middle.y() + middle.height() - 82;
-        Rect nav = new Rect(middle.x() + 10, footerTop, Math.max(1, middle.width() - 20), 28);
+        int arrowTop = middle.y() + headerHeight + Math.max(0, (middle.height() - headerHeight) / 2) - 14;
+        Rect nav = new Rect(middle.x() + 10, arrowTop, Math.max(1, middle.width() - 20), 28);
         Rect confirm = new Rect(middle.x() + middle.width() / 2 - 55, middle.y() + middle.height() - 27, 110, 20);
         Rect list = new Rect(Math.max(margin, width - margin - 70), margin + 4, 70, 20);
         return new OriginSelectionLayout(h, left, middle, right, n, nav, confirm, list);
