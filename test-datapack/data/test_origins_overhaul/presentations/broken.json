@@ -1,0 +1,8 @@
+{
+  "origin": "test_origins:unknown_origin",
+  "advantages": [{
+    "powers": ["test_origins:missing_power"],
+    "name": {"text": "Broken profile"},
+    "description": {"text": "This reference must warn without crashing."}
+  }]
+}
