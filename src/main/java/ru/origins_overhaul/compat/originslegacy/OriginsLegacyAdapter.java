@@ -80,4 +80,10 @@ public final class OriginsLegacyAdapter {
     public static boolean powerExists(Identifier powerId) {
         return PowerTypeRegistry.contains(powerId);
     }
+
+    public static boolean hasOrigin(Player player, Identifier originId) {
+        if (player == null || originId == null) return false;
+        return ModComponents.ORIGIN.get(player).getOrigins().values().stream()
+            .anyMatch(origin -> originId.equals(origin.getIdentifier()));
+    }
 }

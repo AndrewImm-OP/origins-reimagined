@@ -134,6 +134,7 @@
 | Standard payload submission | COMPLETE |
 | Localization | COMPLETE |
 | Client runtime test | BLOCKED |
+| Elytrian flight cancellation | COMPLETE |
 | Dedicated server test | COMPLETE |
 | Player rendering audit | COMPLETE |
 | Preview architecture | COMPLETE |

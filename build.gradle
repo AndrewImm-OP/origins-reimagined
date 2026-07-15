@@ -103,6 +103,12 @@ tasks.register('runVisualSelfTest', JavaExec) {
     enableAssertions = true
 }
 
+tasks.register('runElytraCancelSelfTest', JavaExec) {
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'ru.origins_overhaul.gameplay.ElytraCancelChordStateTest'
+    enableAssertions = true
+}
+
 jar {
     from('LICENSE') {
         rename { 'origins-overhaul-LICENSE' }
@@ -116,6 +122,7 @@ tasks.register('verifyPackagedMixins') {
         def requiredEntries = [
             'origins_overhaul.mixins.json',
             'ru/origins_overhaul/mixin/ModPacketsS2CMixin.class',
+            'ru/origins_overhaul/mixin/MinecraftElytraCancelMixin.class',
             'ru/origins_overhaul/mixin/LivingEntityRendererVisualMixin.class',
             'ru/origins_overhaul/mixin/AvatarRendererVisualMixin.class',
             'ru/origins_overhaul/mixin/GuiSkinRendererVisualMixin.class',
