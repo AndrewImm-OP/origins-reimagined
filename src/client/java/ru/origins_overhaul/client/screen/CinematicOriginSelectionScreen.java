@@ -218,7 +218,9 @@ public final class CinematicOriginSelectionScreen extends Screen {
     private OriginSelectionLayout.Rect previewBodyRect() {
         OriginSelectionLayout.Rect rect = layout.preview();
         int top = rect.y() + layout.header().height() + 10;
-        int bottom = layout.confirm().y() - 42;
+        // Use the available space above the action row; the previous 42px gap
+        // clipped the feet even though there was still room before the buttons.
+        int bottom = layout.confirm().y() - 12;
         return new OriginSelectionLayout.Rect(rect.x() + 2, top, Math.max(20, rect.width() - 4), Math.max(20, bottom - top));
     }
 
