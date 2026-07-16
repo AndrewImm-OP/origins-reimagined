@@ -1,11 +1,97 @@
 # Origins: Reimagined
 
-Внутренний mod ID проекта остаётся `origins_overhaul` для совместимости с
-ресурсами, конфигурацией и уже существующими мирами.
+Клиент-серверный Fabric-мод для Minecraft `26.1.2`, расширяющий [Origins: Legacy](https://modrinth.com/mod/origins-legacy) новым экраном выбора, presentation-профилями, preview игрока, визуальным pipeline и дополнительными косметическими механиками.
 
-Клиент-серверный Fabric-мод поверх Origins Legacy для Minecraft 26.1.2.
+Внутренний mod ID проекта остаётся `origins_overhaul` для совместимости с ресурсами, конфигурацией, datapack-путями и уже существующими мирами.
 
-Этап 6 добавляет общий visual-profile pipeline поверх интерактивного preview: профили ресурсов, условия, tint и безопасные world/preview backend’ы для wide/slim skin. Дополнительная геометрия, полноценный emissive/alpha backend, частицы и отношения с мобами пока не реализованы.
+## Что добавляет мод
+
+### Новый экран выбора происхождения
+
+- заменяет стандартное представление Origins Legacy, не меняя серверный selection flow;
+- показывает название и иконку выбранного origin;
+- окрашивает заголовок по impact/difficulty;
+- разделяет преимущества и недостатки по левому и правому столбцу;
+- показывает нейтральные особенности отдельно;
+- поддерживает перенос длинных описаний и независимую прокрутку колонок;
+- поддерживает несколько origin layers;
+- сохраняет стандартную отправку выбора и случайного выбора Origins Legacy;
+- работает с неизвестными origins и origins из аддонов через fallback;
+- при отключении cinematic screen возвращает стандартный экран Origins Legacy.
+
+### Анимации интерфейса
+
+- frame-independent animation clock на monotonic time;
+- плавное появление фона, заголовка, колонок и кнопок;
+- одновременное раскрытие строк одного описания;
+- последовательное появление способностей сверху вниз;
+- плавные переходы между origins;
+- защита от спама переключения через latest-target-wins;
+- режим `reduce_motion` и полное отключение анимаций;
+- вращение и лёгкое покачивание иконки происхождения.
+
+### Интерактивное preview игрока
+
+- отображает настоящий скин текущего игрока;
+- поддерживает classic и slim model;
+- вращение ЛКМ;
+- приближение и отдаление колёсиком;
+- перемещение ПКМ;
+- сброс камеры двойным кликом или клавишей `R`;
+- автоматическое вращение до первого взаимодействия;
+- управление outer skin layer;
+- clipping внутри центральной preview-области;
+- preview не изменяет настоящую entity игрока и не добавляет entity в мир.
+
+### Presentation pipeline
+
+Origins: Reimagined строит immutable snapshot-модель origin поверх синхронизированных данных Origins Legacy.
+
+- presentation profiles загружаются из JSON и поддерживают resource-pack override;
+- можно объединять несколько powers в одну особенность;
+- технические powers можно скрывать;
+- отсутствующие профили используют безопасный fallback;
+- неизвестные powers, переводы, иконки и повреждённые JSON не приводят к crash;
+- встроены профили для стандартных origins, включая Human, Phantom, Enderian, Arachnid, Blazeborn, Merling, Feline, Avian, Elytrian и Shulk;
+- доступен debug catalog и Visual Test Lab.
+
+### Visual profiles
+
+Visual pipeline использует общий resolved profile для preview и world rendering.
+
+Поддерживается архитектура для:
+
+- tint-слоёв;
+- texture overlays;
+- eye anchors и presets;
+- emissive overlays;
+- model attachments;
+- segmented geometry;
+- particle aura;
+- условий `power_active`, `preview`, `underwater`, `sneaking` и других состояний;
+- безопасного отключения неподдерживаемых capabilities.
+
+Часть сложных visual passes всё ещё требует дополнительной графической проверки в настоящем клиенте. При отсутствии или повреждении профиля игрок отображается обычным скином.
+
+### Дополнительная механика Elytrian
+
+Во время активного полёта на элитрах сочетание `Ctrl + Shift` отменяет fall-flying:
+
+- срабатывает один раз на новое нажатие;
+- обычный `Shift` не отменяет полёт;
+- текущая скорость и направление сохраняются;
+- игрок переходит в обычное свободное падение;
+- сервер валидирует, что игрок действительно летит и имеет `origins:elytrian`;
+- не изменяются powers, origin assignment или серверные правила Origins Legacy.
+
+## Архитектура
+
+- `com.andrewimm.originsreimagined` — Java package проекта;
+- common source set содержит модель, adapter, reload pipeline и серверную механику;
+- client source set содержит экран, анимации, preview, visual renderers и client mixins;
+- прямой доступ к Origins Legacy изолирован в `compat/originslegacy`;
+- собственный registry origins не создаётся;
+- server-side проверка Origins Legacy остаётся источником истины.
 
 Точная карта upstream API находится в [AUDIT_ORIGINS_LEGACY_26.1.2.md](AUDIT_ORIGINS_LEGACY_26.1.2.md), текущие ограничения — в [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
 
@@ -41,3 +127,28 @@ Visual Test Lab: [VISUAL_TEST_LAB.md](docs/VISUAL_TEST_LAB.md), [GRAPHICAL_VALID
 Параметры анимаций включают `text_animation_enabled`, `text_animation_speed`, `transition_animation_enabled`, `transition_out_duration_ms`, `transition_in_duration_ms`, `icon_rotation_enabled`, `icon_rotation_speed`, `icon_bob_enabled`, `ability_stagger_ms` и `reduce_motion`. Preview управляется `player_preview_enabled`, `preview_auto_rotate`, `preview_auto_rotate_speed`, `preview_mouse_sensitivity`, `preview_zoom_sensitivity`, `preview_show_outer_layer`, `preview_show_cape`, `preview_show_equipment` и `preview_idle_animation`.
 
 Для debug-измерения catalog использовать JVM-флаг `-Dorigins_overhaul.debug=true`.
+
+## Debug-команды
+
+При запуске с `-Dorigins_overhaul.debug=true` доступны:
+
+```text
+/originsoverhaul debug catalog
+/originsoverhaul debug open_selection
+/originsoverhaul debug visual_lab
+/originsoverhaul debug visual_world
+```
+
+Debug-команды не назначают origin напрямую и не обходят серверную проверку.
+
+## Текущий статус
+
+Рабочий проект собирается на JDK 25. Изолированные тесты, client compilation, packaged mixin verification и dedicated-server common classloading подготовлены. Полноценная совместимость всех visual passes с Sodium/Iris и графическая проверка каждого профиля требуют отдельного smoke-test в настоящем клиенте.
+
+Планируемые направления:
+
+- стабилизация визуальных render passes;
+- дополнительные тематические UI-профили происхождений;
+- улучшение geometry attachments и particles;
+- mob relations;
+- отдельные исправления механик Origins после завершения визуального pipeline.
