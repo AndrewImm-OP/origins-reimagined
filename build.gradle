@@ -105,7 +105,7 @@ tasks.register('runVisualSelfTest', JavaExec) {
 
 tasks.register('runElytraCancelSelfTest', JavaExec) {
     classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'com.andrewimm.originsreimagined.gameplay.ElytraCancelChordStateTest'
+    mainClass = 'com.andrewimm.originsreimagined.gameplay.ElytraCancelInputStateTest'
     enableAssertions = true
 }
 
