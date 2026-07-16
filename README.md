@@ -7,7 +7,7 @@
 ![Java](https://img.shields.io/badge/Java-25-ED8B00?style=flat-square)
 ![Environment](https://img.shields.io/badge/Environment-Client%20%2B%20Server-5865F2?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Active%20Development-yellow?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)(LICENSE)
+![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
 
 **Origins: Reimagined** — это аддон для **Origins: Legacy**, который перерабатывает стандартные происхождения, исправляет проблемные механики и делает способности рас более логичными, полезными и пригодными для обычного выживания.
 
