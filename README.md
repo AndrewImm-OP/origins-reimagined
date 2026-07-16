@@ -2,16 +2,12 @@
 
 > Улучшенный клиент-серверный Fabric-мод для Origins: Legacy — новый экран выбора, универсальные presentation-профили, интерактивный preview игрока и дополнительные визуальные механики.
 
-[![Minecraft](https://img.shields.io/badge/Minecraft-26.1.2-3f8f3f?style=flat-square)](https://www.minecraft.net/)
-[![Fabric](https://img.shields.io/badge/Mod%20loader-Fabric-dbd0b3?style=flat-square)](https://fabricmc.net/)
-[![Java](https://img.shields.io/badge/Java-25-e76f00?style=flat-square)](https://adoptium.net/)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
-
 ![Minecraft](https://img.shields.io/badge/Minecraft-26.1.2-62B47A?style=flat-square)
 ![Fabric](https://img.shields.io/badge/Loader-Fabric-DBD0B4?style=flat-square)
 ![Java](https://img.shields.io/badge/Java-25-ED8B00?style=flat-square)
 ![Environment](https://img.shields.io/badge/Environment-Client%20%2B%20Server-5865F2?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Active%20Development-yellow?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)(LICENSE)
 
 **Origins: Reimagined** — это аддон для **Origins: Legacy**, который перерабатывает стандартные происхождения, исправляет проблемные механики и делает способности рас более логичными, полезными и пригодными для обычного выживания.
 
