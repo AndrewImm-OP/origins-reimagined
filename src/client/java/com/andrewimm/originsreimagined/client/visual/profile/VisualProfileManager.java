@@ -22,7 +22,7 @@ public final class VisualProfileManager extends MultiJsonDataLoader implements I
     private static volatile Runnable reloadCallback = () -> {};
 
     private VisualProfileManager() { super(GSON, "visual_profiles"); }
-    @Override public Identifier getFabricId() { return Identifier.fromNamespaceAndPath("origins_overhaul", "visual_profiles"); }
+    @Override public Identifier getFabricId() { return Identifier.fromNamespaceAndPath("origins_reimagined", "visual_profiles"); }
 
     @Override protected void apply(Map<Identifier, List<JsonElement>> loader, ResourceManager manager, ProfilerFiller profiler) {
         Map<Identifier, VisualProfile> next = new HashMap<>();

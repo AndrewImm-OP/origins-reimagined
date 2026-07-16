@@ -1,22 +1,22 @@
 # Visual profile format
 
-Profiles are client resources at `assets/<namespace>/origins_overhaul/visual_profiles/*.json`.
+Profiles are client resources at `assets/<namespace>/origins_reimagined/visual_profiles/*.json`.
 
 ```json
 {
-  "id": "origins_overhaul:phantom",
+  "id": "origins_reimagined:phantom",
   "origin": "origins:phantom",
   "priority": 0,
   "modifiers": [
     {
-      "type": "origins_overhaul:model_tint",
+      "type": "origins_reimagined:model_tint",
       "color": "#E8FFFF",
       "strength": 0.08,
-      "condition": {"type": "origins_overhaul:power_active", "power": "origins:phantomize"}
+      "condition": {"type": "origins_reimagined:power_active", "power": "origins:phantomize"}
     }
   ],
   "preview_states": [
-    {"id":"normal", "name":{"translate":"origins_overhaul.preview.normal"}}
+    {"id":"normal", "name":{"translate":"origins_reimagined.preview.normal"}}
   ]
 }
 ```

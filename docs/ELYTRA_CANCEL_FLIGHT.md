@@ -7,7 +7,7 @@ On the first tick of the chord:
 
 1. the client calls `stopFallFlying()`;
 2. no movement vector, velocity, pose or position is changed;
-3. the client sends `origins_overhaul:stop_elytra_flight` when the server
+3. the client sends `origins_reimagined:stop_elytra_flight` when the server
    advertises the payload;
 4. the server validates the sender's current flight state and Elytrian origin,
    then stops fall-flying server-side.

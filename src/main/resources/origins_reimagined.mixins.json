@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.andrewimm.originsreimagined.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": ["MerlingWaterBreathingMixin", "MerlingCombatMixin", "MerlingFireDamageMixin", "MerlingFoodRestrictionMixin", "PhantomBurnPowerMixin"],
+  "client": ["ModPacketsS2CMixin", "MinecraftElytraCancelMixin", "LivingEntityRendererVisualMixin", "AvatarRendererVisualMixin", "GuiSkinRendererVisualMixin", "PictureInPictureRendererAccessor", "LivingEntityRendererAccessor"],
+  "injectors": { "defaultRequire": 1 }
+}

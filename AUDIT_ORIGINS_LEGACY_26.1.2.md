@@ -91,7 +91,7 @@ Apoli Legacy уже применяет `ModifyBehaviorPower` через:
 
 ## Визуальные точки
 
-Origins Legacy не предоставляет универсальный origin render-layer API. Apoli имеет собственные power/render hooks, но косметические слои Origins Overhaul следует держать отдельно и отключать/понижать до safe mode при обнаружении полной замены player model сторонним модом.
+Origins Legacy не предоставляет универсальный origin render-layer API. Apoli имеет собственные power/render hooks, но косметические слои Origins: Reimagined следует держать отдельно и отключать/понижать до safe mode при обнаружении полной замены player model сторонним модом.
 
 ## Рекомендованный первый срез
 

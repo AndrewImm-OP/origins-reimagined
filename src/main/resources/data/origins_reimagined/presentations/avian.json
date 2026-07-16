@@ -1,0 +1,10 @@
+{
+  "origin": "origins:avian",
+  "advantages": [
+    {"powers": ["origins:slow_falling", "origins:fresh_air", "origins:like_air", "origins:tailwind"], "name": {"translate": "origins_reimagined.presentation.avian.flight"}, "description": {"translate": "origins_reimagined.presentation.avian.flight.description"}, "order": 0},
+    {"powers": ["origins:lay_eggs"], "name": {"translate": "origins_reimagined.presentation.avian.eggs"}, "description": {"translate": "origins_reimagined.presentation.avian.eggs.description"}, "order": 1}
+  ],
+  "disadvantages": [
+    {"powers": ["origins:vegetarian"], "name": {"translate": "origins_reimagined.presentation.avian.vegetarian"}, "description": {"translate": "origins_reimagined.presentation.avian.vegetarian.description"}, "order": 0}
+  ]
+}

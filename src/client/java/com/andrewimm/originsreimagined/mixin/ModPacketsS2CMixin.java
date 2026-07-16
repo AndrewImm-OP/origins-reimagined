@@ -15,7 +15,7 @@ import com.andrewimm.originsreimagined.client.screen.CinematicOriginSelectionScr
 @Mixin(ModPacketsS2C.class)
 public abstract class ModPacketsS2CMixin {
     @Inject(method = "openOriginScreen", at = @At("HEAD"), cancellable = true)
-    private static void originsOverhaul$open(OpenOriginScreenPacket packet, ClientPlayNetworking.Context context, CallbackInfo callback) {
+    private static void originsReimagined$open(OpenOriginScreenPacket packet, ClientPlayNetworking.Context context, CallbackInfo callback) {
         if (!ClientSelectionConfig.cinematic()) return;
         callback.cancel();
         context.client().execute(() -> {

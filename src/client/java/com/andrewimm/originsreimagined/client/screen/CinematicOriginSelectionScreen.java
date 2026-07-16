@@ -159,7 +159,7 @@ public final class CinematicOriginSelectionScreen extends Screen {
         extractBackground(context, mouseX, mouseY, delta);
         refreshLayout();
         if (!session.hasCurrentLayer() || session.currentOrigins().isEmpty()) {
-            context.text(font, Component.translatable("origins_overhaul.selection.no_origins"), width / 2 - 45, height / 2, 0xFFFFFFFF, false);
+            context.text(font, Component.translatable("origins_reimagined.selection.no_origins"), width / 2 - 45, height / 2, 0xFFFFFFFF, false);
             return;
         }
         OriginPresentation origin = displayedOrigin();
@@ -168,9 +168,9 @@ public final class CinematicOriginSelectionScreen extends Screen {
         renderColumnSurface(context, layout.advantages(), theme.advantageAccent(), false);
         renderColumnSurface(context, layout.disadvantages(), theme.disadvantageAccent(), true);
         if (ClientSelectionConfig.showNeutral() && !origin.neutralFeatures().isEmpty()) renderColumnSurface(context, layout.neutral(), theme.accent(), false);
-        renderColumn(context, layout.advantages(), origin.advantages(), "origins_overhaul.selection.advantages", "origins_overhaul.selection.no_advantages", advantageScroll, theme.advantageAccent());
-        renderColumn(context, layout.disadvantages(), origin.disadvantages(), "origins_overhaul.selection.disadvantages", "origins_overhaul.selection.no_disadvantages", disadvantageScroll, theme.disadvantageAccent());
-        if (ClientSelectionConfig.showNeutral() && !origin.neutralFeatures().isEmpty()) renderColumn(context, layout.neutral(), origin.neutralFeatures(), "origins_overhaul.selection.features", "origins_overhaul.selection.no_features", neutralScroll, 0xFFE0E0E0);
+        renderColumn(context, layout.advantages(), origin.advantages(), "origins_reimagined.selection.advantages", "origins_reimagined.selection.no_advantages", advantageScroll, theme.advantageAccent());
+        renderColumn(context, layout.disadvantages(), origin.disadvantages(), "origins_reimagined.selection.disadvantages", "origins_reimagined.selection.no_disadvantages", disadvantageScroll, theme.disadvantageAccent());
+        if (ClientSelectionConfig.showNeutral() && !origin.neutralFeatures().isEmpty()) renderColumn(context, layout.neutral(), origin.neutralFeatures(), "origins_reimagined.selection.features", "origins_reimagined.selection.no_features", neutralScroll, 0xFFE0E0E0);
         renderPreview(context);
         renderHeader(context, origin);
         renderNavigation(context, origin);
@@ -212,7 +212,7 @@ public final class CinematicOriginSelectionScreen extends Screen {
         if (!ClientSelectionConfig.previewEnabled()) return;
         float contentOpacity = transitionOpacity() * entrance.value();
         boolean rendered = preview != null && preview.render(context, body.x(), body.y(), body.width(), body.height(), contentOpacity);
-        if (!rendered) context.centeredText(font, Component.translatable("origins_overhaul.selection.preview_unavailable"), body.x() + body.width() / 2, body.y() + body.height() / 2, AnimatedRenderContext.alpha(0xFFAAAAAA, contentOpacity));
+        if (!rendered) context.centeredText(font, Component.translatable("origins_reimagined.selection.preview_unavailable"), body.x() + body.width() / 2, body.y() + body.height() / 2, AnimatedRenderContext.alpha(0xFFAAAAAA, contentOpacity));
     }
 
     private OriginSelectionLayout.Rect previewBodyRect() {
@@ -285,8 +285,8 @@ public final class CinematicOriginSelectionScreen extends Screen {
         int titleColor = AnimatedRenderContext.alpha(OriginDifficultyColorResolver.resolve(origin.impact(), origin.customAccentColor().orElse(0)), opacity);
         context.text(font, title, layout.header().x() + 52 + offset, layout.header().y() + 20, titleColor, false);
         context.fill(layout.header().x() + 52, layout.header().y() + 42, layout.header().x() + 52 + Math.min(160, font.width(title)), layout.header().y() + 44, AnimatedRenderContext.alpha((theme.accent() & 0x00FFFFFF) | 0x66000000, opacity));
-        if (session.layers().size() > 1) context.text(font, Component.translatable("origins_overhaul.selection.layer_progress", session.currentLayerIndex() + 1, session.layers().size()), layout.header().x() + 52 + offset, layout.header().y() + 47, AnimatedRenderContext.alpha(0xFFAAAAAA, opacity), false);
-        if (debugPreview) context.text(font, Component.translatable("origins_overhaul.selection.debug_preview"), layout.header().x() + layout.header().width() - 105, layout.header().y() + 17, 0xFFFFAA55, false);
+        if (session.layers().size() > 1) context.text(font, Component.translatable("origins_reimagined.selection.layer_progress", session.currentLayerIndex() + 1, session.layers().size()), layout.header().x() + 52 + offset, layout.header().y() + 47, AnimatedRenderContext.alpha(0xFFAAAAAA, opacity), false);
+        if (debugPreview) context.text(font, Component.translatable("origins_reimagined.selection.debug_preview"), layout.header().x() + layout.header().width() - 105, layout.header().y() + 17, 0xFFFFAA55, false);
     }
 
     private void renderColumn(GuiGraphicsExtractor context, OriginSelectionLayout.Rect rect, List<PresentedPower> powers, String headingKey, String emptyKey, int scroll, int accent) {
@@ -361,16 +361,16 @@ public final class CinematicOriginSelectionScreen extends Screen {
         int buttonColor = session.selectionSubmitted() || debugPreview ? 0x66444444 : AnimatedRenderContext.alpha(0xAA222222, opacity);
         if (Minecraft.getInstance().player != null && session.randomAllowed(Minecraft.getInstance().player)) {
             context.outline(layout.random().x(), layout.random().y() - 2, layout.random().width(), layout.random().height() + 2, AnimatedRenderContext.alpha(0x33555555, opacity));
-            Component randomText = Component.translatable("origins_overhaul.selection.random");
+            Component randomText = Component.translatable("origins_reimagined.selection.random");
             context.text(font, randomText, layout.random().x() + (layout.random().width() - font.width(randomText)) / 2, layout.random().y() + 4, AnimatedRenderContext.alpha(0xFFCCCCCC, opacity), false);
         }
         context.outline(layout.confirm().x(), layout.confirm().y() - 2, layout.confirm().width(), layout.confirm().height() + 2, AnimatedRenderContext.alpha((theme.accent() & 0x00FFFFFF) | 0x66000000, opacity));
         context.fill(layout.confirm().x(), layout.confirm().y() - 2, layout.confirm().x() + layout.confirm().width(), layout.confirm().y() + layout.confirm().height(), buttonColor);
-        Component selectText = Component.translatable("origins_overhaul.selection.select");
+        Component selectText = Component.translatable("origins_reimagined.selection.select");
         context.text(font, selectText, layout.confirm().x() + (layout.confirm().width() - font.width(selectText)) / 2, layout.confirm().y() + 4, AnimatedRenderContext.alpha(session.selectionSubmitted() || debugPreview ? 0xFF888888 : 0xFFFFFFFF, opacity), false);
         if (session.currentOrigins().size() > ClientSelectionConfig.threshold()) {
             context.fill(layout.listButton().x(), layout.listButton().y(), layout.listButton().x() + layout.listButton().width(), layout.listButton().y() + layout.listButton().height(), AnimatedRenderContext.alpha(0x99222222, opacity));
-            context.text(font, Component.translatable("origins_overhaul.selection.origin_list"), layout.listButton().x() + 7, layout.listButton().y() + 6, AnimatedRenderContext.alpha(0xFFFFFFFF, opacity), false);
+            context.text(font, Component.translatable("origins_reimagined.selection.origin_list"), layout.listButton().x() + 7, layout.listButton().y() + 6, AnimatedRenderContext.alpha(0xFFFFFFFF, opacity), false);
         }
     }
 
@@ -378,9 +378,9 @@ public final class CinematicOriginSelectionScreen extends Screen {
         float opacity = overlayOpacity.value();
         context.fill(0, 0, width, height, AnimatedRenderContext.alpha(0xDD080808, opacity));
         int yOffset = Math.round((1.0f - opacity) * 8.0f);
-        context.text(font, Component.translatable("origins_overhaul.selection.search"), 30, 24 + yOffset, AnimatedRenderContext.alpha(0xFFFFFFFF, opacity), false);
+        context.text(font, Component.translatable("origins_reimagined.selection.search"), 30, 24 + yOffset, AnimatedRenderContext.alpha(0xFFFFFFFF, opacity), false);
         context.fill(30, 40 + yOffset, width - 30, 59 + yOffset, AnimatedRenderContext.alpha(0xAA333333, opacity));
-        context.text(font, search.isEmpty() ? Component.translatable("origins_overhaul.selection.search_hint") : Component.literal(search), 36, 46 + yOffset, AnimatedRenderContext.alpha(0xFFFFFFFF, opacity), false);
+        context.text(font, search.isEmpty() ? Component.translatable("origins_reimagined.selection.search_hint") : Component.literal(search), 36, 46 + yOffset, AnimatedRenderContext.alpha(0xFFFFFFFF, opacity), false);
         int y = 72 + yOffset;
         for (OriginPresentation origin : searchResults) {
             if (y > height - 18) break;
@@ -393,8 +393,8 @@ public final class CinematicOriginSelectionScreen extends Screen {
 
     private void renderEyeAnchorEditor(GuiGraphicsExtractor context) {
         context.fill(0, 0, width, height, 0xDD080808);
-        context.text(font, Component.translatable("origins_overhaul.selection.preview_editor"), 24, 22, 0xFFFFFFFF, false);
-        context.text(font, Component.translatable("origins_overhaul.selection.preview_editor_hint"), 24, 36, 0xFFAAAAAA, false);
+        context.text(font, Component.translatable("origins_reimagined.selection.preview_editor"), 24, 22, 0xFFFFFFFF, false);
+        context.text(font, Component.translatable("origins_reimagined.selection.preview_editor_hint"), 24, 36, 0xFFAAAAAA, false);
         int size = Math.min(224, Math.max(128, Math.min(width, height) / 2));
         int gx = width / 2 - size / 2;
         int gy = height / 2 - size / 2;
@@ -406,8 +406,8 @@ public final class CinematicOriginSelectionScreen extends Screen {
         }
         EyeAnchor selected = editingLeftEye ? profile.leftEye() : profile.rightEye();
         context.fill(gx + selected.x() * size / 8, gy + selected.y() * size / 8, gx + (selected.x() + selected.width()) * size / 8, gy + (selected.y() + selected.height()) * size / 8, 0x8844FF88);
-        context.text(font, Component.translatable(editingLeftEye ? "origins_overhaul.selection.preview_left_eye" : "origins_overhaul.selection.preview_right_eye"), gx, gy + size + 16, 0xFFFFFFFF, false);
-        context.text(font, Component.translatable("origins_overhaul.selection.preview_editor_close"), gx, gy + size + 32, 0xFFCCCCCC, false);
+        context.text(font, Component.translatable(editingLeftEye ? "origins_reimagined.selection.preview_left_eye" : "origins_reimagined.selection.preview_right_eye"), gx, gy + size + 16, 0xFFFFFFFF, false);
+        context.text(font, Component.translatable("origins_reimagined.selection.preview_editor_close"), gx, gy + size + 32, 0xFFCCCCCC, false);
     }
 
     private void renderDebug(GuiGraphicsExtractor context) {

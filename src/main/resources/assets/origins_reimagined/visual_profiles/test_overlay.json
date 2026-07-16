@@ -1,0 +1,1 @@
+{"id":"origins_reimagined:test_overlay","origin":"origins_reimagined:test_overlay","modifiers":[{"type":"origins_reimagined:texture_overlay","texture":"origins_reimagined:textures/visual/missing_test_overlay.png","color":"#FFFFFF","opacity":0.8},{"type":"origins_reimagined:model_tint","color":"#9BE7FF","strength":0.2}]}

@@ -24,7 +24,7 @@ public final class PresentationProfileManager extends MultiJsonDataLoader implem
 
     @Override
     public Identifier getFabricId() {
-        return Identifier.fromNamespaceAndPath("origins_overhaul", "presentations");
+        return Identifier.fromNamespaceAndPath("origins_reimagined", "presentations");
     }
 
     @Override
@@ -36,7 +36,7 @@ public final class PresentationProfileManager extends MultiJsonDataLoader implem
                 try {
                     PresentationProfile profile = parse(id, element.getAsJsonObject());
                     PresentationProfile previous = next.put(profile.originId(), profile);
-                    if (id.getNamespace().equals("origins_overhaul")) builtin.add(profile.originId());
+                    if (id.getNamespace().equals("origins_reimagined")) builtin.add(profile.originId());
                     if (previous != null) {
                         OriginsReimagined.LOGGER.warn("Multiple presentation profiles resolved for {}; using later resource {}", profile.originId(), id);
                     }
@@ -89,14 +89,15 @@ public final class PresentationProfileManager extends MultiJsonDataLoader implem
         for (JsonElement element : array) {
             JsonObject object = element.getAsJsonObject();
             List<Identifier> powers = identifiers(object, "powers");
-            if (powers.isEmpty()) {
+            Identifier presentationId = identifier(object, "id").orElse(null);
+            if (powers.isEmpty() && presentationId == null) {
                 OriginsReimagined.LOGGER.warn("Profile {} has an empty {} entry", resourceId, key);
                 continue;
             }
-            Component name = text(object.get("name"), Component.literal(powers.get(0).toString()));
+            Component name = text(object.get("name"), Component.literal(presentationId != null ? presentationId.toString() : powers.get(0).toString()));
             Component description = text(object.get("description"), Component.literal("No description available."));
             int order = object.has("order") ? object.get("order").getAsInt() : result.size();
-            result.add(new PresentationProfile.Entry(powers, name, description, order));
+            result.add(new PresentationProfile.Entry(presentationId, powers, name, description, order));
         }
         return result;
     }

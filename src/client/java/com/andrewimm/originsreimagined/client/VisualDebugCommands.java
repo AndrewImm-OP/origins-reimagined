@@ -16,7 +16,7 @@ public final class VisualDebugCommands {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> register(dispatcher));
     }
     private static void register(CommandDispatcher<FabricClientCommandSource> dispatcher) {
-        dispatcher.register(ClientCommands.literal("originsoverhaul")
+        dispatcher.register(ClientCommands.literal("originsreimagined")
             .then(ClientCommands.literal("debug")
                 .then(ClientCommands.literal("visual_lab").executes(context -> { Minecraft.getInstance().setScreen(new VisualTestLabScreen()); return 1; }))
                 .then(ClientCommands.literal("visual_world").executes(context -> { Minecraft.getInstance().setScreen(new VisualWorldDebugScreen()); return 1; }))));

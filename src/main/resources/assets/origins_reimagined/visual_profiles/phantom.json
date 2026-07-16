@@ -1,0 +1,15 @@
+{
+  "id": "origins_reimagined:phantom",
+  "origin": "origins:phantom",
+  "priority": 0,
+  "modifiers": [
+    {"type": "origins_reimagined:model_tint", "color": "#E8FFFF", "strength": 0.08},
+    {"id":"phantom_overlay","type": "origins_reimagined:texture_overlay", "texture":"minecraft:textures/particle/soul.png", "parts":["full_model"], "opacity":0.18, "condition": {"type": "origins_reimagined:power_active", "power": "origins:phantomize"}},
+    {"id":"phantom_eyes","type": "origins_reimagined:eye_overlay", "texture":"minecraft:textures/entity/enderman/enderman_eyes.png", "anchor":"eyes", "size":[0.10,0.06,0.04], "color":"#54FF7A"},
+    {"type": "origins_reimagined:model_alpha", "opacity": 0.58, "condition": {"type": "origins_reimagined:power_active", "power": "origins:phantomize"}}
+  ],
+  "preview_states": [
+    {"id": "normal", "name": {"translate": "origins_reimagined.preview.normal"}},
+    {"id": "phantom_form", "name": {"translate": "origins_reimagined.preview.phantom_form"}, "simulate_powers": ["origins:phantomize"]}
+  ]
+}

@@ -110,6 +110,10 @@ public final class ClientOriginCatalog {
                     OriginsReimagined.LOGGER.warn("Presentation profile for {} references missing power {}", originId, powerId);
                 }
             }
+            if (valid.isEmpty() && entry.presentationId() != null) {
+                result.add(new PresentedPower(entry.presentationId(), entry.name(), entry.description(), category, entry.order(), false, List.of()));
+                continue;
+            }
             if (!valid.isEmpty()) {
                 result.add(new PresentedPower(valid.get(0), entry.name(), entry.description(), category, entry.order(), false, valid));
             }

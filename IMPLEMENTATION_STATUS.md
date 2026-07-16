@@ -4,7 +4,7 @@
 
 ## Текущий этап
 
-Этап 6.1 — завершение визуального рендера.
+Этап 6.1 — завершение визуального рендера; переработка Merling реализована.
 
 - [x] Найден upstream: `BluSpring/Origins-Legacy`, ветка `versions/26.1`.
 - [x] Проверены Minecraft/Fabric/Java параметры.
@@ -115,6 +115,11 @@
 | Experimental model alpha | BLOCKED |
 | World debug override | IN PROGRESS |
 | Diagnostics export | COMPLETE |
+| Merling land breathing | COMPLETE |
+| Merling underwater damage | COMPLETE |
+| Merling forbidden fish tag | COMPLETE |
+| Merling fire vulnerability | COMPLETE |
+| Merling Nether desiccation | COMPLETE |
 | Local graphical smoke-test | BLOCKED |
 | Sodium validation | BLOCKED |
 | Iris validation | BLOCKED |

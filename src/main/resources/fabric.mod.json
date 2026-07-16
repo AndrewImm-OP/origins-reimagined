@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "origins_overhaul",
+  "id": "origins_reimagined",
   "version": "${version}",
   "name": "Origins: Reimagined",
   "description": "Universal presentation foundation for Origins Legacy.",
@@ -11,7 +11,7 @@
     "main": ["com.andrewimm.originsreimagined.OriginsReimagined"],
     "client": ["com.andrewimm.originsreimagined.OriginsReimaginedClient"]
   },
-  "mixins": ["origins_overhaul.mixins.json"],
+  "mixins": ["origins_reimagined.mixins.json"],
   "depends": {
     "java": ">=25",
     "fabricloader": ">=0.18.5",

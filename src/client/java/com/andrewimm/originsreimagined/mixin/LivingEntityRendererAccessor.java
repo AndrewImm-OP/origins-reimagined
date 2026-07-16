@@ -10,5 +10,5 @@ import java.util.List;
 @Mixin(LivingEntityRenderer.class)
 public interface LivingEntityRendererAccessor {
     @Accessor("layers")
-    List<RenderLayer<?, ?>> originsOverhaul$getLayers();
+    List<RenderLayer<?, ?>> originsReimagined$getLayers();
 }

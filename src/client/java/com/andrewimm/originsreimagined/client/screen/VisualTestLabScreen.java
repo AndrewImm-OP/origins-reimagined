@@ -164,7 +164,7 @@ public final class VisualTestLabScreen extends Screen {
     @Override public boolean charTyped(CharacterEvent event) { if (event.isAllowedChatCharacter() && search.length() < 80) { search += event.codepointAsString(); filterProfiles(); return true; } return true; }
     private void exportReport() {
         String report = "Origins: Reimagined Visual Report\nMinecraft=26.1.2\nprofile=" + (current() == null ? "none" : current().profileId()) + "\nmodel=" + modelOverride + "\nstate=" + stateName() + "\nactive=" + resolved().modifiers().stream().map(VisualModifier::id).toList() + "\nunsupported=" + resolved().unsupportedModifiers() + "\nconfig_particles=" + ClientSelectionConfig.visualParticles() + "\n";
-        try { Files.writeString(Minecraft.getInstance().gameDirectory.toPath().resolve("logs/origins-overhaul-visual-report.txt"), report); Minecraft.getInstance().keyboardHandler.setClipboard(report); } catch (Exception exception) { OriginsReimagined.LOGGER.warn("Unable to export visual report", exception); }
+        try { Files.writeString(Minecraft.getInstance().gameDirectory.toPath().resolve("logs/origins-reimagined-visual-report.txt"), report); Minecraft.getInstance().keyboardHandler.setClipboard(report); } catch (Exception exception) { OriginsReimagined.LOGGER.warn("Unable to export visual report", exception); }
     }
     @Override public void removed() { preview.clear(); particles.clear(); super.removed(); }
     @Override public boolean shouldCloseOnEsc() { return true; }

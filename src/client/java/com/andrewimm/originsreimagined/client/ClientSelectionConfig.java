@@ -45,7 +45,7 @@ public final class ClientSelectionConfig {
 
     public static void load(Path gameDirectory) {
         Properties p = new Properties();
-        Path file = gameDirectory.resolve("config/origins_overhaul.properties");
+        Path file = gameDirectory.resolve("config/origins_reimagined.properties");
         try {
             if (Files.exists(file)) try (var reader = Files.newBufferedReader(file)) { p.load(reader); }
         } catch (Exception ignored) { }

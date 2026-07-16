@@ -1,0 +1,12 @@
+{
+  "origin": "origins:merling",
+  "advantages": [
+    {"powers": ["origins:water_breathing", "origins:water_vision", "origins:aqua_affinity", "origins:swim_speed", "origins:like_water", "origins:aquatic", "origins:conduit_power_on_land"], "name": {"translate": "origins_reimagined.presentation.merling.aquatic"}, "description": {"translate": "origins_reimagined.presentation.merling.aquatic.description"}, "order": 0},
+    {"id": "origins_reimagined:merling_underwater_damage", "name": {"translate": "origins_reimagined.presentation.merling.underwater_damage"}, "description": {"translate": "origins_reimagined.presentation.merling.underwater_damage.description"}, "order": 1}
+  ],
+  "disadvantages": [
+    {"id": "origins_reimagined:merling_forbidden_food", "name": {"translate": "origins_reimagined.presentation.merling.forbidden_food"}, "description": {"translate": "origins_reimagined.presentation.merling.forbidden_food.description"}, "order": 0},
+    {"id": "origins_reimagined:merling_fire_vulnerability", "name": {"translate": "origins_reimagined.presentation.merling.fire"}, "description": {"translate": "origins_reimagined.presentation.merling.fire.description"}, "order": 1},
+    {"id": "origins_reimagined:merling_nether_desiccation", "name": {"translate": "origins_reimagined.presentation.merling.nether"}, "description": {"translate": "origins_reimagined.presentation.merling.nether.description"}, "order": 2}
+  ]
+}

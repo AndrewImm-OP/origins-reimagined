@@ -51,7 +51,7 @@ dependencies {
 loom {
     splitEnvironmentSourceSets()
     mods {
-        origins_overhaul {
+        origins_reimagined {
             sourceSet sourceSets.main
             sourceSet sourceSets.client
         }
@@ -63,8 +63,8 @@ processResources {
     // Presentation profiles are needed on the client before a server data pack
     // reload is available (for example in the selection screen). Keep the
     // canonical datapack copy and expose the same built-ins as client resources.
-    from('src/main/resources/data/origins_overhaul/presentations') {
-        into('assets/origins_overhaul/presentations')
+    from('src/main/resources/data/origins_reimagined/presentations') {
+        into('assets/origins_reimagined/presentations')
     }
     filesMatching('fabric.mod.json') {
         expand version: project.version
@@ -120,14 +120,19 @@ tasks.register('verifyPackagedMixins') {
     doLast {
         def archive = jar.archiveFile.get().asFile
         def requiredEntries = [
-            'origins_overhaul.mixins.json',
+            'origins_reimagined.mixins.json',
             'com/andrewimm/originsreimagined/mixin/ModPacketsS2CMixin.class',
             'com/andrewimm/originsreimagined/mixin/MinecraftElytraCancelMixin.class',
             'com/andrewimm/originsreimagined/mixin/LivingEntityRendererVisualMixin.class',
             'com/andrewimm/originsreimagined/mixin/AvatarRendererVisualMixin.class',
             'com/andrewimm/originsreimagined/mixin/GuiSkinRendererVisualMixin.class',
             'com/andrewimm/originsreimagined/mixin/PictureInPictureRendererAccessor.class',
-            'com/andrewimm/originsreimagined/mixin/LivingEntityRendererAccessor.class'
+            'com/andrewimm/originsreimagined/mixin/LivingEntityRendererAccessor.class',
+            'com/andrewimm/originsreimagined/mixin/MerlingWaterBreathingMixin.class',
+            'com/andrewimm/originsreimagined/mixin/MerlingCombatMixin.class',
+            'com/andrewimm/originsreimagined/mixin/MerlingFireDamageMixin.class',
+            'com/andrewimm/originsreimagined/mixin/MerlingFoodRestrictionMixin.class'
+            ,'com/andrewimm/originsreimagined/mixin/PhantomBurnPowerMixin.class'
         ] as Set
         def found = new java.util.zip.ZipFile(archive).withCloseable { zip -> zip.entries().findAll { !it.isDirectory() }.collect { it.name } as Set }
         def missing = requiredEntries - found

@@ -1,9 +1,0 @@
-{
-  "origin": "origins:shulk",
-  "advantages": [
-    {"powers": ["origins:shulker_inventory", "origins:natural_armor", "origins:strong_arms", "origins:strong_arms_break_speed"], "name": {"translate": "origins_overhaul.presentation.shulk.shell"}, "description": {"translate": "origins_overhaul.presentation.shulk.shell.description"}, "order": 0}
-  ],
-  "disadvantages": [
-    {"powers": ["origins:no_shield", "origins:more_exhaustion"], "name": {"translate": "origins_overhaul.presentation.shulk.limits"}, "description": {"translate": "origins_overhaul.presentation.shulk.limits.description"}, "order": 0}
-  ]
-}

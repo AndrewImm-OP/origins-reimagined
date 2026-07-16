@@ -14,8 +14,8 @@ import com.andrewimm.originsreimagined.client.visual.render.WorldVisualRenderLay
 @Mixin(AvatarRenderer.class)
 public abstract class AvatarRendererVisualMixin {
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void originsOverhaul$addVisualLayer(EntityRendererProvider.Context context, boolean slim, CallbackInfo callback) {
+    private void originsReimagined$addVisualLayer(EntityRendererProvider.Context context, boolean slim, CallbackInfo callback) {
         var layer = new WorldVisualRenderLayer((RenderLayerParent<AvatarRenderState, PlayerModel>) this);
-        ((LivingEntityRendererAccessor) (Object) this).originsOverhaul$getLayers().add(layer);
+        ((LivingEntityRendererAccessor) (Object) this).originsReimagined$getLayers().add(layer);
     }
 }

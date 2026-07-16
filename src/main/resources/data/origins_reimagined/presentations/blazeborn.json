@@ -1,0 +1,12 @@
+{
+  "origin": "origins:blazeborn",
+  "advantages": [
+    {"powers": ["origins:fire_immunity", "origins:nether_spawn", "origins:burning_wrath"], "name": {"translate": "origins_reimagined.presentation.blazeborn.fire"}, "description": {"translate": "origins_reimagined.presentation.blazeborn.fire.description"}, "order": 0},
+    {"powers": ["origins:hotblooded"], "name": {"translate": "origins_reimagined.presentation.blazeborn.hotblooded"}, "description": {"translate": "origins_reimagined.presentation.blazeborn.hotblooded.description"}, "order": 1}
+  ],
+  "disadvantages": [
+    {"powers": ["origins:water_vulnerability"], "name": {"translate": "origins_reimagined.presentation.blazeborn.water"}, "description": {"translate": "origins_reimagined.presentation.blazeborn.water.description"}, "order": 0},
+    {"powers": ["origins:damage_from_snowballs", "origins:damage_from_potions"], "name": {"translate": "origins_reimagined.presentation.blazeborn.projectiles"}, "description": {"translate": "origins_reimagined.presentation.blazeborn.projectiles.description"}, "order": 1}
+  ],
+  "hidden_powers": ["origins:flame_particles"]
+}

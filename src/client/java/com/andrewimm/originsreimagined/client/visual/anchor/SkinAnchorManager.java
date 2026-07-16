@@ -22,7 +22,7 @@ public final class SkinAnchorManager {
     private SkinAnchorManager() {}
 
     public static void load(Path gameDirectory) {
-        file = gameDirectory.resolve("config/origins_overhaul/skin_anchors.json");
+        file = gameDirectory.resolve("config/origins_reimagined/skin_anchors.json");
         profiles.clear();
         if (!Files.exists(file)) return;
         try (Reader reader = Files.newBufferedReader(file)) {

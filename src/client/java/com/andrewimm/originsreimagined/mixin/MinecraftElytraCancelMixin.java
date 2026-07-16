@@ -11,13 +11,13 @@ import com.andrewimm.originsreimagined.networking.StopElytraFlightPayload;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftElytraCancelMixin {
-    private final ElytraCancelChordState originsOverhaul$chord = new ElytraCancelChordState();
+    private final ElytraCancelChordState originsReimagined$chord = new ElytraCancelChordState();
 
     @Inject(method = "tick", at = @At("TAIL"))
-    private void originsOverhaul$cancelElytraFlight(CallbackInfo callbackInfo) {
+    private void originsReimagined$cancelElytraFlight(CallbackInfo callbackInfo) {
         Minecraft client = (Minecraft) (Object) this;
         boolean fallFlying = client.player != null && client.player.isFallFlying();
-        boolean trigger = originsOverhaul$chord.update(
+        boolean trigger = originsReimagined$chord.update(
             fallFlying,
             client.hasControlDown(),
             client.options.keyShift.isDown()

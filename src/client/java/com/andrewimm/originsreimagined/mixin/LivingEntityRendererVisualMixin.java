@@ -21,7 +21,7 @@ import com.andrewimm.originsreimagined.client.visual.profile.VisualProfileResolv
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererVisualMixin {
     @Inject(method = "getModelTint", at = @At("HEAD"), cancellable = true)
-    private void originsOverhaul$applyModelTint(LivingEntityRenderState state, CallbackInfoReturnable<Integer> callback) {
+    private void originsReimagined$applyModelTint(LivingEntityRenderState state, CallbackInfoReturnable<Integer> callback) {
         if (!(state instanceof AvatarRenderState avatar) || Minecraft.getInstance().level == null) return;
         if (!(Minecraft.getInstance().level.getEntity(avatar.id) instanceof AbstractClientPlayer player)) return;
         PlayerAppearanceSnapshot appearance = PlayerAppearanceSnapshot.from(player, Minecraft.getInstance().options);

@@ -19,8 +19,8 @@ choice. Rejected choices therefore remain under Origins Legacy's normal
 confirmation handling.
 
 Mixin: `com.andrewimm.originsreimagined.mixin.ModPacketsS2CMixin`, client-only in
-`origins_overhaul.mixins.json`. No common class imports client Minecraft APIs.
+`origins_reimagined.mixins.json`. No common class imports client Minecraft APIs.
 
-When `config/origins_overhaul.properties` contains
+When `config/origins_reimagined.properties` contains
 `cinematic_selection_screen=false`, the injection returns without cancelling and
 Origins Legacy creates its original screen.

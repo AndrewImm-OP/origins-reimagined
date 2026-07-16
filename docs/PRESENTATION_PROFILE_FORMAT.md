@@ -1,6 +1,6 @@
 # Presentation profile format
 
-Файлы загружаются из `data/<namespace>/origins_overhaul/presentations/*.json`. Профиль не изменяет origin, его powers или доступность — только собирает presentation snapshot.
+Файлы загружаются из `data/<namespace>/origins_reimagined/presentations/*.json`. Профиль не изменяет origin, его powers или доступность — только собирает presentation snapshot.
 
 ```json
 {
@@ -15,8 +15,8 @@
   "disadvantages": [],
   "neutral_features": [],
   "hidden_powers": ["origins:phantomize_overlay"],
-  "visual_profile": "origins_overhaul:phantom",
-  "relation_profile": "origins_overhaul:phantom"
+  "visual_profile": "origins_reimagined:phantom",
+  "relation_profile": "origins_reimagined:phantom"
 }
 ```
 
@@ -24,4 +24,4 @@
 
 Поддерживаются `translate` и `text` для name/description. Цвет принимает 6- или 8-значный HEX с `#`; неверный цвет заменяется цветом impact.
 
-Для отладочной пересборки включить JVM-флаг `-Dorigins_overhaul.debug=true`. Catalog пишет только агрегаты: число layers, origins и время rebuild.
+Для отладочной пересборки включить JVM-флаг `-Dorigins_reimagined.debug=true`. Catalog пишет только агрегаты: число layers, origins и время rebuild.

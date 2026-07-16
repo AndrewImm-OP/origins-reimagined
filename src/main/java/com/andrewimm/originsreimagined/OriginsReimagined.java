@@ -12,15 +12,19 @@ import org.slf4j.LoggerFactory;
 import com.andrewimm.originsreimagined.profiles.PresentationProfileManager;
 import com.andrewimm.originsreimagined.compat.originslegacy.OriginsLegacyAdapter;
 import com.andrewimm.originsreimagined.networking.StopElytraFlightPayload;
+import com.andrewimm.originsreimagined.gameplay.MerlingMechanics;
+import com.andrewimm.originsreimagined.gameplay.PhantomMechanics;
 
 public final class OriginsReimagined implements ModInitializer {
-    public static final String MOD_ID = "origins_overhaul";
+    public static final String MOD_ID = "origins_reimagined";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final boolean DEBUG = Boolean.getBoolean("origins_overhaul.debug");
+    public static final boolean DEBUG = Boolean.getBoolean("origins_reimagined.debug");
 
     @Override
     public void onInitialize() {
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(PresentationProfileManager.INSTANCE);
+        MerlingMechanics.register();
+        PhantomMechanics.register();
         PayloadTypeRegistry.serverboundPlay().register(StopElytraFlightPayload.TYPE, StopElytraFlightPayload.CODEC);
         ServerPlayNetworking.registerGlobalReceiver(StopElytraFlightPayload.TYPE, (payload, context) ->
             context.server().execute(() -> {

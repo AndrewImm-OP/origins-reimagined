@@ -22,7 +22,7 @@ public record PresentationProfile(
         hiddenPowers = List.copyOf(hiddenPowers);
     }
 
-    public record Entry(List<Identifier> powers, Component name, Component description, int order) {
+    public record Entry(Identifier presentationId, List<Identifier> powers, Component name, Component description, int order) {
         public Entry {
             powers = List.copyOf(powers);
         }

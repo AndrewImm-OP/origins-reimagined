@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(PictureInPictureRenderer.class)
 public interface PictureInPictureRendererAccessor {
     @Accessor("bufferSource")
-    MultiBufferSource.BufferSource originsOverhaul$getBufferSource();
+    MultiBufferSource.BufferSource originsReimagined$getBufferSource();
 }
