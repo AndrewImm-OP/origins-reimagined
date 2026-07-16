@@ -3,7 +3,7 @@
   "id": "origins_reimagined",
   "version": "${version}",
   "name": "Origins: Reimagined",
-  "description": "Reimagines Origins Legacy with an improved selection screen, reworked origin mechanics, logical mob relationships and visual presentation profiles.",
+  "description": "Reimagines Origins: Legacy with a redesigned selection screen, reworked origin mechanics, logical mob relationships, and visual presentation profiles.",
   "authors": ["AndrewImm"],
   "license": "MIT",
   "environment": "*",
