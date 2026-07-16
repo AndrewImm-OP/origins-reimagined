@@ -13,7 +13,7 @@
 - [x] Проверены power registry, hidden powers и network payloads.
 - [x] Проверены текущие точки AI-отношений.
 - [x] Проверена текущая реализация Phantom daylight.
-- [x] Создан исходный мод Origins Overhaul.
+- [x] Создан исходный мод Origins: Reimagined.
 - [x] Реализован универсальный fallback.
 - [x] Реализованы статичный экран выбора и frame-independent анимации; runtime-открытие ожидает графическую проверку.
 - [x] Реализован isolated player skin preview; graphical runtime ожидает проверки.

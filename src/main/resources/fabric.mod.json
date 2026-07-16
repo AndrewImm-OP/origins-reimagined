@@ -4,12 +4,12 @@
   "version": "${version}",
   "name": "Origins: Reimagined",
   "description": "Universal presentation foundation for Origins Legacy.",
-  "authors": ["Origins: Reimagined contributors"],
+  "authors": ["AndrewImm"],
   "license": "MIT",
   "environment": "*",
   "entrypoints": {
-    "main": ["ru.origins_overhaul.OriginsOverhaul"],
-    "client": ["ru.origins_overhaul.OriginsOverhaulClient"]
+    "main": ["com.andrewimm.originsreimagined.OriginsReimagined"],
+    "client": ["com.andrewimm.originsreimagined.OriginsReimaginedClient"]
   },
   "mixins": ["origins_overhaul.mixins.json"],
   "depends": {

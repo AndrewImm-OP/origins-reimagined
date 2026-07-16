@@ -1,7 +1,7 @@
 # Animation architecture
 
 The selection screen uses client-only, frame-independent animation objects in
-`ru.origins_overhaul.client.animation`.
+`com.andrewimm.originsreimagined.client.animation`.
 
 - `AnimationClock` reads monotonic `System.nanoTime()` and clamps a frame delta
   to 100 ms after a stall or window switch.

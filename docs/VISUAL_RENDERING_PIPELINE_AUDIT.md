@@ -2,7 +2,7 @@
 
 Minecraft 26.1.2 exposes the GUI skin path through `GuiGraphicsExtractor.skin(...)`, which delegates to `GuiSkinRenderer` and `PlayerModel.renderToBuffer`. It supports the wide/slim baked player models, skin texture, outer skin parts and GUI clipping, but it does not expose a general attachment or armor pass.
 
-Origins Overhaul therefore uses two backends with one shared profile/resolver contract:
+Origins: Reimagined therefore uses two backends with one shared profile/resolver contract:
 
 - preview: the existing `GuiGraphicsExtractor.skin` path, with a client mixin for the shared model tint pass;
 - world: a client-only player render layer attached to `AvatarRenderer`, plus the model-tint hook in `LivingEntityRenderer`.

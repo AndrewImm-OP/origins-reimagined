@@ -1,6 +1,6 @@
 # Elytra flight cancellation
 
-Origins Overhaul handles `Ctrl+Shift` as an edge-triggered client input while
+Origins: Reimagined handles `Ctrl+Shift` as an edge-triggered client input while
 the local player is fall-flying and has the `origins:elytrian` origin.
 
 On the first tick of the chord:

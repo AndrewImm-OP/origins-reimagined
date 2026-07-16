@@ -1,0 +1,61 @@
+package com.andrewimm.originsreimagined.client.preview;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Player;
+import com.andrewimm.originsreimagined.client.ClientSelectionConfig;
+import com.andrewimm.originsreimagined.client.visual.render.VisualRenderBridge;
+
+public final class PlayerPreviewController {
+    private static long modelRevision;
+    private final PlayerPreviewCamera camera = new PlayerPreviewCamera();
+    private final PlayerPreviewInputHandler input = new PlayerPreviewInputHandler();
+    private final PlayerPreviewRenderer renderer = new PlayerPreviewRenderer();
+    private final PlayerPreviewState state = new PlayerPreviewState();
+    private float refreshCooldown;
+    private long observedModelRevision = -1L;
+
+    public void initialize(Minecraft client) {
+        renderer.refreshModels(client);
+        observedModelRevision = modelRevision;
+        refreshAppearance(client);
+        state.showOuterLayer(ClientSelectionConfig.previewShowOuterLayer());
+        state.showCape(ClientSelectionConfig.previewShowCape());
+        state.showEquipment(ClientSelectionConfig.previewShowEquipment());
+    }
+
+    public void update(float deltaSeconds, Minecraft client) {
+        if (observedModelRevision != modelRevision) {
+            renderer.refreshModels(client);
+            observedModelRevision = modelRevision;
+        }
+        camera.update(deltaSeconds, ClientSelectionConfig.previewAutoRotate(), ClientSelectionConfig.previewAutoRotateSpeed(), ClientSelectionConfig.reduceMotion());
+        refreshCooldown -= deltaSeconds;
+        if (refreshCooldown <= 0.0f) { refreshCooldown = 0.5f; refreshAppearance(client); }
+    }
+
+    public boolean render(GuiGraphicsExtractor context, int x, int y, int width, int height, float opacity) {
+        if (!ClientSelectionConfig.previewEnabled()) return false;
+        return renderer.render(context, state.appearance(), camera, x, y, width, height, opacity, state.showOuterLayer(), state.originContext());
+    }
+
+    public void refreshAppearance(Minecraft client) {
+        if (client.player == null) { state.clear(); return; }
+        if (state.appearance() == null || !state.appearance().playerId().equals(client.player.getUUID()) || !state.appearance().skin().equals(client.player.getSkin())) state.appearance(PlayerAppearanceSnapshot.from(client.player, client.options));
+    }
+
+    public void setOriginContext(Identifier layerId, Identifier originId, float transitionProgress) { state.originContext(new PreviewOriginContext(layerId, originId, transitionProgress)); }
+    public void setOriginContext(Identifier layerId, Identifier originId, Identifier visualProfileId, float transitionProgress) { state.originContext(new PreviewOriginContext(layerId, originId, transitionProgress, visualProfileId)); }
+    public void configureSimulation(java.util.Set<Identifier> powers, boolean inWater, boolean swimming, boolean sneaking, boolean fallFlying, boolean onFire, String modelOverride) {
+        state.simulatedPowers(powers); state.environment(inWater, swimming, sneaking, fallFlying, onFire); state.modelOverride(modelOverride);
+        PreviewOriginContext current = state.originContext();
+        state.originContext(new PreviewOriginContext(current.layerId(), current.originId(), current.transitionProgress(), current.visualProfileId(), powers, inWater, swimming, sneaking, fallFlying, onFire, modelOverride));
+    }
+    public PlayerPreviewCamera camera() { return camera; }
+    public PlayerPreviewInputHandler input() { return input; }
+    public PlayerPreviewState state() { return state; }
+    public void reset() { camera.reset(); }
+    public void clear() { state.clear(); renderer.clear(); input.release(); VisualRenderBridge.clearPreview(); }
+    public static void invalidateModels() { modelRevision++; }
+}

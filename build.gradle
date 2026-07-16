@@ -87,25 +87,25 @@ tasks.test {
 
 tasks.register('runAnimationSelfTest', JavaExec) {
     classpath = sourceSets.test.runtimeClasspath + sourceSets.client.output
-    mainClass = 'ru.origins_overhaul.client.AnimationMathSelfTest'
+    mainClass = 'com.andrewimm.originsreimagined.client.AnimationMathSelfTest'
     enableAssertions = true
 }
 
 tasks.register('runPlayerPreviewSelfTest', JavaExec) {
     classpath = sourceSets.test.runtimeClasspath + sourceSets.client.output
-    mainClass = 'ru.origins_overhaul.client.PlayerPreviewMathSelfTest'
+    mainClass = 'com.andrewimm.originsreimagined.client.PlayerPreviewMathSelfTest'
     enableAssertions = true
 }
 
 tasks.register('runVisualSelfTest', JavaExec) {
     classpath = sourceSets.test.runtimeClasspath + sourceSets.client.output
-    mainClass = 'ru.origins_overhaul.client.VisualMathSelfTest'
+    mainClass = 'com.andrewimm.originsreimagined.client.VisualMathSelfTest'
     enableAssertions = true
 }
 
 tasks.register('runElytraCancelSelfTest', JavaExec) {
     classpath = sourceSets.test.runtimeClasspath
-    mainClass = 'ru.origins_overhaul.gameplay.ElytraCancelChordStateTest'
+    mainClass = 'com.andrewimm.originsreimagined.gameplay.ElytraCancelChordStateTest'
     enableAssertions = true
 }
 
@@ -121,13 +121,13 @@ tasks.register('verifyPackagedMixins') {
         def archive = jar.archiveFile.get().asFile
         def requiredEntries = [
             'origins_overhaul.mixins.json',
-            'ru/origins_overhaul/mixin/ModPacketsS2CMixin.class',
-            'ru/origins_overhaul/mixin/MinecraftElytraCancelMixin.class',
-            'ru/origins_overhaul/mixin/LivingEntityRendererVisualMixin.class',
-            'ru/origins_overhaul/mixin/AvatarRendererVisualMixin.class',
-            'ru/origins_overhaul/mixin/GuiSkinRendererVisualMixin.class',
-            'ru/origins_overhaul/mixin/PictureInPictureRendererAccessor.class',
-            'ru/origins_overhaul/mixin/LivingEntityRendererAccessor.class'
+            'com/andrewimm/originsreimagined/mixin/ModPacketsS2CMixin.class',
+            'com/andrewimm/originsreimagined/mixin/MinecraftElytraCancelMixin.class',
+            'com/andrewimm/originsreimagined/mixin/LivingEntityRendererVisualMixin.class',
+            'com/andrewimm/originsreimagined/mixin/AvatarRendererVisualMixin.class',
+            'com/andrewimm/originsreimagined/mixin/GuiSkinRendererVisualMixin.class',
+            'com/andrewimm/originsreimagined/mixin/PictureInPictureRendererAccessor.class',
+            'com/andrewimm/originsreimagined/mixin/LivingEntityRendererAccessor.class'
         ] as Set
         def found = new java.util.zip.ZipFile(archive).withCloseable { zip -> zip.entries().findAll { !it.isDirectory() }.collect { it.name } as Set }
         def missing = requiredEntries - found

@@ -1,0 +1,27 @@
+package com.andrewimm.originsreimagined.client;
+
+import com.andrewimm.originsreimagined.client.visual.anchor.EyeAnchor;
+import com.andrewimm.originsreimagined.client.visual.anchor.EyeLayer;
+import com.andrewimm.originsreimagined.client.visual.anchor.EyePreset;
+import com.andrewimm.originsreimagined.client.visual.modifier.RenderPhase;
+import com.andrewimm.originsreimagined.client.visual.render.VisualBackendCapabilities;
+import com.andrewimm.originsreimagined.client.visual.render.VisualRenderCapability;
+import com.andrewimm.originsreimagined.client.visual.render.SegmentedChainMath;
+
+/** Small JVM-only checks for visual data that do not require a Minecraft window. */
+public final class VisualMathSelfTest {
+    public static void main(String[] args) {
+        EyeAnchor clamped = new EyeAnchor(-4, 12, 99, -2, EyeLayer.BOTH);
+        assert clamped.x() == 0 && clamped.y() == 7;
+        assert clamped.width() == 8 && clamped.height() == 0;
+        assert EyePreset.STANDARD.left().width() > 0;
+        assert EyePreset.STANDARD.right().width() > 0;
+        assert RenderPhase.values().length == 4;
+        assert VisualBackendCapabilities.WORLD.contains(VisualRenderCapability.GEOMETRY_ATTACHMENT);
+        assert !VisualBackendCapabilities.PREVIEW.contains(VisualRenderCapability.MODEL_ALPHA);
+        assert SegmentedChainMath.clampSegments(0) == 1;
+        assert SegmentedChainMath.clampSegments(99) == 16;
+        assert SegmentedChainMath.angle(10, 2, 1, 8, 2, 0.5f, 1, true) == 10;
+        System.out.println("VisualMathSelfTest passed");
+    }
+}
