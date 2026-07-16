@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "id": "origins_overhaul",
   "version": "${version}",
-  "name": "Origins Overhaul",
+  "name": "Origins: Reimagined",
   "description": "Universal presentation foundation for Origins Legacy.",
-  "authors": ["Origins Overhaul contributors"],
+  "authors": ["Origins: Reimagined contributors"],
   "license": "MIT",
   "environment": "*",
   "entrypoints": {

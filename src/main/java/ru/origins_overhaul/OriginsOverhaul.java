@@ -33,6 +33,6 @@ public final class OriginsOverhaul implements ModInitializer {
                 }
             })
         );
-        LOGGER.info("Origins Overhaul initialized for Minecraft 26.1.2 (Origins Legacy {})", Origins.VERSION);
+        LOGGER.info("Origins: Reimagined initialized for Minecraft 26.1.2 (Origins Legacy {})", Origins.VERSION);
     }
 }

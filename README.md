@@ -1,4 +1,7 @@
-# Origins Overhaul
+# Origins: Reimagined
+
+Внутренний mod ID проекта остаётся `origins_overhaul` для совместимости с
+ресурсами, конфигурацией и уже существующими мирами.
 
 Клиент-серверный Fabric-мод поверх Origins Legacy для Minecraft 26.1.2.
 

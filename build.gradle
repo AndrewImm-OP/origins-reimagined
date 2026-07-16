@@ -111,7 +111,7 @@ tasks.register('runElytraCancelSelfTest', JavaExec) {
 
 jar {
     from('LICENSE') {
-        rename { 'origins-overhaul-LICENSE' }
+        rename { 'origins-reimagined-LICENSE' }
     }
 }
 
@@ -132,7 +132,7 @@ tasks.register('verifyPackagedMixins') {
         def found = new java.util.zip.ZipFile(archive).withCloseable { zip -> zip.entries().findAll { !it.isDirectory() }.collect { it.name } as Set }
         def missing = requiredEntries - found
         if (!missing.isEmpty()) throw new GradleException("Production JAR is missing mixin entries: ${missing}")
-        logger.lifecycle("Verified ${requiredEntries.size()} packaged Origins Overhaul mixin entries")
+        logger.lifecycle("Verified ${requiredEntries.size()} packaged Origins: Reimagined mixin entries")
     }
 }
 tasks.named('check') { dependsOn verifyPackagedMixins }

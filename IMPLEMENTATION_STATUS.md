@@ -1,4 +1,4 @@
-# Origins Overhaul — статус реализации
+# Origins: Reimagined — статус реализации
 
 Дата аудита: 2026-07-14
 
