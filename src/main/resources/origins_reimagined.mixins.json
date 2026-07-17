@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "com.andrewimm.originsreimagined.mixin",
   "compatibilityLevel": "JAVA_25",
-  "mixins": ["MerlingWaterBreathingMixin", "MerlingCombatMixin", "MerlingFireDamageMixin", "MerlingFoodRestrictionMixin", "PhantomBurnPowerMixin"],
+  "mixins": ["MerlingWaterBreathingMixin", "MerlingCombatMixin", "MerlingFireDamageMixin", "MerlingFoodRestrictionMixin", "PhantomBurnPowerMixin", "PowerFeatureControlMixin", "FelineMobTargetMixin", "FelineFoodBonusMixin", "FelineWetJumpMixin"],
   "client": ["ModPacketsS2CMixin", "MinecraftElytraCancelMixin", "LivingEntityRendererVisualMixin", "AvatarRendererVisualMixin", "GuiSkinRendererVisualMixin", "PictureInPictureRendererAccessor", "LivingEntityRendererAccessor"],
   "injectors": { "defaultRequire": 1 }
 }

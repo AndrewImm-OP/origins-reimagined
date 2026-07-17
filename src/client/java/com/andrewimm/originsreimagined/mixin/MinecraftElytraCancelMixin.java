@@ -20,8 +20,8 @@ public abstract class MinecraftElytraCancelMixin {
         boolean trigger = originsReimagined$input.update(fallFlying, client.options.keyJump.isDown());
         if (!trigger || client.player == null) return;
 
-        // Do not touch delta movement: leaving fall-flying naturally preserves velocity and direction.
-        client.player.stopFallFlying();
+        // The server decides whether this feature is enabled and stops flight.
+        // This avoids a client/server mismatch when an administrator disabled it.
         if (ClientPlayNetworking.canSend(StopElytraFlightPayload.TYPE)) {
             ClientPlayNetworking.send(new StopElytraFlightPayload());
         }

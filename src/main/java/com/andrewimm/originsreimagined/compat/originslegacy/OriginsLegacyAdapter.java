@@ -86,4 +86,11 @@ public final class OriginsLegacyAdapter {
         return ModComponents.ORIGIN.get(player).getOrigins().values().stream()
             .anyMatch(origin -> originId.equals(origin.getIdentifier()));
     }
+
+    public static List<Identifier> activeOrigins(Player player) {
+        if (player == null) return List.of();
+        return ModComponents.ORIGIN.get(player).getOrigins().values().stream()
+            .map(Origin::getIdentifier)
+            .toList();
+    }
 }

@@ -15,6 +15,10 @@ import com.andrewimm.originsreimagined.client.visual.profile.VisualProfileManage
 import com.andrewimm.originsreimagined.client.visual.anchor.SkinAnchorManager;
 import com.andrewimm.originsreimagined.client.visual.render.ParticleAuraManager;
 import com.andrewimm.originsreimagined.client.VisualDebugCommands;
+import com.andrewimm.originsreimagined.client.StickyThreadsInput;
+import com.andrewimm.originsreimagined.networking.OpenAdminSettingsPayload;
+import com.andrewimm.originsreimagined.client.screen.AdminSettingsScreen;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 public final class OriginsReimaginedClient implements ClientModInitializer {
     @Override
@@ -23,6 +27,9 @@ public final class OriginsReimaginedClient implements ClientModInitializer {
         SkinAnchorManager.load(Minecraft.getInstance().gameDirectory.toPath());
         ParticleAuraManager.register();
         VisualDebugCommands.register();
+        StickyThreadsInput.register();
+        ClientPlayNetworking.registerGlobalReceiver(OpenAdminSettingsPayload.TYPE, (payload, context) ->
+            context.client().execute(() -> context.client().setScreen(new AdminSettingsScreen())));
         PresentationProfileManager.setReloadCallback(() -> {
             ClientOriginCatalog.rebuild();
             PlayerPreviewController.invalidateModels();

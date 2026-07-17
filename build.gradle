@@ -132,7 +132,8 @@ tasks.register('verifyPackagedMixins') {
             'com/andrewimm/originsreimagined/mixin/MerlingCombatMixin.class',
             'com/andrewimm/originsreimagined/mixin/MerlingFireDamageMixin.class',
             'com/andrewimm/originsreimagined/mixin/MerlingFoodRestrictionMixin.class'
-            ,'com/andrewimm/originsreimagined/mixin/PhantomBurnPowerMixin.class'
+            ,'com/andrewimm/originsreimagined/mixin/PhantomBurnPowerMixin.class',
+            'com/andrewimm/originsreimagined/mixin/PowerFeatureControlMixin.class'
         ] as Set
         def found = new java.util.zip.ZipFile(archive).withCloseable { zip -> zip.entries().findAll { !it.isDirectory() }.collect { it.name } as Set }
         def missing = requiredEntries - found

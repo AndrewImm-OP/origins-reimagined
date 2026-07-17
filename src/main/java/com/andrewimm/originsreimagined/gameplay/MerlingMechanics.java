@@ -21,6 +21,10 @@ import java.util.UUID;
 
 public final class MerlingMechanics {
     public static final Identifier MERLING = Identifier.fromNamespaceAndPath("origins", "merling");
+    public static final Identifier UNDERWATER_DAMAGE = Identifier.fromNamespaceAndPath(OriginsReimagined.MOD_ID, "merling_underwater_damage");
+    public static final Identifier FIRE_DAMAGE = Identifier.fromNamespaceAndPath(OriginsReimagined.MOD_ID, "merling_fire_damage");
+    public static final Identifier FORBIDDEN_FOOD = Identifier.fromNamespaceAndPath(OriginsReimagined.MOD_ID, "merling_forbidden_food");
+    public static final Identifier NETHER_DESICCATION = Identifier.fromNamespaceAndPath(OriginsReimagined.MOD_ID, "merling_nether_desiccation");
     public static final ResourceKey<DamageType> DESICCATION = ResourceKey.create(
         Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(OriginsReimagined.MOD_ID, "merling_desiccation"));
 
@@ -37,7 +41,9 @@ public final class MerlingMechanics {
     private static void tick(MinecraftServer server) {
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             UUID id = player.getUUID();
-            if (!OriginsLegacyAdapter.hasOrigin(player, MERLING) || player.isDeadOrDying()) {
+            if (!OriginsLegacyAdapter.hasOrigin(player, MERLING)
+                || !AdminFeatureControl.enabled(player, MERLING, NETHER_DESICCATION)
+                || player.isDeadOrDying()) {
                 NETHER_STATES.remove(id);
                 continue;
             }

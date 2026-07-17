@@ -3,6 +3,7 @@ package com.andrewimm.originsreimagined.mixin;
 import com.andrewimm.originsreimagined.compat.originslegacy.OriginsLegacyAdapter;
 import com.andrewimm.originsreimagined.gameplay.MerlingConfig;
 import com.andrewimm.originsreimagined.gameplay.MerlingMechanics;
+import com.andrewimm.originsreimagined.gameplay.AdminFeatureControl;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.world.entity.Entity;
@@ -19,6 +20,9 @@ public abstract class MerlingCombatMixin {
         Player player = (Player) (Object) this;
         if (!player.level().isClientSide() && target instanceof LivingEntity
             && player.isInWater() && OriginsLegacyAdapter.hasOrigin(player, MerlingMechanics.MERLING)) {
+            if (!AdminFeatureControl.enabled(player, MerlingMechanics.MERLING, MerlingMechanics.UNDERWATER_DAMAGE)) {
+                return original.call(target, source, amount);
+            }
             amount *= MerlingConfig.get().underwaterDamageMultiplier;
         }
         return original.call(target, source, amount);

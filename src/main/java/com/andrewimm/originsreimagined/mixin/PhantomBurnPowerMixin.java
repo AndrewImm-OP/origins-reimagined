@@ -1,6 +1,7 @@
 package com.andrewimm.originsreimagined.mixin;
 
 import com.andrewimm.originsreimagined.gameplay.PhantomMechanics;
+import com.andrewimm.originsreimagined.gameplay.AdminFeatureControl;
 import io.github.apace100.apoli.power.BurnPower;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +17,7 @@ public abstract class PhantomBurnPowerMixin {
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void originsReimagined$protectHelmet(CallbackInfo callback) {
         if (entity instanceof net.minecraft.server.level.ServerPlayer player
+            && AdminFeatureControl.enabled(player, PhantomMechanics.PHANTOM, PhantomMechanics.SUNLIGHT_PROTECTION)
             && PhantomMechanics.isProtectedFromSun(player)) {
             callback.cancel();
         }

@@ -2,6 +2,7 @@ package com.andrewimm.originsreimagined.mixin;
 
 import com.andrewimm.originsreimagined.compat.originslegacy.OriginsLegacyAdapter;
 import com.andrewimm.originsreimagined.gameplay.MerlingMechanics;
+import com.andrewimm.originsreimagined.gameplay.AdminFeatureControl;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.core.registries.Registries;
@@ -26,6 +27,7 @@ public abstract class MerlingFoodRestrictionMixin {
                                                CallbackInfoReturnable<InteractionResult> callback) {
         if (player != null && ((ItemStack) (Object) this).is(FORBIDDEN_FOOD)
             && OriginsLegacyAdapter.hasOrigin(player, MerlingMechanics.MERLING)) {
+            if (!AdminFeatureControl.enabled(player, MerlingMechanics.MERLING, MerlingMechanics.FORBIDDEN_FOOD)) return;
             if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
                 serverPlayer.sendOverlayMessage(net.minecraft.network.chat.Component.translatable("origins_reimagined.merling.forbidden_food"));
             }

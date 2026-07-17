@@ -19,6 +19,7 @@ import java.util.UUID;
 /** Server-side Phantom sunlight protection and helmet wear. */
 public final class PhantomMechanics {
     public static final Identifier PHANTOM = Identifier.fromNamespaceAndPath("origins", "phantom");
+    public static final Identifier SUNLIGHT_PROTECTION = Identifier.fromNamespaceAndPath(OriginsReimagined.MOD_ID, "phantom_sunlight_protection");
 
     public static final int SUNLIGHT_WEAR_INTERVAL_TICKS = 1_200;
     public static final int SUNLIGHT_WEAR_AMOUNT = 5;
@@ -45,6 +46,7 @@ public final class PhantomMechanics {
             online.add(id);
 
             if (!OriginsLegacyAdapter.hasOrigin(player, PHANTOM)
+                || !AdminFeatureControl.enabled(player, PHANTOM, SUNLIGHT_PROTECTION)
                 || player.isDeadOrDying()
                 || !isExposedToSun(player)
                 || player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {

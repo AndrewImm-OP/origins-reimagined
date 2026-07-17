@@ -3,6 +3,7 @@ package com.andrewimm.originsreimagined.mixin;
 import com.andrewimm.originsreimagined.compat.originslegacy.OriginsLegacyAdapter;
 import com.andrewimm.originsreimagined.gameplay.MerlingConfig;
 import com.andrewimm.originsreimagined.gameplay.MerlingMechanics;
+import com.andrewimm.originsreimagined.gameplay.AdminFeatureControl;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,7 +20,8 @@ public abstract class MerlingFireDamageMixin {
         LivingEntity entity = (LivingEntity) (Object) this;
         if (amount > 0.0F && source.is(DamageTypeTags.IS_FIRE)
             && entity instanceof Player player
-            && OriginsLegacyAdapter.hasOrigin(player, MerlingMechanics.MERLING)) {
+            && OriginsLegacyAdapter.hasOrigin(player, MerlingMechanics.MERLING)
+            && AdminFeatureControl.enabled(player, MerlingMechanics.MERLING, MerlingMechanics.FIRE_DAMAGE)) {
             return amount * MerlingConfig.get().fireDamageMultiplier;
         }
         return amount;
